@@ -1,0 +1,9 @@
+﻿@model Application.Dtos.CasaDtoForUpdate
+
+
+    <form action="@Url.Action("Edit","Casa")" method="post">
+        <input asp-for="Color"/>
+        <input asp-for="CantidadCuartos"/>
+        <button class="btn btn-success" type="submit">Editar</button>
+        <a class="btn btn-secondary" href="@Url.Action("Index","Casa")">Cancelar</a>
+    </form>

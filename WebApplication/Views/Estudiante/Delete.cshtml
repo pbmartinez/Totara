@@ -1,0 +1,37 @@
+﻿@model Application.Dtos.EstudianteDto
+
+@{
+    ViewData["Title"] = "Borrar Estudiante";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Detalles de Estudiante</h1>
+    <h3 class="display-4">Esta seguro que desea eliminar ?</h3>
+</div>
+
+<div class="row">
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Nombre"></label> </b>
+        @Model.Nombre
+    </div>
+    <div class="col-12  col-md-4">
+        <b><label asp-for="FechaNacimiento"></label> </b>
+        @Model.FechaNacimiento
+    </div>
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Grado"></label> </b>
+        @Model.Grado
+    </div>
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Escuela"></label> </b>
+        @Model.Escuela?.Nombre
+    </div>
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Matriculas"></label> </b>
+        @Model.Matriculas.Count()
+    </div>
+</div>
+<div class="row">
+    <a class="btn btn-secondary" href="/Estudiante/Index">Cancelar</a>
+    <a class="btn btn-danger" href="/Estudiante/DeleteConfirm/@Model.Id">Eliminar</a>
+</div>

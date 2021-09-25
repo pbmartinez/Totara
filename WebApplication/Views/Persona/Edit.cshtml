@@ -1,0 +1,9 @@
+﻿@model Application.Dtos.PersonaDtoForUpdate
+
+
+    <form action="@Url.Action("Edit","Persona")" method="post">
+        <input asp-for="Nombre"/>
+        <input asp-for="Apellidos"/>
+        <button class="btn btn-success" type="submit">Editar</button>
+        <a class="btn btn-secondary" href="@Url.Action("Index","Persona")">Cancelar</a>
+    </form>

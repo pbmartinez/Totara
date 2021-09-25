@@ -1,0 +1,24 @@
+﻿@model Application.Dtos.CasaDto
+
+@{
+    ViewData["Title"] = "Detalles Casa";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Detalles de Casa</h1>
+</div>
+
+<div class="row">
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Color"></label> </b>
+        @Model.Color
+    </div>
+    <div class="col-12  col-md-4">
+        <b><label asp-for="CantidadCuartos"></label> </b>
+        @Model.CantidadCuartos
+    </div>
+</div>
+<div class="row">
+    <a class="btn btn-secondary" href="/Casa/Index">Cancelar</a>
+    <a class="btn btn-danger" href="/Casa/Delete/@Model.Id">Eliminar</a>
+</div>

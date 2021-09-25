@@ -1,0 +1,33 @@
+﻿@model List<Application.Dtos.PersonaDto>
+
+@{
+    ViewData["Title"] = "Personas";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Personas</h1>
+</div>
+
+<a class="btn btn-success" href="@Url.Action("Create","Persona")">Adicionar</a>
+
+<table style="width:100%">
+    <tr>
+        <th>Nombre</th>
+        <th>Apellidos</th>
+        <th>Acciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Nombre</td>
+            <td>@item.Apellidos</td>
+            <td>
+                <a class="btn btn-info" href="@Url.Action("Details","Persona",new { id=item.Id})">Detalles</a>
+                <a class="btn btn-secondary" href="@Url.Action("Edit","Persona",new { id=item.Id})">Editar</a>
+                <a class="btn btn-danger" href="@Url.Action("Delete","Persona",new { id=item.Id})">Eliminar</a>
+            </td>
+
+        </tr>
+    }
+</table>

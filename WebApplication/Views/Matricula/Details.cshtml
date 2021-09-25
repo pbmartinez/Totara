@@ -1,0 +1,28 @@
+﻿@model Application.Dtos.MatriculaDto
+
+@{
+    ViewData["Title"] = "Detalles Matricula";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Detalles de Matricula</h1>
+</div>
+
+<div class="row">
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Curso"></label> </b>
+        @Model.Curso?.Nombre
+    </div>
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Estudiante"></label> </b>
+        @Model.Estudiante?.Nombre
+    </div>
+    <div class="col-12  col-md-4">
+        <b><label asp-for="NotaFinal"></label> </b>
+        @Model.NotaFinal
+    </div>
+</div>
+<div class="row">
+    <a class="btn btn-secondary" href="/Matricula/Index">Cancelar</a>
+    <a class="btn btn-danger" href="/Matricula/Delete/@Model.Id">Eliminar</a>
+</div>
