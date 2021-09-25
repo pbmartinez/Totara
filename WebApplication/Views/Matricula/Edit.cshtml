@@ -1,0 +1,11 @@
+﻿@model Application.Dtos.MatriculaDtoForUpdate
+
+
+<form action="@Url.Action("Edit","Matricula")" method="post">
+    <select asp-for="CursoId" asp-items="ViewBag.Cursos" ></select>
+    <select asp-for="EstudianteId" asp-items="ViewBag.Estudiantes" ></select>
+    <input asp-for="NotaFinal" />
+
+    <button class="btn btn-success" type="submit">Editar</button>
+    <a class="btn btn-secondary" href="@Url.Action("Index","Matricula")">Cancelar</a>
+</form>

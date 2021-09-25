@@ -1,0 +1,39 @@
+﻿@model List<Application.Dtos.EstudianteDto>
+
+@{
+    ViewData["Title"] = "Estudiantes";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Estudiantes</h1>
+</div>
+
+<a class="btn btn-success" href="@Url.Action("Create","Estudiante")">Adicionar</a>
+
+<table style="width:100%">
+    <tr>
+        <th>Nombre</th>
+        <th>Escuela</th>
+        <th>Fecha Nac.</th>
+        <th>Grado</th>
+        <th>Cursos Matriculados</th>
+        <th>Acciones</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Nombre</td>
+            <td>@item.Escuela?.Nombre</td>
+            <td>@item.FechaNacimiento</td>
+            <td>@item.Grado</td>
+            <td>@item.Matriculas.Count()</td>
+            <td>
+                <a class="btn btn-info" href="@Url.Action("Details","Estudiante",new { id=item.Id})">Detalles</a>
+                <a class="btn btn-secondary" href="@Url.Action("Edit","Estudiante",new { id=item.Id})">Editar</a>
+                <a class="btn btn-danger" href="@Url.Action("Delete","Estudiante",new { id=item.Id})">Eliminar</a>
+            </td>
+
+        </tr>
+    }
+</table>

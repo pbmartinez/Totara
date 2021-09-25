@@ -1,0 +1,28 @@
+﻿@model Application.Dtos.EscuelaDto
+
+@{
+    ViewData["Title"] = "Detalles Escuela";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Detalles de Escuela</h1>
+</div>
+
+<div class="row">
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Nombre"></label> </b>
+        @Model.Nombre
+    </div>
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Cursos"></label> </b>
+        @Model.Cursos.Count()
+    </div>
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Estudiantes"></label> </b>
+        @Model.Estudiantes.Count()
+    </div>    
+</div>
+<div class="row">
+    <a class="btn btn-secondary" href="/Escuela/Index">Cancelar</a>
+    <a class="btn btn-danger" href="/Escuela/Delete/@Model.Id">Eliminar</a>
+</div>

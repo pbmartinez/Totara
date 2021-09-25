@@ -1,0 +1,10 @@
+﻿@model Application.Dtos.CursoDtoForUpdate
+
+
+<form action="@Url.Action("Edit","Curso")" method="post">
+    <input asp-for="Nombre" />
+    <input asp-for="Descripcion" />
+    <select asp-for="EscuelaId" asp-items="ViewBag.Escuelas" ></select>
+    <button class="btn btn-success" type="submit">Editar</button>
+    <a class="btn btn-secondary" href="@Url.Action("Index","Curso")">Cancelar</a>
+</form>

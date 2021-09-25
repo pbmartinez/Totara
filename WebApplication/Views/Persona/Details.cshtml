@@ -1,0 +1,24 @@
+﻿@model Application.Dtos.PersonaDto
+
+@{
+    ViewData["Title"] = "Detalles Persona";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Detalles de Persona</h1>
+</div>
+
+<div class="row">
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Nombre"></label> </b>
+        @Model.Nombre
+    </div>
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Apellidos"></label> </b>
+        @Model.Apellidos
+    </div>
+</div>
+<div class="row">
+    <a class="btn btn-secondary" href="/Persona/Index">Cancelar</a>
+    <a class="btn btn-danger" href="/Persona/Delete/@Model.Id">Eliminar</a>
+</div>
