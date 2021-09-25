@@ -1,2 +1,2 @@
-# CleanArquitecture
+# CleanArchitecture
 test
