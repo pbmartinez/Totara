@@ -17,6 +17,10 @@ namespace Domain.IRepositories
         Task AddAsync(TEntity item);
         Task UpdateAsync(TEntity item);
         Task DeleteAsync(TEntity item);
+        //From Mukesh Murugan pendiente evaluar
         IEnumerable<TEntity> FindWithSpecificationPattern(IExpressionSpecification<TEntity> specification = null);
+
+        //From Vladimir Khorikov
+        IEnumerable<TEntity> FindWithSpecificationPattern(BaseSpecification<TEntity> specification = null);
     }
 }

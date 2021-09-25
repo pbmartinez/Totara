@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using static Domain.Specification.BaseSpecification;
+using static Domain.Specification.BaseSpecification2;
 
 namespace Application.Specification
 {

@@ -49,5 +49,10 @@ namespace Domain.Repositories
         {
             return SpecificationEvaluator<TEntity>.GetQuery(_unitOfWork.Repository<TEntity>().AsQueryable(), specification);
         }
+
+        public IEnumerable<TEntity> FindWithSpecificationPattern(BaseSpecification<TEntity> specification = null)
+        {
+            return _unitOfWork.Repository<TEntity>().Where(specification.ToExpression());
+        }
     }
 }
