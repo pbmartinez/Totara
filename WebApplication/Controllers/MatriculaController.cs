@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.IAppServices;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,12 @@ namespace WebApplication.Controllers
 
             var estudiantes = await _estudianteAppService.GetAllAsync();
             ViewBag.Estudiantes = new SelectList(estudiantes, "Id", "Nombre");
+        }
+
+        public override async Task<IActionResult> Index()
+        {
+            var items = await AppService.GetAllAsync();
+            return View(items);
         }
     }
 }

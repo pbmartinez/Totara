@@ -10,6 +10,8 @@ namespace WebApplication.Controllers
     public abstract class BaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> : Controller where TEntityDtoForUpdate:Domain.Entities.Entity
     {
         protected readonly IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> AppService;
+
+        
         public BaseController(IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> appService)
         {
             AppService = appService;

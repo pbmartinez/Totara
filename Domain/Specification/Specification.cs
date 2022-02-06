@@ -20,7 +20,7 @@ namespace Domain.Specification
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public abstract class Specification<T>
-    {        
+    {
         /// <summary>
         /// It validates objects in memory
         /// </summary>
@@ -35,16 +35,18 @@ namespace Domain.Specification
         /// </summary>
         /// <returns></returns>
         public virtual Expression<Func<T, bool>> ToExpression() => new AllSpecification<T>().ToExpression();
-
         
+
+
 
         #region Specification Combination Methods
         /// <summary>
         /// Basic specification definition. It just returns true for any object.
         /// </summary>
         /// <returns></returns>
-        public Specification<T> All = new AllSpecification<T>();
+        public Specification<T> All => new AllSpecification<T>();
         
+
         /// <summary>
         /// Combines the current specification with the specification passed as argument in an && operation
         /// </summary>
@@ -54,7 +56,7 @@ namespace Domain.Specification
         {
             if (this == All)
                 return specification;
-            if(specification==All)
+            if (specification == All)
                 return this;
             return new AndSpecification<T>(this, specification);
         }
@@ -78,7 +80,7 @@ namespace Domain.Specification
             return new NotSpecification<T>(this);
         }
 
-        
+
         #endregion
 
         #region Specification Operators
@@ -135,7 +137,7 @@ namespace Domain.Specification
 
             var invokedExpression = Expression.Invoke(rightExpression, leftExpression.Parameters);
             return (Expression<Func<T, bool>>)Expression.Lambda(Expression.AndAlso(leftExpression.Body, invokedExpression), leftExpression.Parameters);
-             
+
         }
     }
 

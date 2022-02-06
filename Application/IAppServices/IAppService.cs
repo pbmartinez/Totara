@@ -14,6 +14,6 @@ namespace Application.IAppServices
         Task<TEntityForUpdate> GetForUpdateAsync(Guid id);
         Task<List<TEntity>> GetAllAsync();
         Task<bool> RemoveAsync(Guid id);
-        IEnumerable<TEntity> FindWithSpecificationPattern(Specification<TEntity> specification = null);
+        Task<IEnumerable<TEntity>> FindWithSpecificationPatternAsync(Specification<TEntity> specification = null);
     }
 }

@@ -32,7 +32,9 @@ namespace Domain.Repositories
 
         public async Task<IQueryable<TEntity>> GetAllAsync()
         {
-            return await Task.FromResult<IQueryable<TEntity>>(_unitOfWork.Repository<TEntity>());
+            var items = _unitOfWork.Repository<TEntity>();
+            
+            return await Task.FromResult<IQueryable<TEntity>>(items);
         }
 
         public async Task<TEntity> GetAsync(Guid id)
@@ -47,14 +49,14 @@ namespace Domain.Repositories
             await Task.CompletedTask;
         }
         
-        public IEnumerable<TEntity> FindWithSpecificationPattern(Specification<TEntity> specification = null)
+        public async Task<IEnumerable<TEntity>> FindWithSpecificationPatternAsync(Specification<TEntity> specification = null)
         {
-            return _unitOfWork.Repository<TEntity>().Where(specification.ToExpression());
+            return await Task.FromResult(_unitOfWork.Repository<TEntity>().Where(specification.ToExpression()).ToList());
         }
 
-        public IEnumerable<TEntity> FindWithExpression(Expression<Func<TEntity, bool>> expression)
+        public async Task<IEnumerable<TEntity>> FindWithExpressionAsync(Expression<Func<TEntity, bool>> expression)
         {
-            return _unitOfWork.Repository<TEntity>().Where(expression);
+            return await Task.FromResult(_unitOfWork.Repository<TEntity>().Where(expression).ToList());
         }
     }
 }

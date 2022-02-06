@@ -27,7 +27,7 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public IEnumerable<PersonaDto> FindWithSpecificationPattern(Specification<PersonaDto> specification = null)
+        public Task<IEnumerable<PersonaDto>> FindWithSpecificationPatternAsync(Specification<PersonaDto> specification = null)
         {
             throw new NotImplementedException();
         }

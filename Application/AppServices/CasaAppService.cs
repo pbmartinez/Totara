@@ -30,12 +30,11 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public IEnumerable<CasaDto> FindWithSpecificationPattern(Specification<CasaDto> specification = null)
+        public async Task<IEnumerable<CasaDto>> FindWithSpecificationPatternAsync(Specification<CasaDto> specification = null)
         {
-            var a = specification == null ? a => true : specification.ToExpression();
-            var exp = _mapper.MapExpression<Expression<Func<Domain.Entities.Casa, bool>>>(a);
-            var items = _casaRepository.FindWithExpression(exp);
-            return _mapper.Map<List<CasaDto>>(items);
+            return _mapper.Map<List<CasaDto>>(
+                await _casaRepository.FindWithExpressionAsync(
+                    _mapper.MapExpression<Expression<Func<Domain.Entities.Casa, bool>>>(specification == null ? a => true : specification.ToExpression())));
         }
 
         public async Task<List<CasaDto>> GetAllAsync()
@@ -48,9 +47,9 @@ namespace Application.AppServices
             return _mapper.Map<CasaDto>(await _casaRepository.GetAsync(id));
         }
 
-        public Task<CasaDtoForUpdate> GetForUpdateAsync(Guid id)
+        public async Task<CasaDtoForUpdate> GetForUpdateAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<CasaDtoForUpdate>(await _casaRepository.GetAsync(id));            
         }
 
         public async Task<bool> RemoveAsync(Guid id)
@@ -62,9 +61,11 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public Task<bool> UpdateAsync(CasaDtoForUpdate item)
+        public async Task<bool> UpdateAsync(CasaDtoForUpdate item)
         {
-            throw new NotImplementedException();
+            await _casaRepository.UpdateAsync(_mapper.Map<Domain.Entities.Casa>(item));
+            var commited = await _casaRepository.UnitOfWork.CommitAsync();
+            return commited > 0;
         }
     }
 }

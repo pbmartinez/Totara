@@ -37,6 +37,11 @@ namespace WebApplication
             {
                 configuration.AddExpressionMapping();
                 configuration.AddProfile<CasaProfile>();
+                configuration.AddProfile<CursoProfile>();
+                configuration.AddProfile<EscuelaProfile>();
+                configuration.AddProfile<EstudianteProfile>();
+                configuration.AddProfile<MatriculaProfile>();
+                configuration.AddProfile<PersonaProfile>();
                 AppDomain.CurrentDomain.GetAssemblies();
                 
             });

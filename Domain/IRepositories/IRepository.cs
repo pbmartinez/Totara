@@ -20,8 +20,8 @@ namespace Domain.IRepositories
         Task DeleteAsync(TEntity item);
         
         //From Vladimir Khorikov
-        IEnumerable<TEntity> FindWithSpecificationPattern(Specification<TEntity> specification = null);
+        Task<IEnumerable<TEntity>> FindWithSpecificationPatternAsync(Specification<TEntity> specification = null);
 
-        IEnumerable<TEntity> FindWithExpression(Expression<Func<TEntity,bool>> expression);
+        Task<IEnumerable<TEntity>> FindWithExpressionAsync(Expression<Func<TEntity,bool>> expression);
     }
 }
