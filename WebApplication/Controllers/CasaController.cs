@@ -15,8 +15,9 @@ namespace WebApplication.Controllers
         }
         public override async Task<IActionResult> Index()
         {
-            var specifi = new CasaMas2Dto(2);
-            var items = AppService.FindWithSpecificationPattern(specifi);
+            //var specifi = new CasaMas2CuartosSpecification();
+            
+            var items = AppService.FindWithSpecificationPattern();
             return await Task.FromResult(View(items));
         }
     }

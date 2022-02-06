@@ -27,7 +27,7 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public IEnumerable<MatriculaDto> FindWithSpecificationPattern(IExpressionSpecification<MatriculaDto> specification = null)
+        public IEnumerable<MatriculaDto> FindWithSpecificationPattern(Specification<MatriculaDto> specification = null)
         {
             throw new NotImplementedException();
         }

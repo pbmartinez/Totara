@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using static Domain.Specification.BaseSpecification2;
+using Application.Specification;
 
 namespace Application.AppServices
 {
@@ -30,11 +30,11 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public IEnumerable<CasaDto> FindWithSpecificationPattern(IExpressionSpecification<CasaDto> specification = null)
-        {            
-            var exp = _mapper.MapExpression<Expression<Func<Domain.Entities.Casa, bool>>>(specification.Criteria);
-            var domainSpecification = new BaseSpecifcation<Domain.Entities.Casa>(exp);
-            var items = _casaRepository.FindWithSpecificationPattern(domainSpecification);
+        public IEnumerable<CasaDto> FindWithSpecificationPattern(Specification<CasaDto> specification = null)
+        {
+            var a = specification == null ? a => true : specification.ToExpression();
+            var exp = _mapper.MapExpression<Expression<Func<Domain.Entities.Casa, bool>>>(a);
+            var items = _casaRepository.FindWithExpression(exp);
             return _mapper.Map<List<CasaDto>>(items);
         }
 

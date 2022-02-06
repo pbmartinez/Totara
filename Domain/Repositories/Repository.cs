@@ -5,6 +5,7 @@ using Domain.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Domain.Repositories
@@ -45,14 +46,15 @@ namespace Domain.Repositories
             _unitOfWork.GetEntry(a).CurrentValues.SetValues(item);
             await Task.CompletedTask;
         }
-        public IEnumerable<TEntity> FindWithSpecificationPattern(IExpressionSpecification<TEntity> specification = null)
-        {
-            return SpecificationEvaluator<TEntity>.GetQuery(_unitOfWork.Repository<TEntity>().AsQueryable(), specification);
-        }
-
-        public IEnumerable<TEntity> FindWithSpecificationPattern(BaseSpecification<TEntity> specification = null)
+        
+        public IEnumerable<TEntity> FindWithSpecificationPattern(Specification<TEntity> specification = null)
         {
             return _unitOfWork.Repository<TEntity>().Where(specification.ToExpression());
+        }
+
+        public IEnumerable<TEntity> FindWithExpression(Expression<Func<TEntity, bool>> expression)
+        {
+            return _unitOfWork.Repository<TEntity>().Where(expression);
         }
     }
 }

@@ -4,6 +4,7 @@ using Domain.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,10 +18,10 @@ namespace Domain.IRepositories
         Task AddAsync(TEntity item);
         Task UpdateAsync(TEntity item);
         Task DeleteAsync(TEntity item);
-        //From Mukesh Murugan pendiente evaluar
-        IEnumerable<TEntity> FindWithSpecificationPattern(IExpressionSpecification<TEntity> specification = null);
-
+        
         //From Vladimir Khorikov
-        IEnumerable<TEntity> FindWithSpecificationPattern(BaseSpecification<TEntity> specification = null);
+        IEnumerable<TEntity> FindWithSpecificationPattern(Specification<TEntity> specification = null);
+
+        IEnumerable<TEntity> FindWithExpression(Expression<Func<TEntity,bool>> expression);
     }
 }
