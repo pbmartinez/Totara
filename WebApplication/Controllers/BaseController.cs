@@ -3,16 +3,22 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
 {
-    public abstract class BaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> : Controller where TEntityDtoForUpdate:Domain.Entities.Entity
+    public abstract class BaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate, TNavigationProperty> : Controller 
+        where TEntityDto:Domain.Entities.Entity
+        where TEntityDtoForCreate:Domain.Entities.Entity
+        where TEntityDtoForUpdate:Domain.Entities.Entity
+        where TNavigationProperty : class
     {
-        protected readonly IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> AppService;
+        protected readonly IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate, TNavigationProperty> AppService;
 
-        
-        public BaseController(IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> appService)
+        protected Expression<Func<TEntityDto, TNavigationProperty>> Includes;
+
+        public BaseController(IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate, TNavigationProperty> appService)
         {
             AppService = appService;
         }
@@ -28,7 +34,7 @@ namespace WebApplication.Controllers
 
         public virtual async Task<IActionResult> Index()
         {
-            var items = await AppService.GetAllAsync();
+            var items = await AppService.GetAllAsync(Includes);
             return View(items);
         }
 

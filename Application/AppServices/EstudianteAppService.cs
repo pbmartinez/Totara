@@ -1,10 +1,13 @@
 ﻿using Application.Dtos;
 using Application.IAppServices;
 using AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
 using Domain.IRepositories;
 using Domain.Specification;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Application.AppServices
@@ -35,6 +38,21 @@ namespace Application.AppServices
         public async Task<List<EstudianteDto>> GetAllAsync()
         {
             return _mapper.Map<List<EstudianteDto>>(await _EstudianteRepository.GetAllAsync());
+        }
+
+
+        public async Task<List<EstudianteDto>> GetAllAsync(Expression<Func<EstudianteDto, Domain.Entities.Entity>> Includes)
+        {
+            //convertir la expression de dto a entity
+            var domainExpression = _mapper.MapExpression<Expression<Func<Domain.Entities.Estudiante, Domain.Entities.Escuela>>>(Includes);
+            var items = await _EstudianteRepository.GetAllAsync(domainExpression);
+
+            //cuando obtenga el resultado de estudiantes domain.entities.estudiante 
+            //mapearlo a listado dto.estudiante
+            var lis = items.ToList();
+            
+            var dtoItems = _mapper.Map<List<EstudianteDto>>(lis);
+            return dtoItems;
         }
 
         public async Task<EstudianteDto> GetAsync(Guid id)

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
 {
-    public class CursoController : BaseController<CursoDto, CursoDtoForCreate, CursoDtoForUpdate>
+    public class CursoController : BaseController<CursoDto, CursoDtoForCreate, CursoDtoForUpdate, Domain.Entities.Entity>
     {
         private readonly IEscuelaAppService _escuelaAppService;
         public CursoController(ICursoAppService cursoAppService,

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Application.IAppServices
 {
-    public partial interface IPersonaAppService : IAppService<PersonaDto, PersonaDtoForCreate, PersonaDtoForUpdate>
+    public partial interface IPersonaAppService : IAppService<PersonaDto, PersonaDtoForCreate, PersonaDtoForUpdate, Domain.Entities.Entity>
     {
 
     }

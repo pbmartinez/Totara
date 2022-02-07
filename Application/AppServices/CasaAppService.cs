@@ -42,6 +42,12 @@ namespace Application.AppServices
             return _mapper.Map<List<CasaDto>>(await _casaRepository.GetAllAsync());
         }
 
+        
+        public Task<List<CasaDto>> GetAllAsync(Expression<Func<CasaDto, Domain.Entities.Entity>> Includes)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<CasaDto> GetAsync(Guid id)
         {
             return _mapper.Map<CasaDto>(await _casaRepository.GetAsync(id));

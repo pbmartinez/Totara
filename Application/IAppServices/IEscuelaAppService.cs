@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Application.IAppServices
 {
-    public partial interface IEscuelaAppService : IAppService<EscuelaDto, EscuelaDtoForCreate, EscuelaDtoForUpdate>
+    public partial interface IEscuelaAppService : IAppService<EscuelaDto, EscuelaDtoForCreate, EscuelaDtoForUpdate, Domain.Entities.Entity>
     {
     }
 }

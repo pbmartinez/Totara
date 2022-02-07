@@ -5,6 +5,7 @@ using Domain.IRepositories;
 using Domain.Specification;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Application.AppServices
@@ -35,6 +36,12 @@ namespace Application.AppServices
         public async Task<List<EscuelaDto>> GetAllAsync()
         {
             return _mapper.Map<List<EscuelaDto>>(await _EscuelaRepository.GetAllAsync());
+        }
+
+        
+        public Task<List<EscuelaDto>> GetAllAsync(Expression<Func<EscuelaDto, Domain.Entities.Entity>> Includes)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<EscuelaDto> GetAsync(Guid id)

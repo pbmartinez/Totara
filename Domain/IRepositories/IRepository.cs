@@ -14,6 +14,9 @@ namespace Domain.IRepositories
     {
         IUnitOfWork UnitOfWork { get; }
         Task<IQueryable<TEntity>> GetAllAsync();
+        Task<IQueryable<TEntity>> GetAllAsync<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> Includes) 
+            where TEntity : class 
+            where TProperty : class;
         Task<TEntity> GetAsync(Guid id);
         Task AddAsync(TEntity item);
         Task UpdateAsync(TEntity item);

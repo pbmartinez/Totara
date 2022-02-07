@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,15 +25,12 @@ namespace Domain.UnitOfWork
             modelBuilder.Entity<Matricula>().HasKey(e => new { e.EstudianteId, e.CursoId });
 
             modelBuilder.Entity<Estudiante>()
-                .HasMany(e=>e.Matriculas)
-                .WithOne(a=>a.Estudiante).IsRequired().OnDelete(DeleteBehavior.NoAction);
+                .HasMany(e => e.Matriculas)
+                .WithOne(a => a.Estudiante).IsRequired().OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Curso>()
-                .HasMany(e=>e.Matriculas)
-                .WithOne(a=>a.Curso).IsRequired().OnDelete(DeleteBehavior.NoAction);
-            
-
-            
+                .HasMany(e => e.Matriculas)
+                .WithOne(a => a.Curso).IsRequired().OnDelete(DeleteBehavior.NoAction);
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -68,6 +66,19 @@ namespace Domain.UnitOfWork
         ChangeTracker IUnitOfWork.ChangeTracker()
         {
             return ChangeTracker;
+        }
+
+        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity,TProperty >(Expression<Func<TEntity, TProperty>> Includes) 
+            where TEntity : class
+            where TProperty : class
+        {
+            var items = Set<TEntity>().Include(Includes);
+            return await Task.FromResult(items);
+        }
+        public IQueryable<TEntity> GetQueryable2<TEntity>(Expression<Func<TEntity, TEntity>> Includes) where TEntity : Entity
+        {
+            var items = Set<TEntity>().Include(Includes);
+            return items;
         }
 
         public virtual DbSet<Persona> Persona { get; set; }

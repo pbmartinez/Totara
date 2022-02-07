@@ -33,7 +33,7 @@ namespace Domain.Repositories
         public async Task<IQueryable<TEntity>> GetAllAsync()
         {
             var items = _unitOfWork.Repository<TEntity>();
-            
+
             return await Task.FromResult<IQueryable<TEntity>>(items);
         }
 
@@ -48,7 +48,7 @@ namespace Domain.Repositories
             _unitOfWork.GetEntry(a).CurrentValues.SetValues(item);
             await Task.CompletedTask;
         }
-        
+
         public async Task<IEnumerable<TEntity>> FindWithSpecificationPatternAsync(Specification<TEntity> specification = null)
         {
             return await Task.FromResult(_unitOfWork.Repository<TEntity>().Where(specification.ToExpression()).ToList());
@@ -57,6 +57,14 @@ namespace Domain.Repositories
         public async Task<IEnumerable<TEntity>> FindWithExpressionAsync(Expression<Func<TEntity, bool>> expression)
         {
             return await Task.FromResult(_unitOfWork.Repository<TEntity>().Where(expression).ToList());
+        }
+
+        public async Task<IQueryable<TEntity>> GetAllAsync<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> Includes)
+            where TEntity : class
+            where TProperty : class
+        {
+            var items = await _unitOfWork.GetQueryableAsync(Includes);
+            return (IQueryable<TEntity>)items;
         }
     }
 }

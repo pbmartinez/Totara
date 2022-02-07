@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace Application.Dtos
 {
-    public class PersonaDtoForCreate
+    public class PersonaDtoForCreate:Entity
     {
         [Required]
         public string Nombre { get; set; }
