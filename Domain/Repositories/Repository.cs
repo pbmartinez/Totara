@@ -59,9 +59,13 @@ namespace Domain.Repositories
             return await Task.FromResult(_unitOfWork.Repository<TEntity>().Where(expression).ToList());
         }
 
-        public async Task<IQueryable<TEntity>> GetAllAsync<TEntity, TProperty>(Expression<Func<TEntity, TProperty>> Includes)
-            where TEntity : class
-            where TProperty : class
+        public async Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, object>> Includes)
+        {
+            var items = await _unitOfWork.GetQueryableAsync(Includes);
+            return (IQueryable<TEntity>)items;
+        }
+
+        public async Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> Includes)
         {
             var items = await _unitOfWork.GetQueryableAsync(Includes);
             return (IQueryable<TEntity>)items;

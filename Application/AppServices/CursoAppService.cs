@@ -38,7 +38,12 @@ namespace Application.AppServices
             return _mapper.Map<List<CursoDto>>(await _CursoRepository.GetAllAsync());
         }
 
-        public Task<List<CursoDto>> GetAllAsync(Expression<Func<CursoDto, Domain.Entities.Entity>> Includes)
+        public Task<List<CursoDto>> GetAllAsync(Expression<Func<CursoDto, object>> Includes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<CursoDto>> GetAllAsync(List<Expression<Func<CursoDto, object>>> Includes)
         {
             throw new NotImplementedException();
         }

@@ -43,7 +43,12 @@ namespace Application.AppServices
         }
 
         
-        public Task<List<CasaDto>> GetAllAsync(Expression<Func<CasaDto, Domain.Entities.Entity>> Includes)
+        public Task<List<CasaDto>> GetAllAsync(Expression<Func<CasaDto, object>> Includes)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<CasaDto>> GetAllAsync(List<Expression<Func<CasaDto, object>>> Includes)
         {
             throw new NotImplementedException();
         }

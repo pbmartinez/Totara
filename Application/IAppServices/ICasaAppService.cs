@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Application.IAppServices
 {
-    public partial interface ICasaAppService : IAppService<CasaDto, CasaDtoForCreate, CasaDtoForUpdate, Domain.Entities.Entity>
+    public partial interface ICasaAppService : IAppService<CasaDto, CasaDtoForCreate, CasaDtoForUpdate>
     {
     }
 }

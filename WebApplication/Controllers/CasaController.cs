@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
 {
-    public class CasaController : BaseController<CasaDto, CasaDtoForCreate, CasaDtoForUpdate, Domain.Entities.Entity>
+    public class CasaController : BaseController<CasaDto, CasaDtoForCreate, CasaDtoForUpdate>
     {
         public CasaController(ICasaAppService CasaAppService) : base(CasaAppService)
         {

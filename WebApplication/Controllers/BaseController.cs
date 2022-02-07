@@ -8,19 +8,20 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
 {
-    public abstract class BaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate, TNavigationProperty> : Controller 
+    public abstract class BaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> : Controller 
         where TEntityDto:Domain.Entities.Entity
         where TEntityDtoForCreate:Domain.Entities.Entity
         where TEntityDtoForUpdate:Domain.Entities.Entity
-        where TNavigationProperty : class
     {
-        protected readonly IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate, TNavigationProperty> AppService;
+        protected readonly IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> AppService;
 
-        protected Expression<Func<TEntityDto, TNavigationProperty>> Includes;
+        protected Expression<Func<TEntityDto, object>> Includes;
+        protected List<Expression<Func<TEntityDto, object>>> IncludesList = new();
 
-        public BaseController(IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate, TNavigationProperty> appService)
+        public BaseController(IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> appService)
         {
             AppService = appService;
+            
         }
 
         public virtual async Task CargarViewBagsCreate()
@@ -34,7 +35,7 @@ namespace WebApplication.Controllers
 
         public virtual async Task<IActionResult> Index()
         {
-            var items = await AppService.GetAllAsync(Includes);
+            var items = await AppService.GetAllAsync(IncludesList);
             return View(items);
         }
 
@@ -75,7 +76,7 @@ namespace WebApplication.Controllers
                 if (commit)
                     return RedirectToAction(nameof(Index));
             }
-            await CargarViewBagsEdit(item.Id);
+            //await CargarViewBagsEdit(item.Id);
             return View(item);
         }
         [HttpGet]

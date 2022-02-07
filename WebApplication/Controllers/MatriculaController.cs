@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
 {
-    public class MatriculaController : BaseController<MatriculaDto, MatriculaDtoForCreate, MatriculaDtoForUpdate, Domain.Entities.Entity>
+    public class MatriculaController : BaseController<MatriculaDto, MatriculaDtoForCreate, MatriculaDtoForUpdate>
     {
         private readonly ICursoAppService _cursoAppService;
         private readonly IEstudianteAppService _estudianteAppService;

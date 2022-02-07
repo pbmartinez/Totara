@@ -41,17 +41,29 @@ namespace Application.AppServices
         }
 
 
-        public async Task<List<EstudianteDto>> GetAllAsync(Expression<Func<EstudianteDto, Domain.Entities.Entity>> Includes)
+        public async Task<List<EstudianteDto>> GetAllAsync(Expression<Func<EstudianteDto, object>> Includes)
         {
-            //convertir la expression de dto a entity
-            var domainExpression = _mapper.MapExpression<Expression<Func<Domain.Entities.Estudiante, Domain.Entities.Escuela>>>(Includes);
+            
+            var domainExpression = _mapper.MapExpressionAsInclude<Expression<Func<Domain.Entities.Estudiante, object>>>(Includes);
+            //var b = _mapper.MapExpressionList<Expression<Func<Domain.Entities.Estudiante, object>>>(new List<LambdaExpression> { Includes });
+            //var c = _mapper.MapIncludesList<Expression<Func<Domain.Entities.Estudiante, object>>>(new List<LambdaExpression> { Includes });
+            
             var items = await _EstudianteRepository.GetAllAsync(domainExpression);
 
-            //cuando obtenga el resultado de estudiantes domain.entities.estudiante 
-            //mapearlo a listado dto.estudiante
-            var lis = items.ToList();
+            var dtoItems = _mapper.Map<List<EstudianteDto>>(items.ToList());
+            return dtoItems;
+        }
+
+        public async Task<List<EstudianteDto>> GetAllAsync(List<Expression<Func<EstudianteDto, object>>> Includes)
+        {
+            //var domainExpression = _mapper.MapExpressionAsInclude<Expression<Func<Domain.Entities.Estudiante, object>>>(Includes);
+            //var b = _mapper.MapExpressionList<Expression<Func<Domain.Entities.Estudiante, object>>>( Includes );
             
-            var dtoItems = _mapper.Map<List<EstudianteDto>>(lis);
+            var c = _mapper.MapIncludesList<Expression<Func<Domain.Entities.Estudiante, object>>>( Includes );
+
+            var items = await _EstudianteRepository.GetAllAsync(c.ToList());
+
+            var dtoItems = _mapper.Map<List<EstudianteDto>>(items.ToList());
             return dtoItems;
         }
 

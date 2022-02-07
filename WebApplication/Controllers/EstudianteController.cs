@@ -3,20 +3,25 @@ using Application.IAppServices;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
 {
-    public class EstudianteController : BaseController<EstudianteDto, EstudianteDtoForCreate, EstudianteDtoForUpdate, Domain.Entities.Entity>
+    public class EstudianteController : BaseController<EstudianteDto, EstudianteDtoForCreate, EstudianteDtoForUpdate>
     {
         private readonly IEscuelaAppService _escuelaAppService;
         public EstudianteController(IEstudianteAppService EstudianteAppService,
             IEscuelaAppService escuelaAppService) : base(EstudianteAppService)
         {
             _escuelaAppService = escuelaAppService;
-            
+
             Includes = a => a.Escuela;
+            //IncludesList = new() { a => a.Escuela, a => a.Matriculas };
+            IncludesList = new() { a => a.Escuela, a => a.Matriculas, a => a.Matriculas.Select(b => b.Curso) };
+            //IncludesList = new() { a => a.Escuela, a => a.Matriculas.Select(b =>  b.Curso) };
+
         }
         public override async Task CargarViewBagsCreate()
         {

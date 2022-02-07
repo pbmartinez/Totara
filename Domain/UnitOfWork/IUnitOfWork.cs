@@ -13,9 +13,10 @@ namespace Domain.UnitOfWork
     public interface IUnitOfWork
     {
         DbSet<TEntity> Repository<TEntity>() where TEntity : Entity;
-        Task<IQueryable<TEntity>> GetQueryableAsync<TEntity,TProperty>(Expression<Func<TEntity, TProperty>> Includes) 
-            where TEntity : class
-            where TProperty : class;
+        Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(Expression<Func<TEntity, object>> Includes) 
+            where TEntity : class;
+        Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes) 
+            where TEntity : class;
         Task<int> CommitAsync();
         Task RollbackAsync();
         void SetEntryState<TEntity>(TEntity item, EntityState state) where TEntity : class;

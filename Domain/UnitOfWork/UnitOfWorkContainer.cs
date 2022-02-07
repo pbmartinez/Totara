@@ -68,9 +68,8 @@ namespace Domain.UnitOfWork
             return ChangeTracker;
         }
 
-        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity,TProperty >(Expression<Func<TEntity, TProperty>> Includes) 
+        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity >(Expression<Func<TEntity, object>> Includes) 
             where TEntity : class
-            where TProperty : class
         {
             var items = Set<TEntity>().Include(Includes);
             return await Task.FromResult(items);
@@ -79,6 +78,13 @@ namespace Domain.UnitOfWork
         {
             var items = Set<TEntity>().Include(Includes);
             return items;
+        }
+
+        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes) where TEntity : class
+        {
+            IQueryable<TEntity> items = Set<TEntity>();            
+            Includes.ForEach(a => items = items.Include(a));             
+            return await Task.FromResult(items);
         }
 
         public virtual DbSet<Persona> Persona { get; set; }
