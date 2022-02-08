@@ -1,10 +1,12 @@
 ﻿using Application.Dtos;
 using Application.IAppServices;
 using AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
 using Domain.IRepositories;
 using Domain.Specification;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -28,34 +30,39 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public Task< IEnumerable<CursoDto>> FindWithSpecificationPatternAsync(Specification<CursoDto> specification = null)
+        public async Task< IEnumerable<CursoDto>> FindWithSpecificationPatternAsync(Specification<CursoDto> specification = null)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<List<CursoDto>>(
+                await _CursoRepository.FindWithExpressionAsync(
+                    _mapper.MapExpression<Expression<Func<Domain.Entities.Curso, bool>>>(
+                        specification == null ? a => true : specification.ToExpression())));
         }
 
-        public async Task<List<CursoDto>> GetAllAsync()
+        public async Task<List<CursoDto>> GetAllAsync(List<Expression<Func<CursoDto, object>>> Includes = null)
         {
-            return _mapper.Map<List<CursoDto>>(await _CursoRepository.GetAllAsync());
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Curso, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(Includes).ToList();
+            var items = await _CursoRepository.GetAllAsync(domainExpressionList);
+            var dtoItems = _mapper.Map<List<CursoDto>>(items.ToList());
+            return dtoItems;
         }
 
-        public Task<List<CursoDto>> GetAllAsync(Expression<Func<CursoDto, object>> Includes)
+
+        public async Task<CursoDto> GetAsync(Guid id, List<Expression<Func<CursoDto, object>>> Includes = null)
         {
-            throw new NotImplementedException();
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Curso, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(Includes).ToList();
+            return _mapper.Map<CursoDto>(await _CursoRepository.GetAsync(id, domainExpressionList));
         }
 
-        public Task<List<CursoDto>> GetAllAsync(List<Expression<Func<CursoDto, object>>> Includes)
+        public async Task<CursoDtoForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<CursoDto, object>>> Includes = null)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<CursoDto> GetAsync(Guid id)
-        {
-            return _mapper.Map<CursoDto>(await _CursoRepository.GetAsync(id));
-        }
-
-        public async Task<CursoDtoForUpdate> GetForUpdateAsync(Guid id)
-        {
-            return _mapper.Map<CursoDtoForUpdate>(await _CursoRepository.GetAsync(id));
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Curso, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(Includes).ToList();
+            return _mapper.Map<CursoDtoForUpdate>(await _CursoRepository.GetAsync(id, domainExpressionList));
         }
 
         public async Task<bool> RemoveAsync(Guid id)

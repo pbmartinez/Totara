@@ -17,11 +17,10 @@ namespace WebApplication.Controllers
         {
             _escuelaAppService = escuelaAppService;
 
-            Includes = a => a.Escuela;
             //IncludesList = new() { a => a.Escuela, a => a.Matriculas };
-            IncludesList = new() { a => a.Escuela, a => a.Matriculas, a => a.Matriculas.Select(b => b.Curso) };
+            //IncludesList = new() { a => a.Escuela, a => a.Matriculas, a => a.Matriculas.Select(b => b.Curso) };
             //IncludesList = new() { a => a.Escuela, a => a.Matriculas.Select(b =>  b.Curso) };
-
+            Includes = null;
         }
         public override async Task CargarViewBagsCreate()
         {

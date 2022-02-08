@@ -11,11 +11,9 @@ namespace Application.IAppServices
     {
         Task<bool> AddAsync(TEntityForCreation item);
         Task<bool> UpdateAsync(TEntityForUpdate item);
-        Task<TEntity> GetAsync(Guid id);
-        Task<TEntityForUpdate> GetForUpdateAsync(Guid id);
-        Task<List<TEntity>> GetAllAsync();
-        Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, object>> Includes);
-        Task<List<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> Includes);
+        Task<TEntity> GetAsync(Guid id, List<Expression<Func<TEntity, object>>> Includes = null);
+        Task<TEntityForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<TEntity, object>>> Includes = null);
+        Task<List<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> Includes = null);
         Task<bool> RemoveAsync(Guid id);
         Task<IEnumerable<TEntity>> FindWithSpecificationPatternAsync(Specification<TEntity> specification = null);
     }

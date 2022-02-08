@@ -67,23 +67,12 @@ namespace Domain.UnitOfWork
         {
             return ChangeTracker;
         }
-
-        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity >(Expression<Func<TEntity, object>> Includes) 
-            where TEntity : class
+        
+        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null) where TEntity : class
         {
-            var items = Set<TEntity>().Include(Includes);
-            return await Task.FromResult(items);
-        }
-        public IQueryable<TEntity> GetQueryable2<TEntity>(Expression<Func<TEntity, TEntity>> Includes) where TEntity : Entity
-        {
-            var items = Set<TEntity>().Include(Includes);
-            return items;
-        }
-
-        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes) where TEntity : class
-        {
-            IQueryable<TEntity> items = Set<TEntity>();            
-            Includes.ForEach(a => items = items.Include(a));             
+            IQueryable<TEntity> items = Set<TEntity>();
+            if (Includes != null && Includes.Any())
+                Includes.ForEach(a => items = items.Include(a));
             return await Task.FromResult(items);
         }
 

@@ -15,8 +15,11 @@ namespace WebApplication.Controllers
     {
         protected readonly IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> AppService;
 
-        protected Expression<Func<TEntityDto, object>> Includes;
-        protected List<Expression<Func<TEntityDto, object>>> IncludesList = new();
+        
+        protected List<Expression<Func<TEntityDto, object>>> Includes = new();
+        protected List<Expression<Func<TEntityDto, object>>> DetailsIncludes = new();
+        protected List<Expression<Func<TEntityDto, object>>> EditIncludes = new();
+        protected List<Expression<Func<TEntityDto, object>>> DeleteIncludes = new();
 
         public BaseController(IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> appService)
         {
@@ -35,7 +38,7 @@ namespace WebApplication.Controllers
 
         public virtual async Task<IActionResult> Index()
         {
-            var items = await AppService.GetAllAsync(IncludesList);
+            var items = await AppService.GetAllAsync(Includes);
             return View(items);
         }
 
@@ -62,7 +65,7 @@ namespace WebApplication.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> Edit(Guid id)
         {
-            var item = await AppService.GetForUpdateAsync(id);
+            var item = await AppService.GetForUpdateAsync(id, EditIncludes);
             await CargarViewBagsEdit(id);
             return await Task.FromResult(View(item));
         }
@@ -82,13 +85,13 @@ namespace WebApplication.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> Details(Guid id)
         {
-            var item = await AppService.GetAsync(id);
+            var item = await AppService.GetAsync(id, DetailsIncludes);
             return await Task.FromResult(View(item));
         }
         [HttpGet]
         public virtual async Task<IActionResult> Delete(Guid id)
         {
-            var item = await AppService.GetAsync(id);
+            var item = await AppService.GetAsync(id, DeleteIncludes);
             return await Task.FromResult(View(item));
         }
         [HttpGet]

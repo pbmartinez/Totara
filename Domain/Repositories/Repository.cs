@@ -30,14 +30,7 @@ namespace Domain.Repositories
             await Task.FromResult(_unitOfWork.Repository<TEntity>().Remove(item));
         }
 
-        public async Task<IQueryable<TEntity>> GetAllAsync()
-        {
-            var items = _unitOfWork.Repository<TEntity>();
-
-            return await Task.FromResult<IQueryable<TEntity>>(items);
-        }
-
-        public async Task<TEntity> GetAsync(Guid id)
+        public async Task<TEntity> GetAsync(Guid id, List<Expression<Func<TEntity, object>>> Includes = null)
         {
             return await Task.FromResult(_unitOfWork.Repository<TEntity>().FirstOrDefault(a => a.Id == id));
         }
@@ -59,13 +52,7 @@ namespace Domain.Repositories
             return await Task.FromResult(_unitOfWork.Repository<TEntity>().Where(expression).ToList());
         }
 
-        public async Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, object>> Includes)
-        {
-            var items = await _unitOfWork.GetQueryableAsync(Includes);
-            return (IQueryable<TEntity>)items;
-        }
-
-        public async Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> Includes)
+        public async Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> Includes = null)
         {
             var items = await _unitOfWork.GetQueryableAsync(Includes);
             return (IQueryable<TEntity>)items;

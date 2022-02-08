@@ -30,51 +30,38 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public Task<IEnumerable<EstudianteDto>> FindWithSpecificationPatternAsync(Specification<EstudianteDto> specification = null)
+        public async Task<IEnumerable<EstudianteDto>> FindWithSpecificationPatternAsync(Specification<EstudianteDto> specification = null)
         {
-            throw new NotImplementedException();
+            return _mapper.Map<List<EstudianteDto>>(
+                await _EstudianteRepository.FindWithExpressionAsync(
+                    _mapper.MapExpression<Expression<Func<Domain.Entities.Estudiante, bool>>>(
+                        specification == null ? a => true : specification.ToExpression())));
         }
 
-        public async Task<List<EstudianteDto>> GetAllAsync()
+        public async Task<List<EstudianteDto>> GetAllAsync(List<Expression<Func<EstudianteDto, object>>> Includes = null)
         {
-            return _mapper.Map<List<EstudianteDto>>(await _EstudianteRepository.GetAllAsync());
-        }
-
-
-        public async Task<List<EstudianteDto>> GetAllAsync(Expression<Func<EstudianteDto, object>> Includes)
-        {
-            
-            var domainExpression = _mapper.MapExpressionAsInclude<Expression<Func<Domain.Entities.Estudiante, object>>>(Includes);
-            //var b = _mapper.MapExpressionList<Expression<Func<Domain.Entities.Estudiante, object>>>(new List<LambdaExpression> { Includes });
-            //var c = _mapper.MapIncludesList<Expression<Func<Domain.Entities.Estudiante, object>>>(new List<LambdaExpression> { Includes });
-            
-            var items = await _EstudianteRepository.GetAllAsync(domainExpression);
-
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Estudiante, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Estudiante, object>>>(Includes).ToList();
+            var items = await _EstudianteRepository.GetAllAsync(domainExpressionList);
             var dtoItems = _mapper.Map<List<EstudianteDto>>(items.ToList());
             return dtoItems;
         }
 
-        public async Task<List<EstudianteDto>> GetAllAsync(List<Expression<Func<EstudianteDto, object>>> Includes)
+        public async Task<EstudianteDto> GetAsync(Guid id, List<Expression<Func<EstudianteDto, object>>> Includes = null)
         {
-            //var domainExpression = _mapper.MapExpressionAsInclude<Expression<Func<Domain.Entities.Estudiante, object>>>(Includes);
-            //var b = _mapper.MapExpressionList<Expression<Func<Domain.Entities.Estudiante, object>>>( Includes );
-            
-            var c = _mapper.MapIncludesList<Expression<Func<Domain.Entities.Estudiante, object>>>( Includes );
-
-            var items = await _EstudianteRepository.GetAllAsync(c.ToList());
-
-            var dtoItems = _mapper.Map<List<EstudianteDto>>(items.ToList());
-            return dtoItems;
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Estudiante, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Estudiante, object>>>(Includes).ToList();
+            return _mapper.Map<EstudianteDto>(await _EstudianteRepository.GetAsync(id, domainExpressionList));
         }
 
-        public async Task<EstudianteDto> GetAsync(Guid id)
+        public async Task<EstudianteDtoForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<EstudianteDto, object>>> Includes = null)
         {
-            return _mapper.Map<EstudianteDto>(await _EstudianteRepository.GetAsync(id));
-        }
-
-        public async Task<EstudianteDtoForUpdate> GetForUpdateAsync(Guid id)
-        {
-            return _mapper.Map<EstudianteDtoForUpdate>(await _EstudianteRepository.GetAsync(id));
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Estudiante, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Estudiante, object>>>(Includes).ToList();
+            return _mapper.Map<EstudianteDtoForUpdate>(await _EstudianteRepository.GetAsync(id, domainExpressionList));
         }
 
         public async Task<bool> RemoveAsync(Guid id)
@@ -82,7 +69,6 @@ namespace Application.AppServices
             var item = await _EstudianteRepository.GetAsync(id);
             await _EstudianteRepository.DeleteAsync(item);
             var commited = await _EstudianteRepository.UnitOfWork.CommitAsync();
-
             return commited > 0;
         }
 

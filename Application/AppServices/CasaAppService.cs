@@ -34,33 +34,37 @@ namespace Application.AppServices
         {
             return _mapper.Map<List<CasaDto>>(
                 await _casaRepository.FindWithExpressionAsync(
-                    _mapper.MapExpression<Expression<Func<Domain.Entities.Casa, bool>>>(specification == null ? a => true : specification.ToExpression())));
+                    _mapper.MapExpression<Expression<Func<Domain.Entities.Casa, bool>>>(
+                        specification == null ? a => true : specification.ToExpression())));
         }
 
-        public async Task<List<CasaDto>> GetAllAsync()
+        public async Task<List<CasaDto>> GetAllAsync(List<Expression<Func<CasaDto, object>>> Includes)
         {
-            return _mapper.Map<List<CasaDto>>(await _casaRepository.GetAllAsync());
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Casa, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Casa, object>>>(Includes).ToList();
+            var items = await _casaRepository.GetAllAsync(domainExpressionList);
+            var dtoItems = _mapper.Map<List<CasaDto>>(items.ToList());
+            return dtoItems;
         }
 
         
-        public Task<List<CasaDto>> GetAllAsync(Expression<Func<CasaDto, object>> Includes)
+
+        public async Task<CasaDto> GetAsync(Guid id, List<Expression<Func<CasaDto, object>>> Includes = null)
         {
-            throw new NotImplementedException();
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Casa, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Casa, object>>>(Includes).ToList();
+            return _mapper.Map<CasaDto>(await _casaRepository.GetAsync(id, domainExpressionList));
         }
 
-        public Task<List<CasaDto>> GetAllAsync(List<Expression<Func<CasaDto, object>>> Includes)
-        {
-            throw new NotImplementedException();
-        }
 
-        public async Task<CasaDto> GetAsync(Guid id)
+        public async Task<CasaDtoForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<CasaDto, object>>> Includes = null)
         {
-            return _mapper.Map<CasaDto>(await _casaRepository.GetAsync(id));
-        }
-
-        public async Task<CasaDtoForUpdate> GetForUpdateAsync(Guid id)
-        {
-            return _mapper.Map<CasaDtoForUpdate>(await _casaRepository.GetAsync(id));            
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Casa, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Casa, object>>>(Includes).ToList();
+            return _mapper.Map<CasaDtoForUpdate>(await _casaRepository.GetAsync(id, domainExpressionList));
         }
 
         public async Task<bool> RemoveAsync(Guid id)

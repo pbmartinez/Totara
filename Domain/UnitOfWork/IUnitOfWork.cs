@@ -12,14 +12,42 @@ namespace Domain.UnitOfWork
 {
     public interface IUnitOfWork
     {
+        /// <summary>
+        /// Access to any repository.
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <returns></returns>
         DbSet<TEntity> Repository<TEntity>() where TEntity : Entity;
-        Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(Expression<Func<TEntity, object>> Includes) 
+        
+        /// <summary>
+        /// Access to any repository in a queryable form in a manner that can specified the related entities that shoud be Included
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="Includes"></param>
+        /// <returns></returns>
+        Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null) 
             where TEntity : class;
-        Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes) 
-            where TEntity : class;
+        
+        /// <summary>
+        /// It commits all pending changes
+        /// </summary>
+        /// <returns></returns>
         Task<int> CommitAsync();
+        
+        /// <summary>
+        /// Rolls back all changes during transaction
+        /// </summary>
+        /// <returns></returns>
         Task RollbackAsync();
+
+        /// <summary>
+        /// Sets the state (Detached, Unchanged, Deleted, Modified, Added) of a given entity 
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="item"></param>
+        /// <param name="state"></param>
         void SetEntryState<TEntity>(TEntity item, EntityState state) where TEntity : class;
+        
         EntityEntry GetEntry<TEntity>(TEntity item) where TEntity: class;
         ChangeTracker ChangeTracker();
     }

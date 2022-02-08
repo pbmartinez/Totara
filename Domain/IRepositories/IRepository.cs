@@ -13,10 +13,8 @@ namespace Domain.IRepositories
     public interface IRepository <TEntity> where TEntity : Entity
     {
         IUnitOfWork UnitOfWork { get; }
-        Task<IQueryable<TEntity>> GetAllAsync();
-        Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, object>> Includes);
-        Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> Includes);
-        Task<TEntity> GetAsync(Guid id);
+        Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> Includes = null);
+        Task<TEntity> GetAsync(Guid id, List<Expression<Func<TEntity, object>>> Includes = null);
         Task AddAsync(TEntity item);
         Task UpdateAsync(TEntity item);
         Task DeleteAsync(TEntity item);
