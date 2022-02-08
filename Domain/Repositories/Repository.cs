@@ -42,14 +42,16 @@ namespace Domain.Repositories
             await Task.CompletedTask;
         }
 
-        public async Task<IEnumerable<TEntity>> FindWithSpecificationPatternAsync(Specification<TEntity> specification = null)
+        public async Task<IEnumerable<TEntity>> FindWithSpecificationPatternAsync(Specification<TEntity> specification = null, List<Expression<Func<TEntity, object>>> Includes = null)
         {
-            return await Task.FromResult(_unitOfWork.Repository<TEntity>().Where(specification.ToExpression()).ToList());
+            var items = await _unitOfWork.GetQueryableAsync(Includes, specification.ToExpression());
+            return items;
         }
 
-        public async Task<IEnumerable<TEntity>> FindWithExpressionAsync(Expression<Func<TEntity, bool>> expression)
+        public async Task<IEnumerable<TEntity>> FindWithExpressionAsync(Expression<Func<TEntity, bool>> expression, List<Expression<Func<TEntity, object>>> Includes = null)
         {
-            return await Task.FromResult(_unitOfWork.Repository<TEntity>().Where(expression).ToList());
+            var items = await _unitOfWork.GetQueryableAsync(Includes, expression);
+            return items; 
         }
 
         public async Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> Includes = null)

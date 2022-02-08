@@ -68,11 +68,15 @@ namespace Domain.UnitOfWork
             return ChangeTracker;
         }
         
-        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null) where TEntity : class
+        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null, Expression<Func<TEntity,bool>> predicate = null) where TEntity : class
         {
             IQueryable<TEntity> items = Set<TEntity>();
             if (Includes != null && Includes.Any())
                 Includes.ForEach(a => items = items.Include(a));
+
+            if(predicate!= null)
+                items = items.Where(predicate);
+
             return await Task.FromResult(items);
         }
 

@@ -30,12 +30,15 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public async Task< IEnumerable<CursoDto>> FindWithSpecificationPatternAsync(Specification<CursoDto> specification = null)
+        public async Task< IEnumerable<CursoDto>> FindWithSpecificationPatternAsync(Specification<CursoDto> specification = null, List<Expression<Func<CursoDto, object>>> Includes = null)
         {
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Curso, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(Includes).ToList();
             return _mapper.Map<List<CursoDto>>(
                 await _CursoRepository.FindWithExpressionAsync(
                     _mapper.MapExpression<Expression<Func<Domain.Entities.Curso, bool>>>(
-                        specification == null ? a => true : specification.ToExpression())));
+                        specification == null ? a => true : specification.ToExpression()), domainExpressionList));
         }
 
         public async Task<List<CursoDto>> GetAllAsync(List<Expression<Func<CursoDto, object>>> Includes = null)

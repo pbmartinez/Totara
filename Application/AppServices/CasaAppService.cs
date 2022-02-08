@@ -30,12 +30,15 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public async Task<IEnumerable<CasaDto>> FindWithSpecificationPatternAsync(Specification<CasaDto> specification = null)
+        public async Task<IEnumerable<CasaDto>> FindWithSpecificationPatternAsync(Specification<CasaDto> specification = null, List<Expression<Func<CasaDto, object>>> Includes = null)
         {
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Casa, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Casa, object>>>(Includes).ToList();
             return _mapper.Map<List<CasaDto>>(
                 await _casaRepository.FindWithExpressionAsync(
                     _mapper.MapExpression<Expression<Func<Domain.Entities.Casa, bool>>>(
-                        specification == null ? a => true : specification.ToExpression())));
+                        specification == null ? a => true : specification.ToExpression()), domainExpressionList));
         }
 
         public async Task<List<CasaDto>> GetAllAsync(List<Expression<Func<CasaDto, object>>> Includes)

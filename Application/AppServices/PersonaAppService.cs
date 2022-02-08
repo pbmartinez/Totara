@@ -30,15 +30,18 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public async Task<IEnumerable<PersonaDto>> FindWithSpecificationPatternAsync(Specification<PersonaDto> specification = null)
+        public async Task<IEnumerable<PersonaDto>> FindWithSpecificationPatternAsync(Specification<PersonaDto> specification = null, List<Expression<Func<PersonaDto, object>>> Includes = null)
         {
+            var domainExpressionList = Includes == null
+                ? new List<Expression<Func<Domain.Entities.Persona, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Persona, object>>>(Includes).ToList();
             return _mapper.Map<List<PersonaDto>>(
                 await _personaRepository.FindWithExpressionAsync(
                     _mapper.MapExpression<Expression<Func<Domain.Entities.Persona, bool>>>(
-                        specification == null ? a => true : specification.ToExpression())));
+                        specification == null ? a => true : specification.ToExpression()), domainExpressionList));
         }
 
-        public async Task<List<PersonaDto>> GetAllAsync(List<Expression<Func<PersonaDto, object>>> Includes)
+        public async Task<List<PersonaDto>> GetAllAsync(List<Expression<Func<PersonaDto, object>>> Includes = null)
         {
             var domainExpressionList = Includes == null
                 ? new List<Expression<Func<Domain.Entities.Persona, object>>>()

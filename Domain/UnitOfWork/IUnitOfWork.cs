@@ -25,7 +25,7 @@ namespace Domain.UnitOfWork
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="Includes"></param>
         /// <returns></returns>
-        Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null) 
+        Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null, Expression<Func<TEntity,bool>> predicate = null) 
             where TEntity : class;
         
         /// <summary>
