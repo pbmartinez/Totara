@@ -20,6 +20,12 @@ namespace WebApplication.Controllers
         protected List<Expression<Func<TEntityDto, object>>> DetailsIncludes = new();
         protected List<Expression<Func<TEntityDto, object>>> EditIncludes = new();
         protected List<Expression<Func<TEntityDto, object>>> DeleteIncludes = new();
+        /// <summary>
+        /// Defines the fields by which the list items will be ordered. The list items will be ordered multiple levels, 
+        /// in the same order that the diccionary is feeded. For specifying Ascending / Descending order specify true / false in each field.
+        /// Multiple related fields can be specified as long as none of them be a collection navigation property.
+        /// </summary>
+        protected Dictionary<string,bool> DefaultOrderBy = new ();
 
         public BaseController(IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> appService)
         {

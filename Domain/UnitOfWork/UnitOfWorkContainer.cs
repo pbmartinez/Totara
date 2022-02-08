@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
@@ -68,7 +69,7 @@ namespace Domain.UnitOfWork
             return ChangeTracker;
         }
         
-        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null, Expression<Func<TEntity,bool>> predicate = null) where TEntity : class
+        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null, Expression<Func<TEntity,bool>> predicate = null, Dictionary<string,bool> order = null, int pageSize = 0, int pageGo = 0) where TEntity : class
         {
             IQueryable<TEntity> items = Set<TEntity>();
             if (Includes != null && Includes.Any())
@@ -76,6 +77,22 @@ namespace Domain.UnitOfWork
 
             if(predicate!= null)
                 items = items.Where(predicate);
+
+            if (order != null && order.Any())
+            {
+                order.Where(i => i.Key != null).ToList()
+                    .ForEach(s => items = QueryableUtils.CallOrderBy(items, s.Key, s.Value));
+                if (pageSize > 0)
+                {
+                    var skip = pageSize * (pageGo - 1);
+                    skip = skip >= 0 ? skip : 0;
+                    items = items.Skip(skip);
+                }
+            }
+            if (pageSize > 0)
+            {
+                items = items.Take(pageSize);
+            }
 
             return await Task.FromResult(items);
         }
