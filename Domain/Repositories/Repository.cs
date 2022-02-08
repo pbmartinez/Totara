@@ -32,7 +32,8 @@ namespace Domain.Repositories
 
         public async Task<TEntity> GetAsync(Guid id, List<Expression<Func<TEntity, object>>> Includes = null)
         {
-            return await Task.FromResult(_unitOfWork.Repository<TEntity>().FirstOrDefault(a => a.Id == id));
+            var item = (await _unitOfWork.GetQueryableAsync(Includes, a => a.Id == id)).FirstOrDefault();
+            return item;
         }
 
         public async Task UpdateAsync(TEntity item)

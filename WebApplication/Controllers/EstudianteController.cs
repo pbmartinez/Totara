@@ -17,10 +17,12 @@ namespace WebApplication.Controllers
         {
             _escuelaAppService = escuelaAppService;
 
-            //IncludesList = new() { a => a.Escuela, a => a.Matriculas };
+
             //IncludesList = new() { a => a.Escuela, a => a.Matriculas, a => a.Matriculas.Select(b => b.Curso) };
             //IncludesList = new() { a => a.Escuela, a => a.Matriculas.Select(b =>  b.Curso) };
-            Includes = null;
+            Includes = new() { a => a.Escuela, a => a.Matriculas };
+            DetailsIncludes = new() { a => a.Escuela, a => a.Matriculas };
+            DeleteIncludes = new() { a => a.Escuela, a => a.Matriculas };
         }
         public override async Task CargarViewBagsCreate()
         {
@@ -33,6 +35,6 @@ namespace WebApplication.Controllers
             ViewBag.Escuelas = new SelectList(items, "Id", "Nombre");
         }
 
-        
+
     }
 }

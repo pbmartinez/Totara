@@ -7,7 +7,11 @@ namespace WebApplication.Controllers
     {
         public EscuelaController(IEscuelaAppService EscuelaAppService) : base(EscuelaAppService)
         {
-
+            Includes = new() { a => a.Cursos, a => a.Estudiantes };
+            DetailsIncludes = new() { a => a.Cursos, a => a.Estudiantes };
+            DeleteIncludes = new() { a => a.Cursos, a => a.Estudiantes };
+            EditIncludes = new() { a => a.Cursos, a => a.Estudiantes };
+            
         }
     }
 }

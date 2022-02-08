@@ -15,6 +15,10 @@ namespace WebApplication.Controllers
             IEscuelaAppService escuelaAppService) : base(cursoAppService)
         {
             _escuelaAppService = escuelaAppService;
+            Includes = new() { a => a.Escuela, a => a.Matriculas };
+            DetailsIncludes = new() { a => a.Escuela, a => a.Matriculas };
+            DeleteIncludes = new() { a => a.Escuela, a => a.Matriculas };
+            EditIncludes = new() { a => a.Escuela, a => a.Matriculas };
         }
         public override async Task CargarViewBagsCreate()
         {

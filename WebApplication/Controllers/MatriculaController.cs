@@ -18,6 +18,11 @@ namespace WebApplication.Controllers
         {
             _cursoAppService = cursoAppService;
             _estudianteAppService = estudianteAppService;
+
+            Includes = new() { a => a.Curso, a => a.Estudiante };
+            DetailsIncludes = new() { a => a.Curso, a => a.Estudiante };
+            DeleteIncludes = new() { a => a.Curso, a => a.Estudiante };
+            EditIncludes = new() { a => a.Curso, a => a.Estudiante };
         }
         public override async Task CargarViewBagsCreate()
         {
@@ -36,10 +41,5 @@ namespace WebApplication.Controllers
             ViewBag.Estudiantes = new SelectList(estudiantes, "Id", "Nombre");
         }
 
-        public override async Task<IActionResult> Index()
-        {
-            var items = await AppService.GetAllAsync();
-            return View(items);
-        }
     }
 }
