@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using Domain.Infraestructure;
 using Domain.Specification;
 using Domain.UnitOfWork;
 using System;
@@ -13,6 +14,11 @@ namespace Domain.IRepositories
     public interface IRepository <TEntity> where TEntity : Entity
     {
         IUnitOfWork UnitOfWork { get; }
+
+        Task<List<TEntity>> AllMatchingAsync(Expression<Func<TEntity, bool>> predicate, List<Expression<Func<TEntity, object>>> includes, Dictionary<string, bool> order);
+        Task<int> AllMatchingCountAsync(Expression<Func<TEntity, bool>> predicate, List<Expression<Func<TEntity, object>>> includes, Dictionary<string, bool> order);
+        Task<PagedCollection<TEntity>> GetPageAsync(Expression<Func<TEntity, bool>> predicate, List<Expression<Func<TEntity, object>>> includes, Dictionary<string, bool> order, int pageSize, int pageGo);
+
         Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> Includes = null);
         Task<TEntity> GetAsync(Guid id, List<Expression<Func<TEntity, object>>> Includes = null);
         Task AddAsync(TEntity item);

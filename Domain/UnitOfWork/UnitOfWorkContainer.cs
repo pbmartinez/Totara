@@ -1,14 +1,12 @@
 ﻿using Domain.Entities;
-using Domain.QueryableExtensions;
+using Domain.Infraestructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.UnitOfWork
@@ -69,7 +67,7 @@ namespace Domain.UnitOfWork
             return ChangeTracker;
         }
         
-        public async Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null, Expression<Func<TEntity,bool>> predicate = null, Dictionary<string,bool> order = null, int pageSize = 0, int pageGo = 0) where TEntity : class
+        public IQueryable<TEntity> GetQueryable<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null, Expression<Func<TEntity,bool>> predicate = null, Dictionary<string,bool> order = null, int pageSize = 0, int pageGo = 0) where TEntity : class
         {
             IQueryable<TEntity> items = Set<TEntity>();
             if (Includes != null && Includes.Any())
@@ -93,8 +91,8 @@ namespace Domain.UnitOfWork
             {
                 items = items.Take(pageSize);
             }
-
-            return await Task.FromResult(items);
+            
+            return  items;
         }
 
         public virtual DbSet<Persona> Persona { get; set; }

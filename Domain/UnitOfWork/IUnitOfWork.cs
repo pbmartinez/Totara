@@ -18,14 +18,14 @@ namespace Domain.UnitOfWork
         /// <typeparam name="TEntity"></typeparam>
         /// <returns></returns>
         DbSet<TEntity> Repository<TEntity>() where TEntity : Entity;
-        
+
         /// <summary>
         /// Access to any repository in a queryable form in a manner that can specified the related entities that shoud be Included
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="Includes"></param>
-        /// <returns></returns>
-        Task<IQueryable<TEntity>> GetQueryableAsync<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null, Expression<Func<TEntity,bool>> predicate = null) 
+        /// <returns></returns>                                                            
+        IQueryable<TEntity> GetQueryable<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null, Expression<Func<TEntity,bool>> predicate = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0) 
             where TEntity : class;
         
         /// <summary>

@@ -6,10 +6,11 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.QueryableExtensions
+namespace Domain.Infraestructure
 {
     public class QueryableUtils
     {
+        private static readonly string EXCEPTION_MESSAGE = "The property specified for ordering can not be builded. Verify that field specified is well spelled or it is a valid property";
         #region OrderBy
 
         public static readonly MethodInfo OrderByAscending =
@@ -43,19 +44,19 @@ namespace Domain.QueryableExtensions
             {
                 var childProperties = propertyName.Split('.');
                 property = typeof(TEntity).GetProperty(childProperties[0],
-                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) ?? throw new NullReferenceException(EXCEPTION_MESSAGE);
                 propertyAccess = Expression.MakeMemberAccess(parameter, property);
                 for (var i = 1; i < childProperties.Length; i++)
                 {
                     property = property.PropertyType.GetProperty(childProperties[i],
-                        BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                        BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) ?? throw new NullReferenceException(EXCEPTION_MESSAGE);
                     propertyAccess = Expression.MakeMemberAccess(propertyAccess, property);
                 }
             }
             else
             {
                 property = typeof(TEntity).GetProperty(propertyName,
-                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) ?? throw new NullReferenceException(EXCEPTION_MESSAGE);
                 propertyAccess = Expression.MakeMemberAccess(parameter, property);
             }
             resultType = property.PropertyType;
