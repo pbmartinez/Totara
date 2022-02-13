@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
 {
-    public abstract class BaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> : Controller 
-        where TEntityDto:Domain.Entities.Entity
-        where TEntityDtoForCreate:Domain.Entities.Entity
-        where TEntityDtoForUpdate:Domain.Entities.Entity
+    public abstract class BaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> : Controller
+        where TEntityDto : Domain.Entities.Entity
+        where TEntityDtoForCreate : Domain.Entities.Entity
+        where TEntityDtoForUpdate : Domain.Entities.Entity
     {
         protected readonly IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> AppService;
 
@@ -37,12 +37,12 @@ namespace WebApplication.Controllers
         /// Multiple related fields can be specified as long as none of them be a collection navigation property.
         /// To Do: Known Problem: Navigation properties belonging to collection properties can not be digged.
         /// </summary>
-        protected Dictionary<string,bool> DefaultOrderBy = new ();
+        protected Dictionary<string, bool> DefaultOrderBy = new();
 
         public BaseController(IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> appService)
         {
             AppService = appService;
-            
+
         }
 
         public virtual async Task CargarViewBagsCreate()
@@ -56,7 +56,7 @@ namespace WebApplication.Controllers
 
         public virtual async Task<IActionResult> Index()
         {
-            var items = await AppService.GetAllAsync(Includes);
+            var items = await AppService.GetAllAsync(Includes, DefaultOrderBy);
             return View(items);
         }
 

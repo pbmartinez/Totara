@@ -7,15 +7,10 @@ using Domain.Repositories;
 using Domain.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebApplication
 {
@@ -42,11 +37,12 @@ namespace WebApplication
                 configuration.AddProfile<EstudianteProfile>();
                 configuration.AddProfile<MatriculaProfile>();
                 configuration.AddProfile<PersonaProfile>();
+                configuration.AddProfile<CategoriaProfile>();
                 AppDomain.CurrentDomain.GetAssemblies();
-                
+
             });
 
-            
+
             /*Why scoped ?
              * Lifetime of Unit of Work should be: 
              * 1. long enough to contain all changes in a single block of transacctions (tipically a request), and
@@ -59,7 +55,7 @@ namespace WebApplication
              * Also .Net's build in dependency injection, validates such a rule, throwing an exception.
              */
             //UnitOfWork
-            services.AddScoped<IUnitOfWork, UnitOfWorkContainer>();            
+            services.AddScoped<IUnitOfWork, UnitOfWorkContainer>();
             //AppServices
             services.AddScoped<ICasaAppService, CasaAppService>();
             services.AddScoped<IPersonaAppService, PersonaAppService>();
@@ -67,6 +63,7 @@ namespace WebApplication
             services.AddScoped<IEscuelaAppService, EscuelaAppService>();
             services.AddScoped<IEstudianteAppService, EstudianteAppService>();
             services.AddScoped<IMatriculaAppService, MatriculaAppService>();
+            services.AddScoped<ICategoriaAppService, CategoriaAppService>();
             //Repositories
             services.AddScoped<ICasaRepository, CasaRepository>();
             services.AddScoped<IPersonaRepository, PersonaRepository>();
@@ -74,6 +71,7 @@ namespace WebApplication
             services.AddScoped<IEscuelaRepository, EscuelaRepository>();
             services.AddScoped<IEstudianteRepository, EstudianteRepository>();
             services.AddScoped<IMatriculaRepository, MatriculaRepository>();
+            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

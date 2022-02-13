@@ -1,0 +1,20 @@
+﻿@model Application.Dtos.CategoriaDto
+
+@{
+    ViewData["Title"] = "Detalles Categoria";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Detalles de Categoria</h1>
+</div>
+
+<div class="row">
+    <div class="col-12  col-md-4">
+        <b><label asp-for="Nombre"></label> </b>
+        @Model.Nombre
+    </div>
+</div>
+<div class="row">
+    <a class="btn btn-secondary" href="/Categoria/Index">Cancelar</a>
+    <a class="btn btn-danger" href="/Categoria/Delete/@Model.Id">Eliminar</a>
+</div>

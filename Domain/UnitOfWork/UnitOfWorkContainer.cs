@@ -101,5 +101,6 @@ namespace Domain.UnitOfWork
         public virtual DbSet<Escuela> Escuela { get; set; }
         public virtual DbSet<Estudiante> Estudiante { get; set; }
         public virtual DbSet<Matricula> Matricula { get; set; }
+        public virtual DbSet<Categoria> Categoria { get; set; }
     }
 }
