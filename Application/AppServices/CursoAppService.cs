@@ -30,42 +30,67 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public async Task< IEnumerable<CursoDto>> FindWithSpecificationPatternAsync(Specification<CursoDto> specification = null, List<Expression<Func<CursoDto, object>>> Includes = null)
+        public async Task<List<CursoDto>> FindAllBySpecificationPatternAsync(Specification<CursoDto> specification = null, List<Expression<Func<CursoDto, object>>> includes = null, Dictionary<string, bool> order = null)
         {
-            var domainExpressionList = Includes == null
+            var domainExpressionIncludesList = includes == null
                 ? new List<Expression<Func<Domain.Entities.Curso, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(Includes).ToList();
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(includes).ToList();
             return _mapper.Map<List<CursoDto>>(
-                await _CursoRepository.FindWithExpressionAsync(
-                    _mapper.MapExpression<Expression<Func<Domain.Entities.Curso, bool>>>(
-                        specification == null ? a => true : specification.ToExpression()), domainExpressionList));
+                await _CursoRepository.FindAllByExpressionAsync(
+                    specification.MapToExpressionOfType<Domain.Entities.Curso>(), domainExpressionIncludesList, order));
         }
 
-        public async Task<List<CursoDto>> GetAllAsync(List<Expression<Func<CursoDto, object>>> Includes = null)
+        public async Task<int> FindCountBySpecificationPatternAsync(Specification<CursoDto> specification = null)
         {
-            var domainExpressionList = Includes == null
+            var count = await _CursoRepository.FindCountByExpressionAsync(specification.MapToExpressionOfType<Domain.Entities.Curso>());
+            return count;
+        }
+
+        public async Task<CursoDto> FindOneBySpecificationPatternAsync(Specification<CursoDto> specification = null, List<Expression<Func<CursoDto, object>>> includes = null)
+        {
+            var domainExpressionIncludesList = includes == null
                 ? new List<Expression<Func<Domain.Entities.Curso, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(Includes).ToList();
-            var items = await _CursoRepository.GetAllAsync(domainExpressionList);
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(includes).ToList();
+            var item = await _CursoRepository.FindOneByExpressionAsync(specification.MapToExpressionOfType<Domain.Entities.Curso>(), domainExpressionIncludesList);
+            return _mapper.Map<CursoDto>(item);
+        }
+
+        public async Task<List<CursoDto>> FindPageBySpecificationPatternAsync(Specification<CursoDto> specification = null, List<Expression<Func<CursoDto, object>>> includes = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
+        {
+            var domainExpressionIncludesList = includes == null
+                ? new List<Expression<Func<Domain.Entities.Curso, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(includes).ToList();
+            return _mapper.Map<List<CursoDto>>(
+                await _CursoRepository.FindPageByExpressionAsync(
+                    specification.MapToExpressionOfType<Domain.Entities.Curso>(), domainExpressionIncludesList, order, pageSize, pageGo));
+        }
+
+
+
+        public async Task<List<CursoDto>> GetAllAsync(List<Expression<Func<CursoDto, object>>> includes = null, Dictionary<string, bool> order = null)
+        {
+            var domainExpressionIncludesList = includes == null
+                ? new List<Expression<Func<Domain.Entities.Curso, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(includes).ToList();
+            var items = await _CursoRepository.GetAllAsync(domainExpressionIncludesList,order);
             var dtoItems = _mapper.Map<List<CursoDto>>(items.ToList());
             return dtoItems;
         }
 
-
         public async Task<CursoDto> GetAsync(Guid id, List<Expression<Func<CursoDto, object>>> Includes = null)
         {
-            var domainExpressionList = Includes == null
+            var domainExpressionIncludesList = Includes == null
                 ? new List<Expression<Func<Domain.Entities.Curso, object>>>()
                 : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(Includes).ToList();
-            return _mapper.Map<CursoDto>(await _CursoRepository.GetAsync(id, domainExpressionList));
+            return _mapper.Map<CursoDto>(await _CursoRepository.GetAsync(id, domainExpressionIncludesList));
         }
 
         public async Task<CursoDtoForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<CursoDto, object>>> Includes = null)
         {
-            var domainExpressionList = Includes == null
+            var domainExpressionIncludesList = Includes == null
                 ? new List<Expression<Func<Domain.Entities.Curso, object>>>()
                 : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Curso, object>>>(Includes).ToList();
-            return _mapper.Map<CursoDtoForUpdate>(await _CursoRepository.GetAsync(id, domainExpressionList));
+            return _mapper.Map<CursoDtoForUpdate>(await _CursoRepository.GetAsync(id, domainExpressionIncludesList));
         }
 
         public async Task<bool> RemoveAsync(Guid id)

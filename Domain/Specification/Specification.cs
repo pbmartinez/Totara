@@ -1,4 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using AutoMapper.Extensions.ExpressionMapping;
+using Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -21,6 +24,14 @@ namespace Domain.Specification
     /// <typeparam name="T"></typeparam>
     public abstract class Specification<T>
     {
+        private readonly IMapper _mapper;
+
+        protected Specification(IMapper mapper)
+        {
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+        }
+
+
         /// <summary>
         /// It validates objects in memory
         /// </summary>
@@ -31,11 +42,12 @@ namespace Domain.Specification
             return ToExpression().Compile().Invoke(item);
         }
         /// <summary>
-        /// 
+        /// It returns the expression of the current specification
         /// </summary>
         /// <returns></returns>
-        public virtual Expression<Func<T, bool>> ToExpression() => new AllSpecification<T>().ToExpression();
-        
+        public virtual Expression<Func<T, bool>> ToExpression() => new AllSpecification<T>(_mapper).ToExpression();
+
+        public virtual Expression<Func<TEntity, bool>> MapToExpressionOfType<TEntity>() where TEntity : Entity => _mapper.MapExpression<Expression<Func<TEntity, bool>>>(ToExpression());
 
 
 
@@ -44,11 +56,11 @@ namespace Domain.Specification
         /// Basic specification definition. It just returns true for any object.
         /// </summary>
         /// <returns></returns>
-        public Specification<T> All => new AllSpecification<T>();
-        
+        public Specification<T> All => new AllSpecification<T>(_mapper);
+
 
         /// <summary>
-        /// Combines the current specification with the specification passed as argument in an && operation
+        /// It combines the current specification with the specification passed as argument in an && operation
         /// </summary>
         /// <param name="specification"></param>
         /// <returns></returns>
@@ -58,10 +70,10 @@ namespace Domain.Specification
                 return specification;
             if (specification == All)
                 return this;
-            return new AndSpecification<T>(this, specification);
+            return new AndSpecification<T>(this, specification, _mapper);
         }
         /// <summary>
-        /// Combines the current specification with the specification passed as argument in an || operation
+        /// It combines the current specification with the specification passed as argument in an || operation
         /// </summary>
         /// <param name="specification"></param>
         /// <returns></returns>
@@ -69,15 +81,15 @@ namespace Domain.Specification
         {
             if (this == All || specification == All)
                 return All;
-            return new OrSpecification<T>(this, specification);
+            return new OrSpecification<T>(this, specification, _mapper);
         }
         /// <summary>
-        /// Returns the opposite of the current specification
+        /// It returns the negation of the current specification
         /// </summary>
         /// <returns></returns>
         public Specification<T> Not()
         {
-            return new NotSpecification<T>(this);
+            return new NotSpecification<T>(this, _mapper);
         }
 
 
@@ -113,6 +125,10 @@ namespace Domain.Specification
 
     internal sealed class AllSpecification<T> : Specification<T>
     {
+        public AllSpecification(IMapper mapper) : base(mapper)
+        {
+        }
+
         public override Expression<Func<T, bool>> ToExpression()
         {
             return a => true;
@@ -124,7 +140,7 @@ namespace Domain.Specification
         private readonly Specification<T> _left;
         private readonly Specification<T> _right;
 
-        public AndSpecification(Specification<T> left, Specification<T> right)
+        public AndSpecification(Specification<T> left, Specification<T> right, IMapper mapper) : base(mapper)
         {
             _left = left;
             _right = right;
@@ -147,7 +163,7 @@ namespace Domain.Specification
         private readonly Specification<T> _left;
         private readonly Specification<T> _right;
 
-        public OrSpecification(Specification<T> left, Specification<T> right)
+        public OrSpecification(Specification<T> left, Specification<T> right, IMapper mapper) : base(mapper)
         {
             _left = left;
             _right = right;
@@ -168,7 +184,7 @@ namespace Domain.Specification
     {
         private readonly Specification<T> _specification;
 
-        public NotSpecification(Specification<T> specification)
+        public NotSpecification(Specification<T> specification, IMapper mapper) : base(mapper)
         {
             _specification = specification;
         }

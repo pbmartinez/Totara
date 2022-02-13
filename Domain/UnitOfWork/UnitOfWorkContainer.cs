@@ -67,11 +67,11 @@ namespace Domain.UnitOfWork
             return ChangeTracker;
         }
         
-        public IQueryable<TEntity> GetQueryable<TEntity>(List<Expression<Func<TEntity, object>>> Includes = null, Expression<Func<TEntity,bool>> predicate = null, Dictionary<string,bool> order = null, int pageSize = 0, int pageGo = 0) where TEntity : class
+        public IQueryable<TEntity> GetQueryable<TEntity>(List<Expression<Func<TEntity, object>>> includes = null, Expression<Func<TEntity,bool>> predicate = null, Dictionary<string,bool> order = null, int pageSize = 0, int pageGo = 0) where TEntity : class
         {
             IQueryable<TEntity> items = Set<TEntity>();
-            if (Includes != null && Includes.Any())
-                Includes.ForEach(a => items = items.Include(a));
+            if (includes != null && includes.Any())
+                includes.ForEach(a => items = items.Include(a));
 
             if(predicate!= null)
                 items = items.Where(predicate);

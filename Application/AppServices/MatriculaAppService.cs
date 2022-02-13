@@ -30,42 +30,66 @@ namespace Application.AppServices
             return commited > 0;
         }
 
-        public async Task<IEnumerable<MatriculaDto>> FindWithSpecificationPatternAsync(Specification<MatriculaDto> specification = null, List<Expression<Func<MatriculaDto, object>>> Includes = null)
+        public async Task<List<MatriculaDto>> FindAllBySpecificationPatternAsync(Specification<MatriculaDto> specification = null, List<Expression<Func<MatriculaDto, object>>> includes = null, Dictionary<string, bool> order = null)
         {
-            var domainExpressionList = Includes == null
+            var domainExpressionIncludesList = includes == null
                 ? new List<Expression<Func<Domain.Entities.Matricula, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Matricula, object>>>(Includes).ToList();
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Matricula, object>>>(includes).ToList();
             return _mapper.Map<List<MatriculaDto>>(
-                await _MatriculaRepository.FindWithExpressionAsync(
+                await _MatriculaRepository.FindAllByExpressionAsync(
                     _mapper.MapExpression<Expression<Func<Domain.Entities.Matricula, bool>>>(
-                        specification == null ? a => true : specification.ToExpression()), domainExpressionList));
+                        specification == null ? a => true : specification.ToExpression()), domainExpressionIncludesList, order));
         }
 
-        public async Task<List<MatriculaDto>> GetAllAsync(List<Expression<Func<MatriculaDto, object>>> Includes = null)
+        public async Task<int> FindCountBySpecificationPatternAsync(Specification<MatriculaDto> specification = null)
         {
-            var domainExpressionList = Includes == null
+            var count = await _MatriculaRepository.FindCountByExpressionAsync(specification.MapToExpressionOfType<Domain.Entities.Matricula>());
+            return count;
+        }
+
+        public async Task<MatriculaDto> FindOneBySpecificationPatternAsync(Specification<MatriculaDto> specification = null, List<Expression<Func<MatriculaDto, object>>> includes = null)
+        {
+            var domainExpressionIncludesList = includes == null
                 ? new List<Expression<Func<Domain.Entities.Matricula, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Matricula, object>>>(Includes).ToList();
-            var items = await _MatriculaRepository.GetAllAsync(domainExpressionList);
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Matricula, object>>>(includes).ToList();
+            var item = await _MatriculaRepository.FindOneByExpressionAsync(specification.MapToExpressionOfType<Domain.Entities.Matricula>(), domainExpressionIncludesList);
+            return _mapper.Map<MatriculaDto>(item);
+        }
+
+        public async Task<List<MatriculaDto>> FindPageBySpecificationPatternAsync(Specification<MatriculaDto> specification = null, List<Expression<Func<MatriculaDto, object>>> includes = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
+        {
+            var domainExpressionIncludesList = includes == null
+                ? new List<Expression<Func<Domain.Entities.Matricula, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Matricula, object>>>(includes).ToList();
+            return _mapper.Map<List<MatriculaDto>>(
+                await _MatriculaRepository.FindPageByExpressionAsync(
+                    specification.MapToExpressionOfType<Domain.Entities.Matricula>(), domainExpressionIncludesList, order, pageSize, pageGo));
+        }
+
+        public async Task<List<MatriculaDto>> GetAllAsync(List<Expression<Func<MatriculaDto, object>>> includes = null, Dictionary<string, bool> order = null)
+        {
+            var domainExpressionIncludesList = includes == null
+                ? new List<Expression<Func<Domain.Entities.Matricula, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Matricula, object>>>(includes).ToList();
+            var items = await _MatriculaRepository.GetAllAsync(domainExpressionIncludesList);
             var dtoItems = _mapper.Map<List<MatriculaDto>>(items.ToList());
             return dtoItems;
         }
 
-
         public async Task<MatriculaDto> GetAsync(Guid id, List<Expression<Func<MatriculaDto, object>>> Includes = null)
         {
-            var domainExpressionList = Includes == null
+            var domainExpressionIncludesList = Includes == null
                 ? new List<Expression<Func<Domain.Entities.Matricula, object>>>()
                 : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Matricula, object>>>(Includes).ToList();
-            return _mapper.Map<MatriculaDto>(await _MatriculaRepository.GetAsync(id, domainExpressionList));
+            return _mapper.Map<MatriculaDto>(await _MatriculaRepository.GetAsync(id, domainExpressionIncludesList));
         }
 
         public async Task<MatriculaDtoForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<MatriculaDto, object>>> Includes = null)
         {
-            var domainExpressionList = Includes == null
+            var domainExpressionIncludesList = Includes == null
                 ? new List<Expression<Func<Domain.Entities.Matricula, object>>>()
                 : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Matricula, object>>>(Includes).ToList();
-            return _mapper.Map<MatriculaDtoForUpdate>(await _MatriculaRepository.GetAsync(id, domainExpressionList));
+            return _mapper.Map<MatriculaDtoForUpdate>(await _MatriculaRepository.GetAsync(id, domainExpressionIncludesList));
         }
 
         public async Task<bool> RemoveAsync(Guid id)

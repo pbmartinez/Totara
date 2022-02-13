@@ -15,15 +15,27 @@ namespace WebApplication.Controllers
     {
         protected readonly IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> AppService;
 
-        
+        /// <summary>
+        /// List of related entities (navigation properties) to be included. Index view.
+        /// </summary>
         protected List<Expression<Func<TEntityDto, object>>> Includes = new();
+        /// <summary>
+        /// List of related entities (navigation properties) to be included. Details view.
+        /// </summary>
         protected List<Expression<Func<TEntityDto, object>>> DetailsIncludes = new();
+        /// <summary>
+        /// List of related entities (navigation properties) to be included. Edit view.
+        /// </summary>
         protected List<Expression<Func<TEntityDto, object>>> EditIncludes = new();
+        /// <summary>
+        /// List of related entities (navigation properties) to be included. Delete view.
+        /// </summary>
         protected List<Expression<Func<TEntityDto, object>>> DeleteIncludes = new();
         /// <summary>
         /// Defines the fields by which the list items will be ordered. The list items will be ordered multiple levels, 
         /// in the same order that the diccionary is feeded. For specifying Ascending / Descending order specify true / false in each field.
         /// Multiple related fields can be specified as long as none of them be a collection navigation property.
+        /// To Do: Known Problem: Navigation properties belonging to collection properties can not be digged.
         /// </summary>
         protected Dictionary<string,bool> DefaultOrderBy = new ();
 
