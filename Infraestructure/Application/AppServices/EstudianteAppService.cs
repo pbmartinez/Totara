@@ -1,5 +1,7 @@
 ﻿using Application.Dtos;
+using Application.Exceptions;
 using Application.IAppServices;
+using Application.IValidator;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Domain.Entities;
@@ -17,17 +19,25 @@ namespace Infraestructure.Application.AppServices
     {
         private readonly IMapper _mapper;
         private readonly IEstudianteRepository _EstudianteRepository;
+        private readonly IEntityValidator _entityValidator;
 
-        public EstudianteAppService(IMapper mapper, IEstudianteRepository EstudianteRepository)
+        public EstudianteAppService(IMapper mapper, IEstudianteRepository estudianteRepository, IEntityValidator entityValidator)
         {
-            _mapper = mapper;
-            _EstudianteRepository = EstudianteRepository;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _EstudianteRepository = estudianteRepository ?? throw new ArgumentNullException(nameof(estudianteRepository));
+            _entityValidator = entityValidator ?? throw new ArgumentNullException(nameof(entityValidator));
         }
 
         public async Task<bool> AddAsync(EstudianteDtoForCreate item)
         {
-            await _EstudianteRepository.AddAsync(_mapper.Map<Estudiante>(item));
-            var commited = await _EstudianteRepository.UnitOfWork.CommitAsync();
+            int commited;
+            if (_entityValidator.IsValid(item))
+            {
+                await _EstudianteRepository.AddAsync(_mapper.Map<Estudiante>(item));
+                commited = await _EstudianteRepository.UnitOfWork.CommitAsync();
+            }
+            else
+                throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
 
@@ -105,8 +115,14 @@ namespace Infraestructure.Application.AppServices
 
         public async Task<bool> UpdateAsync(EstudianteDtoForUpdate item)
         {
-            await _EstudianteRepository.UpdateAsync(_mapper.Map<Estudiante>(item));
-            var commited = await _EstudianteRepository.UnitOfWork.CommitAsync();
+            int commited;
+            if (_entityValidator.IsValid(item))
+            {
+                await _EstudianteRepository.UpdateAsync(_mapper.Map<Estudiante>(item));
+                commited = await _EstudianteRepository.UnitOfWork.CommitAsync();
+            }
+            else
+                throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
     }

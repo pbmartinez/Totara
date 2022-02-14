@@ -1,5 +1,7 @@
 ﻿using Application.Dtos;
+using Application.Exceptions;
 using Application.IAppServices;
+using Application.IValidator;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Domain.Entities;
@@ -17,17 +19,25 @@ namespace Infraestructure.Application.AppServices
     {
         private readonly IMapper _mapper;
         private readonly IEscuelaRepository _EscuelaRepository;
+        private readonly IEntityValidator _entityValidator;
 
-        public EscuelaAppService(IMapper mapper, IEscuelaRepository EscuelaRepository)
+        public EscuelaAppService(IMapper mapper, IEscuelaRepository escuelaRepository, IEntityValidator entityValidator)
         {
-            _mapper = mapper;
-            _EscuelaRepository = EscuelaRepository;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _EscuelaRepository = escuelaRepository ?? throw new ArgumentNullException(nameof(escuelaRepository));
+            _entityValidator = entityValidator ?? throw new ArgumentNullException(nameof(entityValidator));
         }
 
         public async Task<bool> AddAsync(EscuelaDtoForCreate item)
         {
-            await _EscuelaRepository.AddAsync(_mapper.Map<Escuela>(item));
-            var commited = await _EscuelaRepository.UnitOfWork.CommitAsync();
+            int commited;
+            if (_entityValidator.IsValid(item))
+            {
+                await _EscuelaRepository.AddAsync(_mapper.Map<Escuela>(item));
+                commited = await _EscuelaRepository.UnitOfWork.CommitAsync();
+            }
+            else
+                throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
 
@@ -105,8 +115,14 @@ namespace Infraestructure.Application.AppServices
 
         public async Task<bool> UpdateAsync(EscuelaDtoForUpdate item)
         {
-            await _EscuelaRepository.UpdateAsync(_mapper.Map<Escuela>(item));
-            var commited = await _EscuelaRepository.UnitOfWork.CommitAsync();
+            int commited;
+            if (_entityValidator.IsValid(item))
+            {
+                await _EscuelaRepository.UpdateAsync(_mapper.Map<Escuela>(item));
+                commited = await _EscuelaRepository.UnitOfWork.CommitAsync();
+            }
+            else
+                throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
     }

@@ -1,5 +1,7 @@
 ﻿using Application.Dtos;
+using Application.Exceptions;
 using Application.IAppServices;
+using Application.IValidator;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Domain.Entities;
@@ -13,21 +15,29 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Application.AppServices
 {
-    public class CategoriaAppService : ICategoriaAppService
+    public partial class CategoriaAppService : ICategoriaAppService
     {
         private readonly ICategoriaRepository _categoriaRepository;
         private readonly IMapper _mapper;
+        private readonly IEntityValidator _entityValidator;
 
-        public CategoriaAppService(ICategoriaRepository categoriaRepository, IMapper mapper)
+        public CategoriaAppService(ICategoriaRepository categoriaRepository, IMapper mapper, IEntityValidator entityValidator)
         {
             _categoriaRepository = categoriaRepository ?? throw new ArgumentNullException(nameof(categoriaRepository));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _entityValidator = entityValidator ?? throw new ArgumentNullException(nameof(entityValidator));
         }
 
         public async Task<bool> AddAsync(CategoriaDtoForCreate item)
         {
-            await _categoriaRepository.AddAsync(_mapper.Map<Categoria>(item));
-            var commited = await _categoriaRepository.UnitOfWork.CommitAsync();
+            int commited;
+            if (_entityValidator.IsValid(item))
+            {
+                await _categoriaRepository.AddAsync(_mapper.Map<Categoria>(item));
+                commited = await _categoriaRepository.UnitOfWork.CommitAsync();
+            }
+            else
+                throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
 
@@ -107,8 +117,14 @@ namespace Infraestructure.Application.AppServices
 
         public async Task<bool> UpdateAsync(CategoriaDtoForUpdate item)
         {
-            await _categoriaRepository.UpdateAsync(_mapper.Map<Categoria>(item));
-            var commited = await _categoriaRepository.UnitOfWork.CommitAsync();
+            int commited;
+            if (_entityValidator.IsValid(item))
+            {                
+                await _categoriaRepository.UpdateAsync(_mapper.Map<Categoria>(item));
+                commited = await _categoriaRepository.UnitOfWork.CommitAsync();
+            }
+            else
+                throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
     }

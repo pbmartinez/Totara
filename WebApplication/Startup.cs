@@ -1,9 +1,11 @@
 using Application.IAppServices;
+using Application.IValidator;
 using Application.Mappings;
 using AutoMapper.Extensions.ExpressionMapping;
 using Domain.IRepositories;
 using Domain.UnitOfWork;
 using Infraestructure.Application.AppServices;
+using Infraestructure.Application.Validator;
 using Infraestructure.Domain.Repositories;
 using Infraestructure.Domain.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
@@ -29,6 +31,8 @@ namespace WebApplication
         {
             services.AddControllersWithViews();
 
+
+            // AutoMapper Profiles
             services.AddAutoMapper(configuration =>
             {
                 configuration.AddExpressionMapping();
@@ -73,6 +77,10 @@ namespace WebApplication
             services.AddScoped<IEstudianteRepository, EstudianteRepository>();
             services.AddScoped<IMatriculaRepository, MatriculaRepository>();
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+
+
+            //IValidator
+            services.AddScoped<IEntityValidator, DataAnnotationsEntityValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

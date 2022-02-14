@@ -1,5 +1,7 @@
 ﻿using Application.Dtos;
+using Application.Exceptions;
 using Application.IAppServices;
+using Application.IValidator;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Domain.Entities;
@@ -17,17 +19,25 @@ namespace Infraestructure.Application.AppServices
     {
         private readonly IMapper _mapper;
         private readonly IMatriculaRepository _MatriculaRepository;
+        private readonly IEntityValidator _entityValidator;
 
-        public MatriculaAppService(IMapper mapper, IMatriculaRepository MatriculaRepository)
+        public MatriculaAppService(IMapper mapper, IMatriculaRepository matriculaRepository, IEntityValidator entityValidator)
         {
-            _mapper = mapper;
-            _MatriculaRepository = MatriculaRepository;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _MatriculaRepository = matriculaRepository ?? throw new ArgumentNullException(nameof(matriculaRepository));
+            _entityValidator = entityValidator ?? throw new ArgumentNullException(nameof(entityValidator));
         }
 
         public async Task<bool> AddAsync(MatriculaDtoForCreate item)
         {
-            await _MatriculaRepository.AddAsync(_mapper.Map<Matricula>(item));
-            var commited = await _MatriculaRepository.UnitOfWork.CommitAsync();
+            int commited;
+            if (_entityValidator.IsValid(item))
+            {
+                await _MatriculaRepository.AddAsync(_mapper.Map<Matricula>(item));
+                commited = await _MatriculaRepository.UnitOfWork.CommitAsync();
+            }
+            else
+                throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
 
@@ -104,8 +114,14 @@ namespace Infraestructure.Application.AppServices
 
         public async Task<bool> UpdateAsync(MatriculaDtoForUpdate item)
         {
-            await _MatriculaRepository.UpdateAsync(_mapper.Map<Matricula>(item));
-            var commited = await _MatriculaRepository.UnitOfWork.CommitAsync();
+            int commited;
+            if (_entityValidator.IsValid(item))
+            {
+                await _MatriculaRepository.UpdateAsync(_mapper.Map<Matricula>(item));
+                commited = await _MatriculaRepository.UnitOfWork.CommitAsync();
+            }
+            else
+                throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
     }

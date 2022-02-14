@@ -1,5 +1,7 @@
 ﻿using Application.Dtos;
+using Application.Exceptions;
 using Application.IAppServices;
+using Application.IValidator;
 using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Domain.Entities;
@@ -17,17 +19,25 @@ namespace Infraestructure.Application.AppServices
     {
         private readonly IMapper _mapper;
         private readonly IPersonaRepository _personaRepository;
+        private readonly IEntityValidator _entityValidator;
 
-        public PersonaAppService(IMapper mapper, IPersonaRepository personaRepository)
+        public PersonaAppService(IMapper mapper, IPersonaRepository personaRepository, IEntityValidator entityValidator)
         {
-            _mapper = mapper;
-            _personaRepository = personaRepository;
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _personaRepository = personaRepository ?? throw new ArgumentNullException(nameof(personaRepository));
+            _entityValidator = entityValidator ?? throw new ArgumentNullException(nameof(entityValidator));
         }
 
         public async Task<bool> AddAsync(PersonaDtoForCreate item)
         {
-            await _personaRepository.AddAsync(_mapper.Map<Persona>(item));
-            var commited = await _personaRepository.UnitOfWork.CommitAsync();
+            int commited;
+            if (_entityValidator.IsValid(item))
+            {
+                await _personaRepository.AddAsync(_mapper.Map<Persona>(item));
+                commited = await _personaRepository.UnitOfWork.CommitAsync();
+            }
+            else
+                throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
 
@@ -104,8 +114,14 @@ namespace Infraestructure.Application.AppServices
 
         public async Task<bool> UpdateAsync(PersonaDtoForUpdate item)
         {
-            await _personaRepository.UpdateAsync(_mapper.Map<Persona>(item));
-            var commited = await _personaRepository.UnitOfWork.CommitAsync();
+            int commited;
+            if (_entityValidator.IsValid(item))
+            {
+                await _personaRepository.UpdateAsync(_mapper.Map<Persona>(item));
+                commited = await _personaRepository.UnitOfWork.CommitAsync();
+            }
+            else
+                throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
     }

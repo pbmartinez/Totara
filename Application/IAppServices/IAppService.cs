@@ -1,4 +1,5 @@
-﻿using Domain.Specification;
+﻿using Application.IValidator;
+using Domain.Specification;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 namespace Application.IAppServices
 {
     public interface IAppService<TEntity, TEntityForCreation, TEntityForUpdate>
-    {
+    {        
         Task<bool> AddAsync(TEntityForCreation item);
         Task<bool> UpdateAsync(TEntityForUpdate item);
         Task<TEntity> GetAsync(Guid id, List<Expression<Func<TEntity, object>>> includes = null);
