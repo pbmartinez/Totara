@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Domain.Migrations
+namespace Infraestructure.Migrations
 {
     public partial class AddCategoria : Migration
     {

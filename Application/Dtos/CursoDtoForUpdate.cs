@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dtos
 {
-    public class CursoDtoForUpdate: Entity
+    public partial class CursoDtoForUpdate: Entity
     {
         public string Nombre { get; set; }
         public string Descripcion { get; set; }

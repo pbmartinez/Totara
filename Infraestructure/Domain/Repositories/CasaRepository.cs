@@ -2,9 +2,9 @@
 using Domain.IRepositories;
 using Domain.UnitOfWork;
 
-namespace Domain.Repositories
+namespace Infraestructure.Domain.Repositories
 {
-    public class CasaRepository : Repository<Casa>, ICasaRepository
+    public partial class CasaRepository : Repository<Casa>, ICasaRepository
     {
         public CasaRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {

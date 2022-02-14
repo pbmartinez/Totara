@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Infraestructure;
+using Domain.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Configuration;
@@ -9,7 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Domain.UnitOfWork
+namespace Infraestructure.Domain.UnitOfWork
 {
     public class UnitOfWorkContainer : DbContext, IUnitOfWork
     {
@@ -95,7 +96,7 @@ namespace Domain.UnitOfWork
             return  items;
         }
 
-        public virtual DbSet<Persona> Persona { get; set; }
+        public virtual DbSet<Persona> Persona { get; set; } 
         public virtual DbSet<Casa> Casa { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }
         public virtual DbSet<Escuela> Escuela { get; set; }

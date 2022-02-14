@@ -4,6 +4,7 @@ using AutoMapper;
 using AutoMapper.Extensions.ExpressionMapping;
 using Domain.IRepositories;
 using Domain.Specification;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Application.Specification;
 
-namespace Application.AppServices
+namespace Infraestructure.Application.AppServices
 {
     public partial class CasaAppService : ICasaAppService
     {
@@ -25,7 +26,7 @@ namespace Application.AppServices
         }
         public async Task<bool> AddAsync(CasaDtoForCreate item)
         {
-            await _casaRepository.AddAsync(_mapper.Map<Domain.Entities.Casa>(item));
+            await _casaRepository.AddAsync(_mapper.Map<Casa>(item));
             var commited = await _casaRepository.UnitOfWork.CommitAsync();
             return commited > 0;
         }
@@ -33,44 +34,44 @@ namespace Application.AppServices
         public async Task<List<CasaDto>> FindAllBySpecificationPatternAsync(Specification<CasaDto> specification = null, List<Expression<Func<CasaDto, object>>> includes = null, Dictionary<string, bool> order = null)
         {
             var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Domain.Entities.Casa, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Casa, object>>>(includes).ToList();
+                ? new List<Expression<Func<Casa, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Casa, object>>>(includes).ToList();
             return _mapper.Map<List<CasaDto>>(
                 await _casaRepository.FindAllByExpressionAsync(
-                    _mapper.MapExpression<Expression<Func<Domain.Entities.Casa, bool>>>(
+                    _mapper.MapExpression<Expression<Func<Casa, bool>>>(
                         specification == null ? a => true : specification.ToExpression()), domainExpressionIncludesList, order));
         }
 
         public async Task<int> FindCountBySpecificationPatternAsync(Specification<CasaDto> specification = null)
         {
-            var count = await _casaRepository.FindCountByExpressionAsync(specification.MapToExpressionOfType<Domain.Entities.Casa>());
+            var count = await _casaRepository.FindCountByExpressionAsync(specification.MapToExpressionOfType<Casa>());
             return count;
         }
 
         public async Task<CasaDto> FindOneBySpecificationPatternAsync(Specification<CasaDto> specification = null, List<Expression<Func<CasaDto, object>>> includes = null)
         {
             var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Domain.Entities.Casa, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Casa, object>>>(includes).ToList();
-            var item = await _casaRepository.FindOneByExpressionAsync(specification.MapToExpressionOfType<Domain.Entities.Casa>(), domainExpressionIncludesList);
+                ? new List<Expression<Func<Casa, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Casa, object>>>(includes).ToList();
+            var item = await _casaRepository.FindOneByExpressionAsync(specification.MapToExpressionOfType<Casa>(), domainExpressionIncludesList);
             return _mapper.Map<CasaDto>(item);
         }
 
         public async Task<List<CasaDto>> FindPageBySpecificationPatternAsync(Specification<CasaDto> specification = null, List<Expression<Func<CasaDto, object>>> includes = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
         {
             var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Domain.Entities.Casa, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Casa, object>>>(includes).ToList();
+                ? new List<Expression<Func<Casa, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Casa, object>>>(includes).ToList();
             return _mapper.Map<List<CasaDto>>(
                 await _casaRepository.FindPageByExpressionAsync(
-                    specification.MapToExpressionOfType<Domain.Entities.Casa>(), domainExpressionIncludesList, order, pageSize, pageGo));
+                    specification.MapToExpressionOfType<Casa>(), domainExpressionIncludesList, order, pageSize, pageGo));
         }
 
         public async Task<List<CasaDto>> GetAllAsync(List<Expression<Func<CasaDto, object>>> includes, Dictionary<string, bool> order)
         {
             var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Domain.Entities.Casa, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Casa, object>>>(includes).ToList();
+                ? new List<Expression<Func<Casa, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Casa, object>>>(includes).ToList();
             var items = await _casaRepository.GetAllAsync(domainExpressionIncludesList, order);
             var dtoItems = _mapper.Map<List<CasaDto>>(items.ToList());
             return dtoItems;
@@ -81,8 +82,8 @@ namespace Application.AppServices
         public async Task<CasaDto> GetAsync(Guid id, List<Expression<Func<CasaDto, object>>> includes = null)
         {
             var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Domain.Entities.Casa, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Casa, object>>>(includes).ToList();
+                ? new List<Expression<Func<Casa, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Casa, object>>>(includes).ToList();
             return _mapper.Map<CasaDto>(await _casaRepository.GetAsync(id, domainExpressionIncludesList));
         }
 
@@ -90,8 +91,8 @@ namespace Application.AppServices
         public async Task<CasaDtoForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<CasaDto, object>>> includes = null)
         {
             var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Domain.Entities.Casa, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Domain.Entities.Casa, object>>>(includes).ToList();
+                ? new List<Expression<Func<Casa, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Casa, object>>>(includes).ToList();
             return _mapper.Map<CasaDtoForUpdate>(await _casaRepository.GetAsync(id, domainExpressionIncludesList));
         }
 
@@ -106,7 +107,7 @@ namespace Application.AppServices
 
         public async Task<bool> UpdateAsync(CasaDtoForUpdate item)
         {
-            await _casaRepository.UpdateAsync(_mapper.Map<Domain.Entities.Casa>(item));
+            await _casaRepository.UpdateAsync(_mapper.Map<Casa>(item));
             var commited = await _casaRepository.UnitOfWork.CommitAsync();
             return commited > 0;
         }

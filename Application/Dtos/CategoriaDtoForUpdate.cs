@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Dtos
 {
-    public class CategoriaDtoForUpdate : Entity
+    public partial class CategoriaDtoForUpdate : Entity
     {
         public string Nombre { get; set; }
     }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Application.Dtos
 {
-    public class CursoDto : Entity
+    public partial class CursoDto : Entity
     {
         public string Nombre { get; set; }
         public string Descripcion { get; set; }

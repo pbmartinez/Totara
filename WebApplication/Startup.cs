@@ -1,10 +1,11 @@
-using Application.AppServices;
 using Application.IAppServices;
 using Application.Mappings;
 using AutoMapper.Extensions.ExpressionMapping;
 using Domain.IRepositories;
-using Domain.Repositories;
 using Domain.UnitOfWork;
+using Infraestructure.Application.AppServices;
+using Infraestructure.Domain.Repositories;
+using Infraestructure.Domain.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;

@@ -10,7 +10,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace Domain.Repositories
+namespace Infraestructure.Domain.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
@@ -32,9 +32,9 @@ namespace Domain.Repositories
             await Task.FromResult(_unitOfWork.Repository<TEntity>().Remove(item));
         }
 
-        public async Task<TEntity> GetAsync(Guid id, List<Expression<Func<TEntity, object>>> Includes = null)
+        public async Task<TEntity> GetAsync(Guid id, List<Expression<Func<TEntity, object>>>? includes = null)
         {
-            var item = await _unitOfWork.GetQueryable(Includes, a => a.Id == id).FirstOrDefaultAsync();
+            var item = await _unitOfWork.GetQueryable(includes, a => a.Id == id).FirstOrDefaultAsync();
             return item;
         }
 
@@ -45,16 +45,16 @@ namespace Domain.Repositories
             await Task.CompletedTask;
         }
 
-        
 
-        public async Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> includes, Dictionary<string,bool>order)
+
+        public async Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> includes, Dictionary<string, bool> order)
         {
             var items = _unitOfWork.GetQueryable(includes, a => true, order);
             return await Task.FromResult(items);
         }
 
 
-        
+
 
         public async Task<TEntity> FindOneBySpecificationPatternAsync(Specification<TEntity> specification, List<Expression<Func<TEntity, object>>> includes)
         {

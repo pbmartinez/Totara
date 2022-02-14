@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dtos
 {
-    public class MatriculaDtoForUpdate : Entity
+    public partial class MatriculaDtoForUpdate : Entity
     {
         [Key]
         public virtual Guid EstudianteId { get; set; }

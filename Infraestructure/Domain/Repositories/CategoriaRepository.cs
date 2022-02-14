@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Repositories
+namespace Infraestructure.Domain.Repositories
 {
-    public class CategoriaRepository : Repository<Categoria>, ICategoriaRepository
+    public partial class CategoriaRepository : Repository<Categoria>, ICategoriaRepository
     {
         public CategoriaRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {

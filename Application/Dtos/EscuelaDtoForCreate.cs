@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Application.Dtos
 {
-    public class EscuelaDtoForCreate: Entity
+    public partial class EscuelaDtoForCreate: Entity
     {
         public string Nombre { get; set; }
     }

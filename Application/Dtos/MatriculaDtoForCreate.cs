@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Application.Dtos
 {
-    public class MatriculaDtoForCreate : Entity
+    public partial class MatriculaDtoForCreate : Entity
     {
         [Key]
         public virtual Guid EstudianteId { get; set; }

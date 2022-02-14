@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Application.Dtos
 {
-    public class CasaDtoForUpdate : Entity
+    public partial class CasaDtoForUpdate : Entity
     {
         public string Color { get; set; }
         public int CantidadCuartos { get; set; }

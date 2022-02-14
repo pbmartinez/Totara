@@ -2,9 +2,9 @@
 using Domain.IRepositories;
 using Domain.UnitOfWork;
 
-namespace Domain.Repositories
+namespace Infraestructure.Domain.Repositories
 {
-    public class MatriculaRepository : Repository<Matricula>, IMatriculaRepository
+    public partial class MatriculaRepository : Repository<Matricula>, IMatriculaRepository
     {
         public MatriculaRepository(IUnitOfWork unitOfWork) : base(unitOfWork)
         {

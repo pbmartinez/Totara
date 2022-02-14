@@ -2,9 +2,9 @@
 using Domain.IRepositories;
 using Domain.UnitOfWork;
 
-namespace Domain.Repositories
+namespace Infraestructure.Domain.Repositories
 {
-    public class CursoRepository : Repository<Curso>, ICursoRepository
+    public partial class CursoRepository : Repository<Curso>, ICursoRepository
     {
         public CursoRepository(IUnitOfWork unitofWork) : base(unitofWork)
         {

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Application.Dtos
 {
-    public class PersonaDtoForCreate:Entity
+    public partial class PersonaDtoForCreate:Entity
     {
         [Required]
         public string Nombre { get; set; }
