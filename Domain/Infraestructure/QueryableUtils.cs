@@ -10,7 +10,6 @@ namespace Domain.Infraestructure
 {
     public class QueryableUtils
     {
-        private static readonly string EXCEPTION_MESSAGE = "The property specified for ordering can not be builded. Verify that field specified is well spelled or it is a valid property";
         #region OrderBy
 
         public static readonly MethodInfo OrderByAscending =
@@ -44,19 +43,22 @@ namespace Domain.Infraestructure
             {
                 var childProperties = propertyName.Split('.');
                 property = typeof(TEntity).GetProperty(childProperties[0],
-                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) ?? throw new NullReferenceException(EXCEPTION_MESSAGE);
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
+                    ?? throw new NullReferenceException(string.Format(Localization.Resource.Exception_NullFieldOnOrderingEntity, nameof(property), typeof(TEntity)));
                 propertyAccess = Expression.MakeMemberAccess(parameter, property);
                 for (var i = 1; i < childProperties.Length; i++)
                 {
                     property = property.PropertyType.GetProperty(childProperties[i],
-                        BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) ?? throw new NullReferenceException(EXCEPTION_MESSAGE);
+                        BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
+                        ?? throw new NullReferenceException(string.Format(Localization.Resource.Exception_NullFieldOnOrderingEntity, nameof(property), typeof(TEntity)));
                     propertyAccess = Expression.MakeMemberAccess(propertyAccess, property);
                 }
             }
             else
             {
                 property = typeof(TEntity).GetProperty(propertyName,
-                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public) ?? throw new NullReferenceException(EXCEPTION_MESSAGE);
+                    BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public)
+                    ?? throw new NullReferenceException(string.Format(Localization.Resource.Exception_NullFieldOnOrderingEntity, nameof(property), typeof(TEntity)));
                 propertyAccess = Expression.MakeMemberAccess(parameter, property);
             }
             resultType = property.PropertyType;

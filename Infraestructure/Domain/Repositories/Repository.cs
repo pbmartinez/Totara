@@ -68,22 +68,6 @@ namespace Infraestructure.Domain.Repositories
             return items;
         }
 
-        public async Task<PagedCollection<TEntity>> FindPageBySpecificationPatternAsync(Specification<TEntity> specification, List<Expression<Func<TEntity, object>>> includes, Dictionary<string, bool> order, int pageSize, int pageGo)
-        {
-            var items = await _unitOfWork.GetQueryable(includes, specification.ToExpression(), order).ToListAsync();
-            var totalItems = await _unitOfWork.GetQueryable(null, specification.ToExpression()).CountAsync();
-
-            var page = new PagedCollection<TEntity>()
-            {
-                Items = items,
-                Order = order,
-                PageIndex = pageGo,
-                PageSize = pageSize,
-                TotalItems = totalItems
-            };
-            return page;
-        }
-
         public async Task<TEntity> FindOneByExpressionAsync(Expression<Func<TEntity, bool>> expression, List<Expression<Func<TEntity, object>>> includes)
         {
             var item = await _unitOfWork.GetQueryable(includes, expression).FirstOrDefaultAsync();
@@ -92,6 +76,8 @@ namespace Infraestructure.Domain.Repositories
 
         public async Task<PagedCollection<TEntity>> FindPageByExpressionAsync(Expression<Func<TEntity, bool>> expression, List<Expression<Func<TEntity, object>>> includes, Dictionary<string, bool> order, int pageSize, int pageGo)
         {
+            if (order == null || order.Count == 0)
+                order = new Dictionary<string, bool>() { { "Id", true } };
             var items = await _unitOfWork.GetQueryable(includes, expression, order, pageSize, pageGo).ToListAsync();
             var totalItems = await _unitOfWork.GetQueryable(null, expression).CountAsync();
 

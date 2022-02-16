@@ -5,8 +5,8 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Detalles de Casa</h1>
-    <h3 class="display-4">Esta seguro que desea eliminar ?</h3>
+    <h1 class="display-4">@string.Format(Domain.Localization.Resource.display_DetailsOf,"") Casa</h1>
+    <h3 class="display-4">@Domain.Localization.Resource.display_ConfirmOnDelete</h3>
 </div>
 
 <div class="row">
@@ -20,6 +20,6 @@
     </div>
 </div>
 <div class="row">
-    <a class="btn btn-secondary" href="/Casa/Index">Cancelar</a>
-    <a class="btn btn-danger" href="/Casa/DeleteConfirm/@Model.Id">Eliminar</a>
+    <a class="btn btn-secondary" href="/Casa/Index">@Domain.Localization.Resource.btn_Cancel</a>
+    <a class="btn btn-danger" href="/Casa/DeleteConfirm/@Model.Id">@Domain.Localization.Resource.btn_Delete</a>
 </div>

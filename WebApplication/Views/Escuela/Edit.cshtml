@@ -3,6 +3,6 @@
 
     <form action="@Url.Action("Edit","Escuela")" method="post">
         <input asp-for="Nombre"/>
-        <button class="btn btn-success" type="submit">Editar</button>
-        <a class="btn btn-secondary" href="@Url.Action("Index","Escuela")">Cancelar</a>
+        <button class="btn btn-success" type="submit">@Domain.Localization.Resource.btn_Edit</button>
+        <a class="btn btn-secondary" href="@Url.Action("Index","Escuela")">@Domain.Localization.Resource.btn_Cancel</a>
     </form>

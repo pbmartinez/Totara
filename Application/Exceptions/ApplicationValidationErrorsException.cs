@@ -11,7 +11,6 @@ namespace Application.Exceptions
     /// </summary>
     public class ApplicationValidationErrorsException : Exception
     {
-        private static readonly string EXCEPTION_ERROR_MESSAGE = "Error de validación, compruebe los errores de la validación para más información";
         #region Properties
 
         /// <summary>
@@ -28,7 +27,7 @@ namespace Application.Exceptions
         /// </summary>
         /// <param name="validationErrors">The collection of validation errors</param>
         public ApplicationValidationErrorsException(IEnumerable<string> validationErrors)
-            : base(message: EXCEPTION_ERROR_MESSAGE)
+            : base(message: Domain.Localization.Resource.Exception_ApplicationValidationError)
         {
             ValidationErrors = validationErrors;
         }

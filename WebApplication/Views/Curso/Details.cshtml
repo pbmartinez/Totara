@@ -5,7 +5,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Detalles de Curso</h1>
+    <h1 class="display-4">@string.Format(Domain.Localization.Resource.display_DetailsOf,"") Curso</h1>
 </div>
 
 <div class="row">
@@ -27,6 +27,6 @@
     </div>
 </div>
 <div class="row">
-    <a class="btn btn-secondary" href="/Curso/Index">Cancelar</a>
-    <a class="btn btn-danger" href="/Curso/Delete/@Model.Id">Eliminar</a>
+    <a class="btn btn-secondary" href="/Curso/Index">@Domain.Localization.Resource.btn_Cancel</a>
+    <a class="btn btn-danger" href="/Curso/Delete/@Model.Id">@Domain.Localization.Resource.btn_Delete</a>
 </div>
