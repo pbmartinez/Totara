@@ -24,6 +24,6 @@
             <span asp-validation-for="EscuelaId" class="text-danger"></span>
         </div>
     </div>
-    <button class="btn btn-success" type="submit">Adicionar</button>
-    <a class="btn btn-secondary" href="@Url.Action("Create","Curso")">Cancelar</a>
+    <button class="btn btn-success" type="submit">@Domain.Localization.Resource.btn_Add</button>
+    <a class="btn btn-secondary" href="@Url.Action("Create","Curso")">@Domain.Localization.Resource.btn_Cancel</a>
 </form>

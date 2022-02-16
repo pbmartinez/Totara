@@ -59,5 +59,86 @@ namespace Domain.Localization {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adicionar.
+        /// </summary>
+        public static string btn_Add {
+            get {
+                return ResourceManager.GetString("btn_Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancelar.
+        /// </summary>
+        public static string btn_Cancel {
+            get {
+                return ResourceManager.GetString("btn_Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Eliminar.
+        /// </summary>
+        public static string btn_Delete {
+            get {
+                return ResourceManager.GetString("btn_Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detalles.
+        /// </summary>
+        public static string btn_Details {
+            get {
+                return ResourceManager.GetString("btn_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editar.
+        /// </summary>
+        public static string btn_Edit {
+            get {
+                return ResourceManager.GetString("btn_Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Está seguro que desea eliminar ?.
+        /// </summary>
+        public static string display_ConfirmOnDelete {
+            get {
+                return ResourceManager.GetString("display_ConfirmOnDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Detalles de  {0}.
+        /// </summary>
+        public static string display_DetailsOf {
+            get {
+                return ResourceManager.GetString("display_DetailsOf", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error de validación, compruebe los errores de la validación para más información..
+        /// </summary>
+        public static string Exception_ApplicationValidationError {
+            get {
+                return ResourceManager.GetString("Exception_ApplicationValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La propiedad especificada {0} no puede ser seleccionada para ordernar colección de {1}..
+        /// </summary>
+        public static string Exception_NullFieldOnOrderingEntity {
+            get {
+                return ResourceManager.GetString("Exception_NullFieldOnOrderingEntity", resourceCulture);
+            }
+        }
     }
 }

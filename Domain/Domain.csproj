@@ -17,13 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Localization\Resource.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Localization\Resource.en.Designer.cs">
-      <DependentUpon>Resource.en.resx</DependentUpon>
+    <Compile Update="Localization\Resource.es-ES.Designer.cs">
+      <DependentUpon>Resource.es-ES.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
@@ -32,38 +27,35 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Localization\Resource.en-CA.Designer.cs">
-      <DependentUpon>Resource.en-CA.resx</DependentUpon>
+    <Compile Update="Localization\Resource.en.Designer.cs">
+      <DependentUpon>Resource.en.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Update="Localization\Resource.es-ES.Designer.cs">
-      <DependentUpon>Resource.es-ES.resx</DependentUpon>
+    <Compile Update="Localization\Resource.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+      <DependentUpon>Resource.resx</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Localization\Resource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Resource.en.resx">
-      <LastGenOutput>Resource.en.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Resource.en-US.resx">
-      <LastGenOutput>Resource.en-US.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Localization\Resource.en-CA.resx">
-      <LastGenOutput>Resource.en-CA.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Localization\Resource.es-ES.resx">
       <LastGenOutput>Resource.es-ES.Designer.cs</LastGenOutput>
       <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Resource.en-US.resx">
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resource.en-US.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Resource.en.resx">
+      <LastGenOutput>Resource.en.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Localization\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
 

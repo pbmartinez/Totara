@@ -8,7 +8,7 @@
     <h1 class="display-4">Escuelas</h1>
 </div>
 
-<a class="btn btn-success" href="@Url.Action("Create","Escuela")">Adicionar</a>
+<a class="btn btn-success" href="@Url.Action("Create","Escuela")">@Domain.Localization.Resource.btn_Add</a>
 
 <table style="width:100%">
     <tr>
@@ -25,9 +25,9 @@
             <td>@item.Cursos.Count()</td>
             <td>@item.Estudiantes.Count()</td>
             <td>
-                <a class="btn btn-info" href="@Url.Action("Details","Escuela",new { id=item.Id})">Detalles</a>
-                <a class="btn btn-secondary" href="@Url.Action("Edit","Escuela",new { id=item.Id})">Editar</a>
-                <a class="btn btn-danger" href="@Url.Action("Delete","Escuela",new { id=item.Id})">Eliminar</a>
+                <a class="btn btn-info" href="@Url.Action("Details","Escuela",new { id=item.Id})">@Domain.Localization.Resource.btn_Details</a>
+                <a class="btn btn-secondary" href="@Url.Action("Edit","Escuela",new { id=item.Id})">@Domain.Localization.Resource.btn_Edit</a>
+                <a class="btn btn-danger" href="@Url.Action("Delete","Escuela",new { id=item.Id})">@Domain.Localization.Resource.btn_Delete</a>
             </td>
 
         </tr>
