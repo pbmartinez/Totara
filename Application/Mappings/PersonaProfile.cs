@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Application.Mappings
 {
-    public class PersonaProfile : Profile
+    public partial class PersonaProfile : Profile
     {
         public PersonaProfile()
         {

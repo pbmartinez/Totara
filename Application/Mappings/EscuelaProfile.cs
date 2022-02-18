@@ -4,7 +4,7 @@ using Domain.Entities;
 
 namespace Application.Mappings
 {
-    public class EscuelaProfile : Profile
+    public partial class EscuelaProfile : Profile
     {
         public EscuelaProfile()
         {
