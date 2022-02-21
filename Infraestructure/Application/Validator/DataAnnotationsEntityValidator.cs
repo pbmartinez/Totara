@@ -1,4 +1,5 @@
 ﻿using Application.IValidator;
+using Domain.Localization;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,7 +14,8 @@ namespace Infraestructure.Application.Validator
     ///   Validator based on Data Annotations. 
     ///   This validator use IValidatableObject interface and
     ///   ValidationAttribute ( hierachy of this) for
-    ///   perform validation
+    ///   perform validation. 
+    ///   This is not a DataAnnotation
     /// </summary>
     public class DataAnnotationsEntityValidator : IEntityValidator
     {
@@ -25,7 +27,7 @@ namespace Infraestructure.Application.Validator
         /// <typeparam name="TEntity"> The typeof entity </typeparam>
         /// <param name="item"> The item to validate </param>
         /// <param name="errors"> A collection of current errors </param>
-        private void SetValidatableObjectErrors<TEntity>(TEntity item, List<string> errors) where TEntity : class
+        private static void SetValidatableObjectErrors<TEntity>(TEntity item, List<string> errors) where TEntity : class
         {
             if (typeof(IValidatableObject).IsAssignableFrom(typeof(TEntity)))
             {
@@ -33,7 +35,8 @@ namespace Infraestructure.Application.Validator
 
                 var validationResults = ((IValidatableObject)item).Validate(validationContext);
 
-                errors.AddRange(validationResults.Select(vr => vr.ErrorMessage));
+                
+                errors.AddRange(validationResults.Select(vr => vr.ErrorMessage+""));
             }
         }
 
@@ -43,7 +46,7 @@ namespace Infraestructure.Application.Validator
         /// <typeparam name="TEntity"> The type of entity </typeparam>
         /// <param name="item"> The entity to validate </param>
         /// <param name="errors"> A collection of current errors </param>
-        private void SetValidationAttributeErrors<TEntity>(TEntity item, List<string> errors) where TEntity : class
+        private static void SetValidationAttributeErrors<TEntity>(TEntity item, List<string> errors) where TEntity : class
         {
             var result = (from property in TypeDescriptor.GetProperties(item).Cast<PropertyDescriptor>()
                           from attribute in property.Attributes.OfType<ValidationAttribute>()
@@ -88,7 +91,8 @@ namespace Infraestructure.Application.Validator
         public List<string> GetInvalidMessages<TEntity>(TEntity item) where TEntity : class
         {
             if (item == null)
-                return null;
+                //throw new ArgumentNullException(string.Format(Resource.Exception_NullEntityForValidation, typeof(TEntity)));
+                throw new ArgumentNullException();
 
             var validationErrors = new List<string>();
 

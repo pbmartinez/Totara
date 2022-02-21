@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Domain.Infraestructure;
+using Domain.Utils;
 using Domain.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -19,19 +19,7 @@ namespace Infraestructure.Domain.UnitOfWork
         public UnitOfWorkContainer(IConfiguration configuration)
         {
             _configuration = configuration;
-        }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Matricula>().HasKey(e => new { e.EstudianteId, e.CursoId });
-
-            modelBuilder.Entity<Estudiante>()
-                .HasMany(e => e.Matriculas)
-                .WithOne(a => a.Estudiante).IsRequired().OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Curso>()
-                .HasMany(e => e.Matriculas)
-                .WithOne(a => a.Curso).IsRequired().OnDelete(DeleteBehavior.NoAction);
-        }
+        }        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(_configuration.GetConnectionString(STRING_CONNECTION));
@@ -68,7 +56,7 @@ namespace Infraestructure.Domain.UnitOfWork
             return ChangeTracker;
         }
         
-        public IQueryable<TEntity> GetQueryable<TEntity>(List<Expression<Func<TEntity, object>>> includes = null, Expression<Func<TEntity,bool>> predicate = null, Dictionary<string,bool> order = null, int pageSize = 0, int pageGo = 0) where TEntity : class
+        public IQueryable<TEntity> GetQueryable<TEntity>(List<Expression<Func<TEntity, object>>>? includes = null, Expression<Func<TEntity,bool>>? predicate = null, Dictionary<string,bool>? order = null, int pageSize = 0, int pageGo = 0) where TEntity : class
         {
             IQueryable<TEntity> items = Set<TEntity>();
             if (includes != null && includes.Any())
@@ -96,12 +84,7 @@ namespace Infraestructure.Domain.UnitOfWork
             return  items;
         }
 
-        public virtual DbSet<Persona> Persona { get; set; } 
-        public virtual DbSet<Casa> Casa { get; set; }
-        public virtual DbSet<Curso> Curso { get; set; }
-        public virtual DbSet<Escuela> Escuela { get; set; }
-        public virtual DbSet<Estudiante> Estudiante { get; set; }
-        public virtual DbSet<Matricula> Matricula { get; set; }
-        public virtual DbSet<Categoria> Categoria { get; set; }
+        public virtual DbSet<Gateway>? Gateway { get; set; }
+        public virtual DbSet<Peripheral>? Peripheral { get; set; }
     }
 }

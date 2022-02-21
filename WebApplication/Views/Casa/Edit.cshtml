@@ -1,9 +1,0 @@
-﻿@model Application.Dtos.CasaDtoForUpdate
-
-
-    <form action="@Url.Action("Edit","Casa")" method="post">
-        <input asp-for="Color"/>
-        <input asp-for="CantidadCuartos"/>
-        <button class="btn btn-success" type="submit">@Domain.Localization.Resource.btn_Edit</button>
-        <a class="btn btn-secondary" href="@Url.Action("Index","Casa")">@Domain.Localization.Resource.btn_Cancel</a>
-    </form>
