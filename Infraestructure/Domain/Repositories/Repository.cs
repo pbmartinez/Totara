@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Domain.Infraestructure;
+using Domain.Utils;
 using Domain.IRepositories;
 using Domain.Specification;
 using Domain.UnitOfWork;

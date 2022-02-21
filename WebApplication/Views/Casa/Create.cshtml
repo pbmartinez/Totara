@@ -1,9 +1,0 @@
-﻿@model Application.Dtos.CasaDtoForCreate
-
-
-    <form action="@Url.Action("Create","Casa")" method="post">
-        <input asp-for="Color"/>
-        <input asp-for="CantidadCuartos"/>
-        <button class="btn btn-success" type="submit">@Domain.Localization.Resource.btn_Add</button>
-        <a class="btn btn-secondary" href="@Url.Action("Create","Casa")">@Domain.Localization.Resource.btn_Cancel</a>
-    </form>

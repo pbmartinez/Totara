@@ -6,6 +6,7 @@ using Domain.IRepositories;
 using Domain.UnitOfWork;
 using Infraestructure.Application.AppServices;
 using Infraestructure.Application.Validator;
+using Infraestructure.DependencyInjectionExtensions;
 using Infraestructure.Domain.Repositories;
 using Infraestructure.Domain.UnitOfWork;
 using Microsoft.AspNetCore.Builder;
@@ -30,57 +31,9 @@ namespace WebApplication
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
-
-            // AutoMapper Profiles
-            services.AddAutoMapper(configuration =>
-            {
-                configuration.AddExpressionMapping();
-                configuration.AddProfile<CasaProfile>();
-                configuration.AddProfile<CursoProfile>();
-                configuration.AddProfile<EscuelaProfile>();
-                configuration.AddProfile<EstudianteProfile>();
-                configuration.AddProfile<MatriculaProfile>();
-                configuration.AddProfile<PersonaProfile>();
-                configuration.AddProfile<CategoriaProfile>();
-                AppDomain.CurrentDomain.GetAssemblies();
-
-            });
-
-
-            /*Why scoped ?
-             * Lifetime of Unit of Work should be: 
-             * 1. long enough to contain all changes in a single block of transacctions (tipically a request), and
-             * 2. short enough to avoid interfere with other changes carried out in another block of transacctions
-             * AddSingleton -> Application Lifetime
-             * AddScoped -> Request Lifetime
-             * AddTransient -> Every time is invoked.
-             * Unit of Work should be Scoped. And because is injected into Repositories these ones should be scoped as well.
-             * When scoped services injected into singleton services their life time is altered and become singleton.
-             * Also .Net's build in dependency injection, validates such a rule, throwing an exception.
-             */
-            //UnitOfWork
-            services.AddScoped<IUnitOfWork, UnitOfWorkContainer>();
-            //AppServices
-            services.AddScoped<ICasaAppService, CasaAppService>();
-            services.AddScoped<IPersonaAppService, PersonaAppService>();
-            services.AddScoped<ICursoAppService, CursoAppService>();
-            services.AddScoped<IEscuelaAppService, EscuelaAppService>();
-            services.AddScoped<IEstudianteAppService, EstudianteAppService>();
-            services.AddScoped<IMatriculaAppService, MatriculaAppService>();
-            services.AddScoped<ICategoriaAppService, CategoriaAppService>();
-            //Repositories
-            services.AddScoped<ICasaRepository, CasaRepository>();
-            services.AddScoped<IPersonaRepository, PersonaRepository>();
-            services.AddScoped<ICursoRepository, CursoRepository>();
-            services.AddScoped<IEscuelaRepository, EscuelaRepository>();
-            services.AddScoped<IEstudianteRepository, EstudianteRepository>();
-            services.AddScoped<IMatriculaRepository, MatriculaRepository>();
-            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
-
-
-            //IValidator
-            services.AddScoped<IEntityValidator, DataAnnotationsEntityValidator>();
+            services.AddAutoMapperWithProfiles();
+            services.AddEntitiesServicesAndRepositories();
+            services.AddCustomApplicationServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
