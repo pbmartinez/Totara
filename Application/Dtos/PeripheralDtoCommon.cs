@@ -16,6 +16,10 @@ namespace Application.Dtos
         private static readonly int MAX_PERIPHERALS_ALLOWED = 10;
         private readonly IGatewayAppService _gatewayAppService;
 
+        public PeripheralDtoCommon()
+        {
+
+        }
         public PeripheralDtoCommon(IGatewayAppService gatewayAppService)
         {
             _gatewayAppService = gatewayAppService ?? throw new ArgumentNullException(nameof(gatewayAppService));
@@ -37,7 +41,7 @@ namespace Application.Dtos
         [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
         public Guid GatewayId { get; set; }
 
-
+        public GatewayDtoCommon Gateway { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

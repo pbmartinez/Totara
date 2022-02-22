@@ -8,6 +8,10 @@ namespace Application.Dtos
 {
     public partial class PeripheralDto : PeripheralDtoCommon
     {
+        public PeripheralDto():base()
+        {
+                
+        }
         public PeripheralDto(IGatewayAppService gatewayAppService) : base(gatewayAppService)
         {
         }

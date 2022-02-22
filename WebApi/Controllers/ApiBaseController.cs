@@ -1,12 +1,16 @@
 ﻿using Application.IAppServices;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
 
 namespace WebApi.Controllers
-{
-    [Route("api/[controller]")]
+{    
     [ApiController]
+    [Route("api/[controller]")]
     public abstract class ApiBaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> : ControllerBase
         where TEntityDto : Domain.Entities.Entity
         where TEntityDtoForCreate : Domain.Entities.Entity
@@ -38,17 +42,20 @@ namespace WebApi.Controllers
         /// </summary>
         protected Dictionary<string, bool> DefaultOrderBy = new();
 
-        private readonly ILogger<ApiBaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate>> _logger;
+        protected readonly ILogger<ApiBaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate>> _logger;
+
+        
 
         public ApiBaseController(IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> appService,
             ILogger<ApiBaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate>> logger)
         {
             AppService = appService;
             _logger = logger;
+
+            
         }
-
-
         [HttpGet]
+        [HttpHead]
         public virtual async Task<ActionResult<List<TEntityDto>>> Get()
         {
             var items = await AppService.GetAllAsync(Includes, DefaultOrderBy);
@@ -56,6 +63,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}")]
+        [HttpHead("{id}")]
         public virtual async Task<ActionResult<TEntityDto>> Get(Guid? id)
         {
             if (id == null || id.Value == Guid.Empty)
@@ -70,7 +78,7 @@ namespace WebApi.Controllers
         public virtual async Task<IActionResult> Post(TEntityDtoForCreate item)
         {
             var result = await AppService.AddAsync(item);
-            return CreatedAtAction("", item);
+            return CreatedAtAction(nameof(Get), new { id = item.Id }, item);
         }
 
         [HttpPut("{id}")]
@@ -82,23 +90,22 @@ namespace WebApi.Controllers
             if (itemTarget == null)
                 return NotFound();
             var result = await AppService.UpdateAsync(item);
-            if (result)
-            {
-
-            }
-            else
-            {
-
-            }
-            return null;
+            return NoContent();
         }
         [HttpPatch("{id}")]
-        public virtual async Task<IActionResult> Patch(Guid? id, TEntityDtoForUpdate item)
+        public virtual async Task<IActionResult> Patch(Guid? id, JsonPatchDocument<TEntityDtoForUpdate> patchDocument)
         {
-            var commit = await AppService.UpdateAsync(item);
-            if (commit)
-                return RedirectToAction(nameof(Index));
-            return null;
+            if (id == null || id == Guid.Empty)
+                return BadRequest();
+            var item = await AppService.GetForUpdateAsync(id.Value);
+            if (item == null)
+                return NotFound();            
+            //TODO: Check client errors vs server error response
+            patchDocument.ApplyTo(item);
+            if(!TryValidateModel(item))
+                return ValidationProblem(ModelState);
+            var result = await AppService.UpdateAsync(item);
+            return NoContent();
         }
         [HttpDelete("{id}")]
         public virtual async Task<IActionResult> Delete(Guid? id)
@@ -109,6 +116,12 @@ namespace WebApi.Controllers
             if (item==null)
                 return NotFound();
             return NoContent();
+        }
+
+        public override ActionResult ValidationProblem([ActionResultObjectValue] ModelStateDictionary modelStateDictionary)
+        {
+            var options = HttpContext.RequestServices.GetRequiredService<IOptions<ApiBehaviorOptions>>();
+            return (ActionResult)options.Value.InvalidModelStateResponseFactory(ControllerContext);
         }
     }
 }
