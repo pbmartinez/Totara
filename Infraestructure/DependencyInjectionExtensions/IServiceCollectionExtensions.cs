@@ -17,6 +17,10 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.DependencyInjectionExtensions
 {
+    /// <summary>
+    /// IServiceCollecion extensions, encapsulation of adding application services to the Program/StartUp class
+    /// no matter what net. core application client is running.
+    /// </summary>
     public static class IServiceCollectionExtensions
     {
         /// <summary>
