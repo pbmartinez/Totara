@@ -144,4 +144,31 @@
   <data name="Exception_NullFieldOnOrderingEntity" xml:space="preserve">
     <value>La propiedad especificada {0} no puede ser seleccionada para ordernar colección de {1}.</value>
   </data>
+  <data name="GatewayDtoCommonIpv4Address" xml:space="preserve">
+    <value>Ipv4</value>
+  </data>
+  <data name="GatewayDtoCommonName" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="PeripheralDtoCommonCreatedDate" xml:space="preserve">
+    <value>Fecha creado</value>
+  </data>
+  <data name="PeripheralDtoCommonGatewayId" xml:space="preserve">
+    <value>Pasarela</value>
+  </data>
+  <data name="PeripheralDtoCommonStatus" xml:space="preserve">
+    <value>Estatus</value>
+  </data>
+  <data name="PeripheralDtoCommonVendor" xml:space="preserve">
+    <value>Proveedor</value>
+  </data>
+  <data name="validation_FieldRequired" xml:space="preserve">
+    <value>Campo requerido</value>
+  </data>
+  <data name="validation_Ipv4AddressBadFormat" xml:space="preserve">
+    <value>La dirección Ip no es válida</value>
+  </data>
+  <data name="validation_MaxPeriphelsAllowed" xml:space="preserve">
+    <value>No son permitidos más de {0} periféricos por pasarela</value>
+  </data>
 </root>

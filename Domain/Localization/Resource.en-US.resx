@@ -144,4 +144,31 @@
   <data name="Exception_NullFieldOnOrderingEntity" xml:space="preserve">
     <value>The property specified {0} can not be defined for ordering collection of {1}.</value>
   </data>
+  <data name="GatewayDtoCommonIpv4Address" xml:space="preserve">
+    <value>Ipv4</value>
+  </data>
+  <data name="GatewayDtoCommonName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PeripheralDtoCommonCreatedDate" xml:space="preserve">
+    <value>CreatedDate</value>
+  </data>
+  <data name="PeripheralDtoCommonGatewayId" xml:space="preserve">
+    <value>Gateway</value>
+  </data>
+  <data name="PeripheralDtoCommonStatus" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="PeripheralDtoCommonVendor" xml:space="preserve">
+    <value>Vendor</value>
+  </data>
+  <data name="validation_FieldRequired" xml:space="preserve">
+    <value>Field required</value>
+  </data>
+  <data name="validation_Ipv4AddressBadFormat" xml:space="preserve">
+    <value>Ipv4 it has bad format</value>
+  </data>
+  <data name="validation_MaxPeriphelsAllowed" xml:space="preserve">
+    <value>No more then {0} peripherals by gateway are allowed</value>
+  </data>
 </root>

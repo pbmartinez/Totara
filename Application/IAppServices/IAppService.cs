@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 namespace Application.IAppServices
 {
     public interface IAppService<TEntity, TEntityForCreation, TEntityForUpdate>
-    {        
+    {
+        TEntity Get(Guid id, List<Expression<Func<TEntity, object>>> includes = null);
         Task<bool> AddAsync(TEntityForCreation item);
         Task<bool> UpdateAsync(TEntityForUpdate item);
         Task<TEntity> GetAsync(Guid id, List<Expression<Func<TEntity, object>>> includes = null);

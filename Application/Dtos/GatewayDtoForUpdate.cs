@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Application.Dtos
 {
-    public partial class GatewayDtoForUpdate : Entity
+    public partial class GatewayDtoForUpdate : GatewayDtoCommon
     {
-        public string Name { get; set; }
-        public string Ipv4Address { get; set; }
+
     }
 }

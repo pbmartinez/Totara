@@ -76,6 +76,14 @@ namespace Infraestructure.Application.AppServices
                     specification?.MapToExpressionOfType<Gateway>(), domainExpressionIncludesList, order, pageSize, pageGo));
         }
 
+        public GatewayDto Get(Guid id, List<Expression<Func<GatewayDto, object>>>? includes = null)
+        {
+            var domainExpressionIncludesList = includes == null
+                ? new List<Expression<Func<Gateway, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Gateway, object>>>(includes).ToList();
+            return _mapper.Map<GatewayDto>(_GatewayRepository.Get(id, domainExpressionIncludesList));
+        }
+
         public async Task<List<GatewayDto>> GetAllAsync(List<Expression<Func<GatewayDto, object>>>? includes, Dictionary<string, bool>? order)
         {
             var domainExpressionIncludesList = includes == null

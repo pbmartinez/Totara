@@ -76,6 +76,14 @@ namespace Infraestructure.Application.AppServices
                     specification?.MapToExpressionOfType<Peripheral>(), domainExpressionIncludesList, order, pageSize, pageGo));
         }
 
+        public PeripheralDto Get(Guid id, List<Expression<Func<PeripheralDto, object>>>? includes = null)
+        {
+            var domainExpressionIncludesList = includes == null
+                ? new List<Expression<Func<Peripheral, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Peripheral, object>>>(includes).ToList();
+            return _mapper.Map<PeripheralDto>( _PeripheralRepository.Get(id, domainExpressionIncludesList));
+        }
+
         public async Task<List<PeripheralDto>> GetAllAsync(List<Expression<Func<PeripheralDto, object>>>? includes, Dictionary<string, bool>? order)
         {
             var domainExpressionIncludesList = includes == null

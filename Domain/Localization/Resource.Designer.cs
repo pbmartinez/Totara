@@ -140,5 +140,86 @@ namespace Domain.Localization {
                 return ResourceManager.GetString("Exception_NullFieldOnOrderingEntity", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ipv4.
+        /// </summary>
+        public static string GatewayDtoCommonIpv4Address {
+            get {
+                return ResourceManager.GetString("GatewayDtoCommonIpv4Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nombre.
+        /// </summary>
+        public static string GatewayDtoCommonName {
+            get {
+                return ResourceManager.GetString("GatewayDtoCommonName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fecha creado.
+        /// </summary>
+        public static string PeripheralDtoCommonCreatedDate {
+            get {
+                return ResourceManager.GetString("PeripheralDtoCommonCreatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pasarela.
+        /// </summary>
+        public static string PeripheralDtoCommonGatewayId {
+            get {
+                return ResourceManager.GetString("PeripheralDtoCommonGatewayId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estatus.
+        /// </summary>
+        public static string PeripheralDtoCommonStatus {
+            get {
+                return ResourceManager.GetString("PeripheralDtoCommonStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proveedor.
+        /// </summary>
+        public static string PeripheralDtoCommonVendor {
+            get {
+                return ResourceManager.GetString("PeripheralDtoCommonVendor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Campo requerido.
+        /// </summary>
+        public static string validation_FieldRequired {
+            get {
+                return ResourceManager.GetString("validation_FieldRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La dirección Ip no es válida.
+        /// </summary>
+        public static string validation_Ipv4AddressBadFormat {
+            get {
+                return ResourceManager.GetString("validation_Ipv4AddressBadFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No son permitidos más de {0} periféricos por pasarela.
+        /// </summary>
+        public static string validation_MaxPeriphelsAllowed {
+            get {
+                return ResourceManager.GetString("validation_MaxPeriphelsAllowed", resourceCulture);
+            }
+        }
     }
 }
