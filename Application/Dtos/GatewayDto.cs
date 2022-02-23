@@ -23,9 +23,6 @@ namespace Application.Dtos
     [MetadataType(typeof(GatewayDtoMetadata))]
     public partial class GatewayDto : Entity, IValidatableObject 
     {
-        private static readonly int MAX_PERIPHERALS_ALLOWED = 10;
-
-
         public GatewayDto()
         {
             Peripherals = new List<PeripheralDto>();
@@ -43,11 +40,10 @@ namespace Application.Dtos
             var gateway = (GatewayDto)validationContext.ObjectInstance;
             var erroResults = new List<ValidationResult>();
 
-
-            if (gateway.Peripherals.Count >= MAX_PERIPHERALS_ALLOWED)
+            if (gateway.Peripherals.Count >= Constants.GatewayPeripherals.MAX_PERIPHERALS_ALLOWED_PER_GATEWAY)
             {
                 erroResults.Add(new ValidationResult(
-                    errorMessage: string.Format(Resource.validation_MaxPeriphelsAllowed, MAX_PERIPHERALS_ALLOWED),
+                    errorMessage: string.Format(Resource.validation_MaxPeriphelsAllowed, Constants.GatewayPeripherals.MAX_PERIPHERALS_ALLOWED_PER_GATEWAY),
                     memberNames: new[] { nameof(Peripherals) }));
             }
 
