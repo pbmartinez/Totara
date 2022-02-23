@@ -12,7 +12,7 @@
 @inject IStringLocalizer<Resource> Localizer
 
 
-<MudText Typo="Typo.h3" GutterBottom="true">@Localizer[Resource.GatewayDtoCommon]</MudText>
+<MudText Typo="Typo.h3" GutterBottom="true">@Localizer[Resource.GatewayDto]</MudText>
 <MudText Class="mb-8">Listado de las cajas registradoras</MudText>
 
 
@@ -37,8 +37,8 @@
                 </MudTextField>
             </ToolBarContent>
             <HeaderContent>
-                <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<GatewayDto, object>(x=>x.Name)">@Localizer[Resource.GatewayDtoCommonName]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<GatewayDto, object>(x=>x.Ipv4Address)">@Localizer[Resource.GatewayDtoCommonIpv4Address]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<GatewayDto, object>(x=>x.Name)">@Localizer[Resource.GatewayDtoName]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<GatewayDto, object>(x=>x.Ipv4Address)">@Localizer[Resource.GatewayDtoIpv4Address]</MudTableSortLabel></MudTh>
                 <MudTh>@Localizer[Resource.display_Actions]</MudTh>
             </HeaderContent>
             <RowTemplate>
@@ -132,7 +132,7 @@
         {
             var parameters = SetParametersForShow();
             parameters.Add("item", new GatewayDto());
-            parameters.Add("itemForCreate", new GatewayDtoForCreate());
+            parameters.Add("itemForCreate", new GatewayDto());
             parameters.Add("EditMode", true);
             dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);
         }

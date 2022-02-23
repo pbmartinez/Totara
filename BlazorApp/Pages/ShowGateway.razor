@@ -18,24 +18,24 @@
             <MudGrid>
 
                 @*<MudItem xs="6" sm="4">
-                    <MudTextField @bind-Value=@(ShowMode ? item.Name: AddMode? itemForCreate.Name:itemForUpdate.Name) Disabled=(!EditMode) Label="@Localizer[Resource.GatewayDtoCommonName]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoCommonName]} ...")"
+                    <MudTextField @bind-Value=@(ShowMode ? item.Name: AddMode? itemForCreate.Name:itemForUpdate.Name) Disabled=(!EditMode) Label="@Localizer[Resource.GatewayDtoName]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoName]} ...")"
                                   Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]">
                     </MudTextField>
                 </MudItem>
                 <MudItem xs="6" sm="4">
-                    <MudTextField @bind-Value=@(ShowMode ? item.Ipv4Address: AddMode? itemForCreate.Ipv4Address:itemForUpdate.Ipv4Address) Disabled=(!EditMode) Label="@Localizer[Resource.GatewayDtoCommonIpv4Address]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoCommonIpv4Address]} ...")"
+                    <MudTextField @bind-Value=@(ShowMode ? item.Ipv4Address: AddMode? itemForCreate.Ipv4Address:itemForUpdate.Ipv4Address) Disabled=(!EditMode) Label="@Localizer[Resource.GatewayDtoIpv4Address]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoIpv4Address]} ...")"
                                   Validation="@(new Ipv4Address(){ErrorMessage=Localizer[Resource.validation_Ipv4AddressBadFormat]})">
                     </MudTextField>
                 </MudItem>*@
 
                 <MudItem xs="6" sm="4">
-                    <MudTextField @bind-Value=@(item.Name) Disabled=(!EditMode) Label="@Localizer[Resource.GatewayDtoCommonName]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoCommonName]} ...")"
+                    <MudTextField @bind-Value=@(item.Name) Disabled=(!EditMode) Label="@Localizer[Resource.GatewayDtoName]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoName]} ...")"
                                   Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]">
                     </MudTextField>
                 </MudItem>
 
                 <MudItem xs="6" sm="4">
-                    <MudTextField @bind-Value=item.Ipv4Address Disabled=(!EditMode) Label="@Localizer[Resource.GatewayDtoCommonIpv4Address]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoCommonIpv4Address]} ...")"
+                    <MudTextField @bind-Value=item.Ipv4Address Disabled=(!EditMode) Label="@Localizer[Resource.GatewayDtoIpv4Address]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoIpv4Address]} ...")"
                                   Validation="@(new Ipv4Address(){ErrorMessage=Localizer[Resource.validation_Ipv4AddressBadFormat]})">
                     </MudTextField>
                 </MudItem>
@@ -78,12 +78,6 @@
 @code {
     [Parameter]
     public GatewayDto item { get; set; }
-
-    [Parameter]
-    public GatewayDtoForCreate itemForCreate { get; set; }= new GatewayDtoForCreate();
-
-    [Parameter]
-    public GatewayDtoForUpdate itemForUpdate { get; set; } 
 
     [Parameter]
     public Action OnSuccessfullySaveAsync { get; set; }
@@ -156,7 +150,7 @@
     }
     private async Task EditAsync()
     {
-        var itemToEdit = await Http.GetFromJsonAsync<GatewayDto>($"api/gateway/{itemForUpdate.Id}");
+        var itemToEdit = await Http.GetFromJsonAsync<GatewayDto>($"api/gateway/{item.Id}");
 
         if (itemToEdit == null)
         {
@@ -164,14 +158,14 @@
         }
         else
         {
-            var result = await Http.PostAsJsonAsync<GatewayDtoForUpdate>($"api/gateway", itemForUpdate);
+            var result = await Http.PostAsJsonAsync<GatewayDto>($"api/gateway", item);
             Snackbar.Add(Localizer[Resource.message_SuccesfullyEdited], Severity.Success);
             OnSuccessfullySaveAsync.Invoke();
         }
     }
     private async Task AddAsync()
     {
-        var result = await Http.PostAsJsonAsync<GatewayDtoForCreate>($"api/gateway", itemForCreate);
+        var result = await Http.PostAsJsonAsync<GatewayDto>($"api/gateway", item);
         Snackbar.Add(Localizer[Resource.message_SuccesfullyAdded], Severity.Success);
         OnSuccessfullySaveAsync.Invoke();
     }

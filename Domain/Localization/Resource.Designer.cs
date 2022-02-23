@@ -189,45 +189,45 @@ namespace Domain.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Pasarela.
         /// </summary>
-        public static string GatewayDtoCommon {
+        public static string GatewayDto {
             get {
-                return ResourceManager.GetString("GatewayDtoCommon", resourceCulture);
+                return ResourceManager.GetString("GatewayDto", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Ipv4.
         /// </summary>
-        public static string GatewayDtoCommonIpv4Address {
+        public static string GatewayDtoIpv4Address {
             get {
-                return ResourceManager.GetString("GatewayDtoCommonIpv4Address", resourceCulture);
+                return ResourceManager.GetString("GatewayDtoIpv4Address", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Nombre.
         /// </summary>
-        public static string GatewayDtoCommonName {
+        public static string GatewayDtoName {
             get {
-                return ResourceManager.GetString("GatewayDtoCommonName", resourceCulture);
+                return ResourceManager.GetString("GatewayDtoName", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Periféricos.
         /// </summary>
-        public static string GatewayDtoCommonPeripherals {
+        public static string GatewayDtoPeripherals {
             get {
-                return ResourceManager.GetString("GatewayDtoCommonPeripherals", resourceCulture);
+                return ResourceManager.GetString("GatewayDtoPeripherals", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Pasarelas.
         /// </summary>
-        public static string GatewayDtoCommons {
+        public static string GatewayDtos {
             get {
-                return ResourceManager.GetString("GatewayDtoCommons", resourceCulture);
+                return ResourceManager.GetString("GatewayDtos", resourceCulture);
             }
         }
         
@@ -270,54 +270,54 @@ namespace Domain.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Periférico.
         /// </summary>
-        public static string PeripheralDtoCommon {
+        public static string PeripheralDto {
             get {
-                return ResourceManager.GetString("PeripheralDtoCommon", resourceCulture);
+                return ResourceManager.GetString("PeripheralDto", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Fecha creado.
         /// </summary>
-        public static string PeripheralDtoCommonCreatedDate {
+        public static string PeripheralDtoCreatedDate {
             get {
-                return ResourceManager.GetString("PeripheralDtoCommonCreatedDate", resourceCulture);
+                return ResourceManager.GetString("PeripheralDtoCreatedDate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Pasarela.
         /// </summary>
-        public static string PeripheralDtoCommonGatewayId {
+        public static string PeripheralDtoGatewayId {
             get {
-                return ResourceManager.GetString("PeripheralDtoCommonGatewayId", resourceCulture);
+                return ResourceManager.GetString("PeripheralDtoGatewayId", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Periféricos.
         /// </summary>
-        public static string PeripheralDtoCommons {
+        public static string PeripheralDtos {
             get {
-                return ResourceManager.GetString("PeripheralDtoCommons", resourceCulture);
+                return ResourceManager.GetString("PeripheralDtos", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Estatus.
         /// </summary>
-        public static string PeripheralDtoCommonStatus {
+        public static string PeripheralDtoStatus {
             get {
-                return ResourceManager.GetString("PeripheralDtoCommonStatus", resourceCulture);
+                return ResourceManager.GetString("PeripheralDtoStatus", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Proveedor.
         /// </summary>
-        public static string PeripheralDtoCommonVendor {
+        public static string PeripheralDtoVendor {
             get {
-                return ResourceManager.GetString("PeripheralDtoCommonVendor", resourceCulture);
+                return ResourceManager.GetString("PeripheralDtoVendor", resourceCulture);
             }
         }
         

@@ -11,12 +11,9 @@ namespace WebApi.Controllers
 {    
     [ApiController]
     [Route("api/[controller]")]
-    public abstract class ApiBaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> : ControllerBase
-        where TEntityDto : Domain.Entities.Entity
-        where TEntityDtoForCreate : Domain.Entities.Entity
-        where TEntityDtoForUpdate : Domain.Entities.Entity
+    public abstract class ApiBaseController<TEntityDto> : ControllerBase where TEntityDto : Domain.Entities.Entity
     {
-        protected readonly IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> AppService;
+        protected readonly IAppService<TEntityDto> AppService;
 
         /// <summary>
         /// List of related entities (navigation properties) to be included. Index view.
@@ -42,12 +39,12 @@ namespace WebApi.Controllers
         /// </summary>
         protected Dictionary<string, bool> DefaultOrderBy = new();
 
-        protected readonly ILogger<ApiBaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate>> _logger;
+        protected readonly ILogger<ApiBaseController<TEntityDto>> _logger;
 
         
 
-        public ApiBaseController(IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> appService,
-            ILogger<ApiBaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate>> logger)
+        public ApiBaseController(IAppService<TEntityDto> appService,
+            ILogger<ApiBaseController<TEntityDto>> logger)
         {
             AppService = appService;
             _logger = logger;
@@ -75,29 +72,29 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Post(TEntityDtoForCreate item)
+        public virtual async Task<IActionResult> Post(TEntityDto item)
         {
             var result = await AppService.AddAsync(item);
             return CreatedAtAction(nameof(Get), new { id = item.Id }, item);
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<IActionResult> Put(Guid? id, TEntityDtoForUpdate item)
+        public virtual async Task<IActionResult> Put(Guid? id, TEntityDto item)
         {
             if (id == null || id == Guid.Empty)
                 return BadRequest();
-            var itemTarget = await AppService.GetForUpdateAsync(id.Value);
+            var itemTarget = await AppService.GetAsync(id.Value);
             if (itemTarget == null)
                 return NotFound();
             var result = await AppService.UpdateAsync(item);
             return NoContent();
         }
         [HttpPatch("{id}")]
-        public virtual async Task<IActionResult> Patch(Guid? id, JsonPatchDocument<TEntityDtoForUpdate> patchDocument)
+        public virtual async Task<IActionResult> Patch(Guid? id, JsonPatchDocument<TEntityDto> patchDocument)
         {
             if (id == null || id == Guid.Empty)
                 return BadRequest();
-            var item = await AppService.GetForUpdateAsync(id.Value);
+            var item = await AppService.GetAsync(id.Value);
             if (item == null)
                 return NotFound();            
             //TODO: Check client errors vs server error response

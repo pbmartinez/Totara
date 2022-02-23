@@ -159,19 +159,19 @@
   <data name="Exception_NullFieldOnOrderingEntity" xml:space="preserve">
     <value>The property specified {0} can not be defined for ordering collection of {1}.</value>
   </data>
-  <data name="GatewayDtoCommon" xml:space="preserve">
+  <data name="GatewayDto" xml:space="preserve">
     <value>Gateway</value>
   </data>
-  <data name="GatewayDtoCommonIpv4Address" xml:space="preserve">
+  <data name="GatewayDtoIpv4Address" xml:space="preserve">
     <value>Ipv4</value>
   </data>
-  <data name="GatewayDtoCommonName" xml:space="preserve">
+  <data name="GatewayDtoName" xml:space="preserve">
     <value>Name</value>
   </data>
-  <data name="GatewayDtoCommonPeripherals" xml:space="preserve">
+  <data name="GatewayDtoPeripherals" xml:space="preserve">
     <value>Peripherals</value>
   </data>
-  <data name="GatewayDtoCommons" xml:space="preserve">
+  <data name="GatewayDtos" xml:space="preserve">
     <value>Gateways</value>
   </data>
   <data name="message_ItemDoesNotExist" xml:space="preserve">
@@ -186,22 +186,22 @@
   <data name="message_SuccesfullyEdited" xml:space="preserve">
     <value>Successfully edited</value>
   </data>
-  <data name="PeripheralDtoCommon" xml:space="preserve">
+  <data name="PeripheralDto" xml:space="preserve">
     <value>Peripheral</value>
   </data>
-  <data name="PeripheralDtoCommonCreatedDate" xml:space="preserve">
+  <data name="PeripheralDtoCreatedDate" xml:space="preserve">
     <value>CreatedDate</value>
   </data>
-  <data name="PeripheralDtoCommonGatewayId" xml:space="preserve">
+  <data name="PeripheralDtoGatewayId" xml:space="preserve">
     <value>Gateway</value>
   </data>
-  <data name="PeripheralDtoCommons" xml:space="preserve">
+  <data name="PeripheralDtos" xml:space="preserve">
     <value>Peripherals</value>
   </data>
-  <data name="PeripheralDtoCommonStatus" xml:space="preserve">
+  <data name="PeripheralDtoStatus" xml:space="preserve">
     <value>Status</value>
   </data>
-  <data name="PeripheralDtoCommonVendor" xml:space="preserve">
+  <data name="PeripheralDtoVendor" xml:space="preserve">
     <value>Vendor</value>
   </data>
   <data name="validation_FieldRequired" xml:space="preserve">

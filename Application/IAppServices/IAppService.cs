@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Application.IAppServices
 {
-    public interface IAppService<TEntity, TEntityForCreation, TEntityForUpdate>
+    public interface IAppService<TEntity>
     {
         TEntity Get(Guid id, List<Expression<Func<TEntity, object>>> includes = null);
-        Task<bool> AddAsync(TEntityForCreation item);
-        Task<bool> UpdateAsync(TEntityForUpdate item);
+        Task<bool> AddAsync(TEntity item);
+        Task<bool> UpdateAsync(TEntity item);
         Task<TEntity> GetAsync(Guid id, List<Expression<Func<TEntity, object>>> includes = null);
-        Task<TEntityForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<TEntity, object>>> includes = null);
+//        Task<TEntityForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<TEntity, object>>> includes = null);
         Task<List<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> includes = null, Dictionary<string, bool> order = null);
         Task<bool> RemoveAsync(Guid id);
         Task<TEntity> FindOneBySpecificationPatternAsync(Specification<TEntity> specification = null, List<Expression<Func<TEntity, object>>> includes = null);

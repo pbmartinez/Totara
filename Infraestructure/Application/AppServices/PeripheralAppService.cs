@@ -27,7 +27,7 @@ namespace Infraestructure.Application.AppServices
             _mapper = mapper;
             _entityValidator = entityValidator;
         }
-        public async Task<bool> AddAsync(PeripheralDtoForCreate item)
+        public async Task<bool> AddAsync(PeripheralDto item)
         {
             int commited;
             if (_entityValidator.IsValid(item))
@@ -105,13 +105,13 @@ namespace Infraestructure.Application.AppServices
         }
 
 
-        public async Task<PeripheralDtoForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<PeripheralDto, object>>>? includes = null)
-        {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Peripheral, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Peripheral, object>>>(includes).ToList();
-            return _mapper.Map<PeripheralDtoForUpdate>(await _PeripheralRepository.GetAsync(id, domainExpressionIncludesList));
-        }
+        //public async Task<PeripheralDto> GetForUpdateAsync(Guid id, List<Expression<Func<PeripheralDto, object>>>? includes = null)
+        //{
+        //    var domainExpressionIncludesList = includes == null
+        //        ? new List<Expression<Func<Peripheral, object>>>()
+        //        : _mapper.MapIncludesList<Expression<Func<Peripheral, object>>>(includes).ToList();
+        //    return _mapper.Map<PeripheralDto>(await _PeripheralRepository.GetAsync(id, domainExpressionIncludesList));
+        //}
 
         public async Task<bool> RemoveAsync(Guid id)
         {
@@ -122,7 +122,7 @@ namespace Infraestructure.Application.AppServices
             return commited > 0;
         }
 
-        public async Task<bool> UpdateAsync(PeripheralDtoForUpdate item)
+        public async Task<bool> UpdateAsync(PeripheralDto item)
         {
             int commited;
             if (_entityValidator.IsValid(item))

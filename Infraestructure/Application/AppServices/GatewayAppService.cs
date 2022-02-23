@@ -27,7 +27,7 @@ namespace Infraestructure.Application.AppServices
             _mapper = mapper;
             _entityValidator = entityValidator;
         }
-        public async Task<bool> AddAsync(GatewayDtoForCreate item)
+        public async Task<bool> AddAsync(GatewayDto item)
         {
             int commited;
             if (_entityValidator.IsValid(item))
@@ -105,13 +105,13 @@ namespace Infraestructure.Application.AppServices
         }
 
 
-        public async Task<GatewayDtoForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<GatewayDto, object>>>? includes = null)
-        {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Gateway, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Gateway, object>>>(includes).ToList();
-            return _mapper.Map<GatewayDtoForUpdate>(await _GatewayRepository.GetAsync(id, domainExpressionIncludesList));
-        }
+        //public async Task<GatewayDto> GetForUpdateAsync(Guid id, List<Expression<Func<GatewayDto, object>>>? includes = null)
+        //{
+        //    var domainExpressionIncludesList = includes == null
+        //        ? new List<Expression<Func<Gateway, object>>>()
+        //        : _mapper.MapIncludesList<Expression<Func<Gateway, object>>>(includes).ToList();
+        //    return _mapper.Map<GatewayDto>(await _GatewayRepository.GetAsync(id, domainExpressionIncludesList));
+        //}
 
         public async Task<bool> RemoveAsync(Guid id)
         {
@@ -122,7 +122,7 @@ namespace Infraestructure.Application.AppServices
             return commited > 0;
         }
 
-        public async Task<bool> UpdateAsync(GatewayDtoForUpdate item)
+        public async Task<bool> UpdateAsync(GatewayDto item)
         {
             int commited;
             if (_entityValidator.IsValid(item))

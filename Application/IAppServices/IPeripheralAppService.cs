@@ -2,7 +2,7 @@
 
 namespace Application.IAppServices
 {
-    public partial interface IPeripheralAppService : IAppService<PeripheralDto, PeripheralDtoForCreate, PeripheralDtoForUpdate>
+    public partial interface IPeripheralAppService : IAppService<PeripheralDto>
     {
     }
 }

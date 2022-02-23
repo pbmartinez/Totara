@@ -9,10 +9,10 @@ namespace WebApi.Controllers
 
     [ApiController]
     [Route("api/peripheral")]
-    public class PeripheralController : ApiBaseController<PeripheralDto, PeripheralDtoForCreate, PeripheralDtoForUpdate>
+    public class PeripheralController : ApiBaseController<PeripheralDto>
     {
         private readonly IGatewayAppService _gatewayAppService;
-        public PeripheralController(IGatewayAppService gatewayAppService, IPeripheralAppService appService, ILogger<ApiBaseController<PeripheralDto, PeripheralDtoForCreate, PeripheralDtoForUpdate>> logger)
+        public PeripheralController(IGatewayAppService gatewayAppService, IPeripheralAppService appService, ILogger<ApiBaseController<PeripheralDto>> logger)
             : base(appService, logger)
         {
             _gatewayAppService = gatewayAppService;
@@ -39,7 +39,7 @@ namespace WebApi.Controllers
 
         [HttpPost]
         [Route("~/api/gateway/{gatewayId}/peripheral")]
-        public async Task<ActionResult> PostPeripheralForGateway(Guid? gatewayId, PeripheralDtoForCreate peripheral)
+        public async Task<ActionResult> PostPeripheralForGateway(Guid? gatewayId, PeripheralDto peripheral)
         {
             if (gatewayId == null || gatewayId == Guid.Empty)
                 return BadRequest();

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
 {
-    public class PeripheralController : BaseController<PeripheralDto, PeripheralDtoForCreate, PeripheralDtoForUpdate>
+    public class PeripheralController : BaseController<PeripheralDto>
     {
         public PeripheralController(IPeripheralAppService PeripheralAppService) : base(PeripheralAppService)
         {
