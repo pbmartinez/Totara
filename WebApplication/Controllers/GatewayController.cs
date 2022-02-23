@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
 {
-    public class GatewayController : BaseController<GatewayDto, GatewayDtoForCreate, GatewayDtoForUpdate>
+    public class GatewayController : BaseController<GatewayDto>
     {
         public GatewayController(IGatewayAppService GatewayAppService) : base(GatewayAppService)
         {

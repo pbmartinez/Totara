@@ -8,9 +8,9 @@ namespace Application.Mappings
     {
         public GatewayProfile()
         {
-            CreateMap<Gateway, GatewayDto>().ReverseMap();
-            CreateMap<Gateway, GatewayDtoForCreate>().ReverseMap();
-            CreateMap<Gateway, GatewayDtoForUpdate>().ReverseMap();
+            CreateMap<Gateway, GatewayDto>()
+                .ForMember(g => g.Peripherals, options => options.MapFrom(f => f.Peripherals))
+                .ReverseMap();
         }
     }
 }

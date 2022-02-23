@@ -48,11 +48,11 @@ namespace Infraestructure.Application.Validator
         /// <param name="errors"> A collection of current errors </param>
         private static void SetValidationAttributeErrors<TEntity>(TEntity item, List<string> errors) where TEntity : class
         {
+            //TODO: Capture attributes that are decorated in metadata class
             var result = (from property in TypeDescriptor.GetProperties(item).Cast<PropertyDescriptor>()
                           from attribute in property.Attributes.OfType<ValidationAttribute>()
                           where !attribute.IsValid(property.GetValue(item))
                           select attribute.FormatErrorMessage(string.Empty)).ToList();
-
             if (result.Any())
                 errors.AddRange(result);
         }

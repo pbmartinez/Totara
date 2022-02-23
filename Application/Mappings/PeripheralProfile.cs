@@ -8,9 +8,9 @@ namespace Application.Mappings
     {
         public PeripheralProfile()
         {
-            CreateMap<Peripheral, PeripheralDto>().ReverseMap();
-            CreateMap<Peripheral, PeripheralDtoForCreate>().ReverseMap();
-            CreateMap<Peripheral, PeripheralDtoForUpdate>().ReverseMap();
+            CreateMap<Peripheral, PeripheralDto>()
+                .ForMember(g => g.Gateway, options => options.MapFrom(f => f.Gateway))
+                .ReverseMap();
         }
     }
 }

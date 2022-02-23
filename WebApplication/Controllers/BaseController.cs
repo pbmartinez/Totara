@@ -8,12 +8,9 @@ using System.Threading.Tasks;
 
 namespace WebApplication.Controllers
 {
-    public abstract class BaseController<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> : Controller
-        where TEntityDto : Domain.Entities.Entity
-        where TEntityDtoForCreate : Domain.Entities.Entity
-        where TEntityDtoForUpdate : Domain.Entities.Entity
+    public abstract class BaseController<TEntityDto> : Controller where TEntityDto : Domain.Entities.Entity
     {
-        protected readonly IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> AppService;
+        protected readonly IAppService<TEntityDto> AppService;
 
         /// <summary>
         /// List of related entities (navigation properties) to be included. Index view.
@@ -39,7 +36,7 @@ namespace WebApplication.Controllers
         /// </summary>
         protected Dictionary<string, bool> DefaultOrderBy = new();
 
-        public BaseController(IAppService<TEntityDto, TEntityDtoForCreate, TEntityDtoForUpdate> appService)
+        public BaseController(IAppService<TEntityDto> appService)
         {
             AppService = appService;
 
@@ -68,7 +65,7 @@ namespace WebApplication.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Create(TEntityDtoForCreate item)
+        public virtual async Task<IActionResult> Create(TEntityDto item)
         {
             if (ModelState.IsValid)
             {
@@ -83,13 +80,13 @@ namespace WebApplication.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> Edit(Guid id)
         {
-            var item = await AppService.GetForUpdateAsync(id, EditIncludes);
+            var item = await AppService.GetAsync(id, EditIncludes);
             await CargarViewBagsEdit(id);
             return await Task.FromResult(View(item));
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Edit(TEntityDtoForUpdate item)
+        public virtual async Task<IActionResult> Edit(TEntityDto item)
         {
             if (ModelState.IsValid)
             {

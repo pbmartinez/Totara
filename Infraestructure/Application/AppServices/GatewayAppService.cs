@@ -21,13 +21,15 @@ namespace Infraestructure.Application.AppServices
         private readonly IGatewayRepository _GatewayRepository;
         private readonly IMapper _mapper;
         private readonly IEntityValidator _entityValidator;
-        public GatewayAppService(IGatewayRepository GatewayRepository, IMapper mapper, IEntityValidator entityValidator)
+
+        public GatewayAppService(IGatewayRepository gatewayRepository, IMapper mapper, IEntityValidator entityValidator)
         {
-            _GatewayRepository = GatewayRepository;
-            _mapper = mapper;
-            _entityValidator = entityValidator;
+            _GatewayRepository = gatewayRepository ?? throw new ArgumentNullException(nameof(gatewayRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _entityValidator = entityValidator ?? throw new ArgumentNullException(nameof(entityValidator));
         }
-        public async Task<bool> AddAsync(GatewayDtoForCreate item)
+
+        public async Task<bool> AddAsync(GatewayDto item)
         {
             int commited;
             if (_entityValidator.IsValid(item))
@@ -76,6 +78,14 @@ namespace Infraestructure.Application.AppServices
                     specification?.MapToExpressionOfType<Gateway>(), domainExpressionIncludesList, order, pageSize, pageGo));
         }
 
+        public GatewayDto Get(Guid id, List<Expression<Func<GatewayDto, object>>>? includes = null)
+        {
+            var domainExpressionIncludesList = includes == null
+                ? new List<Expression<Func<Gateway, object>>>()
+                : _mapper.MapIncludesList<Expression<Func<Gateway, object>>>(includes).ToList();
+            return _mapper.Map<GatewayDto>(_GatewayRepository.Get(id, domainExpressionIncludesList));
+        }
+
         public async Task<List<GatewayDto>> GetAllAsync(List<Expression<Func<GatewayDto, object>>>? includes, Dictionary<string, bool>? order)
         {
             var domainExpressionIncludesList = includes == null
@@ -97,13 +107,13 @@ namespace Infraestructure.Application.AppServices
         }
 
 
-        public async Task<GatewayDtoForUpdate> GetForUpdateAsync(Guid id, List<Expression<Func<GatewayDto, object>>>? includes = null)
-        {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Gateway, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Gateway, object>>>(includes).ToList();
-            return _mapper.Map<GatewayDtoForUpdate>(await _GatewayRepository.GetAsync(id, domainExpressionIncludesList));
-        }
+        //public async Task<GatewayDto> GetForUpdateAsync(Guid id, List<Expression<Func<GatewayDto, object>>>? includes = null)
+        //{
+        //    var domainExpressionIncludesList = includes == null
+        //        ? new List<Expression<Func<Gateway, object>>>()
+        //        : _mapper.MapIncludesList<Expression<Func<Gateway, object>>>(includes).ToList();
+        //    return _mapper.Map<GatewayDto>(await _GatewayRepository.GetAsync(id, domainExpressionIncludesList));
+        //}
 
         public async Task<bool> RemoveAsync(Guid id)
         {
@@ -114,7 +124,7 @@ namespace Infraestructure.Application.AppServices
             return commited > 0;
         }
 
-        public async Task<bool> UpdateAsync(GatewayDtoForUpdate item)
+        public async Task<bool> UpdateAsync(GatewayDto item)
         {
             int commited;
             if (_entityValidator.IsValid(item))

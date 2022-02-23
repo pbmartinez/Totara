@@ -106,6 +106,42 @@ namespace Domain.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Guardar.
+        /// </summary>
+        public static string btn_Save {
+            get {
+                return ResourceManager.GetString("btn_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Acciones.
+        /// </summary>
+        public static string display_Actions {
+            get {
+                return ResourceManager.GetString("display_Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Adicionar / Editar.
+        /// </summary>
+        public static string display_AddEdit {
+            get {
+                return ResourceManager.GetString("display_AddEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Buscar ....
+        /// </summary>
+        public static string display_Buscar {
+            get {
+                return ResourceManager.GetString("display_Buscar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Está seguro que desea eliminar ?.
         /// </summary>
         public static string display_ConfirmOnDelete {
@@ -133,11 +169,182 @@ namespace Domain.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Debe especificar solo un modo al mostrar la vista. Ó ShowMode ó EditMode ó DeleteMode..
+        /// </summary>
+        public static string Exception_MultipleModeOnShowView {
+            get {
+                return ResourceManager.GetString("Exception_MultipleModeOnShowView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to La propiedad especificada {0} no puede ser seleccionada para ordernar colección de {1}..
         /// </summary>
         public static string Exception_NullFieldOnOrderingEntity {
             get {
                 return ResourceManager.GetString("Exception_NullFieldOnOrderingEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pasarela.
+        /// </summary>
+        public static string GatewayDto {
+            get {
+                return ResourceManager.GetString("GatewayDto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ipv4.
+        /// </summary>
+        public static string GatewayDtoIpv4Address {
+            get {
+                return ResourceManager.GetString("GatewayDtoIpv4Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nombre.
+        /// </summary>
+        public static string GatewayDtoName {
+            get {
+                return ResourceManager.GetString("GatewayDtoName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Periféricos.
+        /// </summary>
+        public static string GatewayDtoPeripherals {
+            get {
+                return ResourceManager.GetString("GatewayDtoPeripherals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pasarelas.
+        /// </summary>
+        public static string GatewayDtos {
+            get {
+                return ResourceManager.GetString("GatewayDtos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La entidad no existe.
+        /// </summary>
+        public static string message_ItemDoesNotExist {
+            get {
+                return ResourceManager.GetString("message_ItemDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ha sido adicionado/a satisfactoriamente.
+        /// </summary>
+        public static string message_SuccesfullyAdded {
+            get {
+                return ResourceManager.GetString("message_SuccesfullyAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ha sido eliminado/a satisfactoriamente.
+        /// </summary>
+        public static string message_SuccesfullyDeleted {
+            get {
+                return ResourceManager.GetString("message_SuccesfullyDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ha sido editado/a satisfactoriamente.
+        /// </summary>
+        public static string message_SuccesfullyEdited {
+            get {
+                return ResourceManager.GetString("message_SuccesfullyEdited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Periférico.
+        /// </summary>
+        public static string PeripheralDto {
+            get {
+                return ResourceManager.GetString("PeripheralDto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fecha creado.
+        /// </summary>
+        public static string PeripheralDtoCreatedDate {
+            get {
+                return ResourceManager.GetString("PeripheralDtoCreatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pasarela.
+        /// </summary>
+        public static string PeripheralDtoGatewayId {
+            get {
+                return ResourceManager.GetString("PeripheralDtoGatewayId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Periféricos.
+        /// </summary>
+        public static string PeripheralDtos {
+            get {
+                return ResourceManager.GetString("PeripheralDtos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Estatus.
+        /// </summary>
+        public static string PeripheralDtoStatus {
+            get {
+                return ResourceManager.GetString("PeripheralDtoStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Proveedor.
+        /// </summary>
+        public static string PeripheralDtoVendor {
+            get {
+                return ResourceManager.GetString("PeripheralDtoVendor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Campo requerido.
+        /// </summary>
+        public static string validation_FieldRequired {
+            get {
+                return ResourceManager.GetString("validation_FieldRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to La dirección Ip no es válida.
+        /// </summary>
+        public static string validation_Ipv4AddressBadFormat {
+            get {
+                return ResourceManager.GetString("validation_Ipv4AddressBadFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No son permitidos más de {0} periféricos por pasarela.
+        /// </summary>
+        public static string validation_MaxPeriphelsAllowed {
+            get {
+                return ResourceManager.GetString("validation_MaxPeriphelsAllowed", resourceCulture);
             }
         }
     }

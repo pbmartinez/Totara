@@ -103,5 +103,11 @@ namespace Infraestructure.Domain.Repositories
             var count = await _unitOfWork.GetQueryable(null, expression).CountAsync();
             return count;
         }
+
+        public TEntity Get(Guid id, List<Expression<Func<TEntity, object>>>? includes = null)
+        {
+            var item = _unitOfWork.GetQueryable(includes, a => a.Id == id).FirstOrDefault();
+            return item;
+        }
     }
 }

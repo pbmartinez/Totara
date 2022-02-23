@@ -2,7 +2,7 @@
 
 namespace Application.IAppServices
 {
-    public partial interface IGatewayAppService : IAppService<GatewayDto, GatewayDtoForCreate, GatewayDtoForUpdate>
+    public partial interface IGatewayAppService : IAppService<GatewayDto>
     {
     }
 }
