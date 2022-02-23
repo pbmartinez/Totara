@@ -21,12 +21,14 @@ namespace Infraestructure.Application.AppServices
         private readonly IPeripheralRepository _PeripheralRepository;
         private readonly IMapper _mapper;
         private readonly IEntityValidator _entityValidator;
-        public PeripheralAppService(IPeripheralRepository PeripheralRepository, IMapper mapper, IEntityValidator entityValidator)
+
+        public PeripheralAppService(IPeripheralRepository peripheralRepository, IMapper mapper, IEntityValidator entityValidator)
         {
-            _PeripheralRepository = PeripheralRepository;
-            _mapper = mapper;
-            _entityValidator = entityValidator;
+            _PeripheralRepository = peripheralRepository ?? throw new ArgumentNullException(nameof(peripheralRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _entityValidator = entityValidator ?? throw new ArgumentNullException(nameof(entityValidator));
         }
+
         public async Task<bool> AddAsync(PeripheralDto item)
         {
             int commited;

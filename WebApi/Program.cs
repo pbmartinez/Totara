@@ -3,9 +3,8 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System.Text.Json.Serialization;
-
-
-
+using Infraestructure.Domain.UnitOfWork;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -90,6 +89,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapperWithProfiles();
 builder.Services.AddEntitiesServicesAndRepositories();
 builder.Services.AddCustomApplicationServices();
+
+builder.Services.AddDbContext<UnitOfWorkContainer>( options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions =>
+    {
+        sqlServerOptions.CommandTimeout(30);
+        sqlServerOptions.EnableRetryOnFailure(3);
+    }));
 
 var app = builder.Build();
 

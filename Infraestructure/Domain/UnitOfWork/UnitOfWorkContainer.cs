@@ -12,18 +12,11 @@ using System.Threading.Tasks;
 
 namespace Infraestructure.Domain.UnitOfWork
 {
-    public class UnitOfWorkContainer : DbContext, IUnitOfWork
+    public class UnitOfWorkContainer : BaseDbContext, IUnitOfWork
     {
-        private readonly IConfiguration _configuration;
-        private const string STRING_CONNECTION = "DefaultConnection";
-        public UnitOfWorkContainer(IConfiguration configuration)
+        public UnitOfWorkContainer(DbContextOptions<UnitOfWorkContainer> options) : base(options)
         {
-            _configuration = configuration;
-        }        
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            optionsBuilder.UseSqlServer(_configuration.GetConnectionString(STRING_CONNECTION));
-            base.OnConfiguring(optionsBuilder);
+
         }
 
         public async Task<int> CommitAsync()
@@ -55,14 +48,14 @@ namespace Infraestructure.Domain.UnitOfWork
         {
             return ChangeTracker;
         }
-        
-        public IQueryable<TEntity> GetQueryable<TEntity>(List<Expression<Func<TEntity, object>>>? includes = null, Expression<Func<TEntity,bool>>? predicate = null, Dictionary<string,bool>? order = null, int pageSize = 0, int pageGo = 0) where TEntity : class
+
+        public IQueryable<TEntity> GetQueryable<TEntity>(List<Expression<Func<TEntity, object>>>? includes = null, Expression<Func<TEntity, bool>>? predicate = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0) where TEntity : class
         {
             IQueryable<TEntity> items = Set<TEntity>();
             if (includes != null && includes.Any())
                 includes.ForEach(a => items = items.Include(a));
 
-            if(predicate!= null)
+            if (predicate != null)
                 items = items.Where(predicate);
 
             if (order != null && order.Any())
@@ -80,8 +73,8 @@ namespace Infraestructure.Domain.UnitOfWork
             {
                 items = items.Take(pageSize);
             }
-            
-            return  items;
+
+            return items;
         }
 
         public virtual DbSet<Gateway>? Gateway { get; set; }

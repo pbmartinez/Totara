@@ -21,12 +21,14 @@ namespace Infraestructure.Application.AppServices
         private readonly IGatewayRepository _GatewayRepository;
         private readonly IMapper _mapper;
         private readonly IEntityValidator _entityValidator;
-        public GatewayAppService(IGatewayRepository GatewayRepository, IMapper mapper, IEntityValidator entityValidator)
+
+        public GatewayAppService(IGatewayRepository gatewayRepository, IMapper mapper, IEntityValidator entityValidator)
         {
-            _GatewayRepository = GatewayRepository;
-            _mapper = mapper;
-            _entityValidator = entityValidator;
+            _GatewayRepository = gatewayRepository ?? throw new ArgumentNullException(nameof(gatewayRepository));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            _entityValidator = entityValidator ?? throw new ArgumentNullException(nameof(entityValidator));
         }
+
         public async Task<bool> AddAsync(GatewayDto item)
         {
             int commited;
