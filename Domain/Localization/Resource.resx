@@ -132,6 +132,18 @@
   <data name="btn_Edit" xml:space="preserve">
     <value>Editar</value>
   </data>
+  <data name="btn_Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="display_Actions" xml:space="preserve">
+    <value>Acciones</value>
+  </data>
+  <data name="display_AddEdit" xml:space="preserve">
+    <value>Adicionar / Editar</value>
+  </data>
+  <data name="display_Buscar" xml:space="preserve">
+    <value>Buscar ...</value>
+  </data>
   <data name="display_ConfirmOnDelete" xml:space="preserve">
     <value>Está seguro que desea eliminar ?</value>
   </data>
@@ -141,8 +153,14 @@
   <data name="Exception_ApplicationValidationError" xml:space="preserve">
     <value>Error de validación, compruebe los errores de la validación para más información.</value>
   </data>
+  <data name="Exception_MultipleModeOnShowView" xml:space="preserve">
+    <value>Debe especificar solo un modo al mostrar la vista. Ó ShowMode ó EditMode ó DeleteMode.</value>
+  </data>
   <data name="Exception_NullFieldOnOrderingEntity" xml:space="preserve">
     <value>La propiedad especificada {0} no puede ser seleccionada para ordernar colección de {1}.</value>
+  </data>
+  <data name="GatewayDtoCommon" xml:space="preserve">
+    <value>Pasarela</value>
   </data>
   <data name="GatewayDtoCommonIpv4Address" xml:space="preserve">
     <value>Ipv4</value>
@@ -150,11 +168,35 @@
   <data name="GatewayDtoCommonName" xml:space="preserve">
     <value>Nombre</value>
   </data>
+  <data name="GatewayDtoCommonPeripherals" xml:space="preserve">
+    <value>Periféricos</value>
+  </data>
+  <data name="GatewayDtoCommons" xml:space="preserve">
+    <value>Pasarelas</value>
+  </data>
+  <data name="message_ItemDoesNotExist" xml:space="preserve">
+    <value>La entidad no existe</value>
+  </data>
+  <data name="message_SuccesfullyAdded" xml:space="preserve">
+    <value>Ha sido adicionado/a satisfactoriamente</value>
+  </data>
+  <data name="message_SuccesfullyDeleted" xml:space="preserve">
+    <value>Ha sido eliminado/a satisfactoriamente</value>
+  </data>
+  <data name="message_SuccesfullyEdited" xml:space="preserve">
+    <value>Ha sido editado/a satisfactoriamente</value>
+  </data>
+  <data name="PeripheralDtoCommon" xml:space="preserve">
+    <value>Periférico</value>
+  </data>
   <data name="PeripheralDtoCommonCreatedDate" xml:space="preserve">
     <value>Fecha creado</value>
   </data>
   <data name="PeripheralDtoCommonGatewayId" xml:space="preserve">
     <value>Pasarela</value>
+  </data>
+  <data name="PeripheralDtoCommons" xml:space="preserve">
+    <value>Periféricos</value>
   </data>
   <data name="PeripheralDtoCommonStatus" xml:space="preserve">
     <value>Estatus</value>

@@ -16,8 +16,9 @@ builder.Services.AddControllers(setupAction =>
     //Return Not Acceptable Status Code when api is requested in a format that it does not support
     setupAction.ReturnHttpNotAcceptable = true;
 })
-    //.AddXmlDataContractSerializerFormatters() // XML output formatter for support responses in xml format
-.AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve)
+//.AddXmlDataContractSerializerFormatters() // XML output formatter for support responses in xml format
+
+.AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
 .ConfigureApiBehaviorOptions(setupAction =>
  {
      setupAction.InvalidModelStateResponseFactory = context =>
@@ -62,7 +63,24 @@ builder.Services.AddControllers(setupAction =>
          };
      };
  });
+// CORS Configuration
+var allowedHosts = builder.Configuration["AllowedHosts"].Split(',');
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowedHosts", builder =>
+    {
+        builder.WithOrigins("https://localhost:7122");
+        builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        builder.SetIsOriginAllowedToAllowWildcardSubdomains();
+    });
+});
+
+//builder.Services.Configure<JsonOptions>(o =>
+//{
+//    o.JsonSerializerOptions.WriteIndented = true;
+//    o.JsonSerializerOptions.
+//});
 
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -83,15 +101,19 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler(appBuilder => appBuilder.Run(async context => {
+    app.UseExceptionHandler(appBuilder => appBuilder.Run(async context =>
+    {
         context.Response.StatusCode = 500;
         await context.Response.WriteAsync("An error happened, please try later");
     }));
 }
 app.UseHttpsRedirection();
 
+app.UseCors("AllowedHosts");
+
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+

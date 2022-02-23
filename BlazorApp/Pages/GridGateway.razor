@@ -1,0 +1,190 @@
+﻿@page "/gateways"
+@using Application.Dtos
+@using Domain.Localization
+@using Microsoft.Extensions.Localization
+@using Newtonsoft.Json
+
+
+@inject ISnackbar Snackbar
+@inject IDialogService Dialog
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+@inject IStringLocalizer<Resource> Localizer
+
+
+<MudText Typo="Typo.h3" GutterBottom="true">@Localizer[Resource.GatewayDtoCommon]</MudText>
+<MudText Class="mb-8">Listado de las cajas registradoras</MudText>
+
+
+<br />
+<MudCard Elevation="2">
+    @if (Gateways == null)
+    {
+        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+    }
+    else
+    {
+        <MudTable Items="Gateways" Hover="true" SortLabel="Sort By" Elevation="0" MultiSelection="true" Dense="true"
+              Filter="new Func<GatewayDto,bool>(FilterFunc1)">
+            <ToolBarContent>
+                <MudTooltip Text=@Localizer[Resource.btn_Add]>
+                    <MudIconButton @onclick="Add" Icon="@Icons.Material.Filled.Add" Color=Color.Inherit></MudIconButton>
+                </MudTooltip>
+                <MudSpacer />
+                <MudTextField @bind-Value="searchString" Placeholder=@Localizer[Resource.display_Buscar]
+                    Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
+                    Class="mt-0">
+                </MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<GatewayDto, object>(x=>x.Name)">@Localizer[Resource.GatewayDtoCommonName]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<GatewayDto, object>(x=>x.Ipv4Address)">@Localizer[Resource.GatewayDtoCommonIpv4Address]</MudTableSortLabel></MudTh>
+                <MudTh>@Localizer[Resource.display_Actions]</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Name">@context.Name</MudTd>
+                <MudTd DataLabel="Ipv4">@context.Ipv4Address</MudTd>
+                <MudTd DataLabel="">                                        
+                    <MudTooltip Text=@Localizer[Resource.btn_Details]>
+                        <MudFab @onclick="@(()=>Show(context))" Color=Color.Default Icon="@Icons.Material.Filled.Visibility" Size=Size.Medium> </MudFab>
+                    </MudTooltip>
+                    <MudTooltip Text=@Localizer[Resource.btn_Edit]>
+                        <MudFab @onclick="@(()=>Edit(context))" Color=Color.Warning Icon="@Icons.Material.Filled.Edit" Size=Size.Medium> </MudFab>
+                    </MudTooltip>
+                    <MudTooltip Text=@Localizer[Resource.btn_Delete]>
+                        <MudFab @onclick="@(()=>Delete(context))" Color=Color.Error Icon="@Icons.Material.Filled.Delete" Size=Size.Medium> </MudFab>
+                    </MudTooltip>
+                </MudTd>
+            </RowTemplate>
+
+            <PagerContent>
+                <MudTablePager PageSizeOptions="new int[]{10, 25, 50}" />
+            </PagerContent>
+        </MudTable>
+    }
+</MudCard>
+
+
+
+@code {
+    private GatewayDto cajaToSave = new GatewayDto();
+    private List<GatewayDto> Gateways ;
+    private IDialogReference dialogReference;
+    private string searchString;
+    private DialogOptions dialogOptions = new DialogOptions { CloseButton = true};
+
+    protected override async Task OnInitializedAsync()
+    {
+        await UpdateGridAsync();
+    }
+
+    private async Task UpdateGridAsync()
+    {
+        Gateways = await Http.GetFromJsonAsync<List<GatewayDto>>("api/gateway") ?? new List<GatewayDto>();        
+    }
+
+    private void OnCancelled()
+    {
+        dialogReference?.Close();
+    }
+    private async Task OnSuccessfullySaveAsync()
+    {
+        dialogReference?.Close();
+        await UpdateGridAsync();
+        StateHasChanged();
+    }
+    private async Task OnSuccessfullyDeletedAsync()
+    {
+        dialogReference?.Close();
+        await UpdateGridAsync();
+        StateHasChanged();
+    }
+    private void SuccessfullySave() => Task.FromResult( OnSuccessfullySaveAsync());
+    private void SuccessfullyDelete() => Task.FromResult(OnSuccessfullySaveAsync());
+
+    private DialogParameters SetParametersForShow()
+    {
+        var parameters = new DialogParameters();
+        parameters.Add("OnSuccessfullySaveAsync", () => SuccessfullySave());
+        parameters.Add("OnSuccessfullyDeletedAsync", () => SuccessfullyDelete());
+        parameters.Add("OnCancelled", () => OnCancelled());
+        return parameters;
+    }    
+    private async Task Show(GatewayDto pivot) 
+    {
+        var item = await Http.GetFromJsonAsync<GatewayDto>($"/api/gateway/{pivot.Id}");
+        if (item == null)
+        {
+            Snackbar.Add(Localizer[Resource.message_ItemDoesNotExist], Severity.Warning);
+            await UpdateGridAsync();
+        }
+        else
+        {
+            var parameters = SetParametersForShow();
+            parameters.Add("item", item);
+            parameters.Add("ShowMode", true);
+            dialogReference = Dialog.Show<ShowGateway>("",parameters, dialogOptions);
+        }
+    }
+    private void Add()
+    {
+        try
+        {
+            var parameters = SetParametersForShow();
+            parameters.Add("item", new GatewayDto());
+            parameters.Add("itemForCreate", new GatewayDtoForCreate());
+            parameters.Add("EditMode", true);
+            dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);
+        }
+        catch (Exception es)
+        {
+            var a = es;
+        }
+
+    }
+    private async Task Edit(GatewayDto pivot)
+    {
+        var item = await Http.GetFromJsonAsync<GatewayDto>($"/api/gateway/{pivot.Id}");
+        if (item == null)
+        {
+            Snackbar.Add(Localizer[Resource.message_ItemDoesNotExist], Severity.Warning);
+            await UpdateGridAsync();
+        }
+        else
+        {
+            var parameters = SetParametersForShow();
+            parameters.Add("item", item);
+            parameters.Add("EditMode", true);
+            dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);        
+        }
+    }
+    private async Task Delete(GatewayDto pivot)
+    {
+        var item = await Http.GetFromJsonAsync<GatewayDto>($"/api/gateway/{pivot.Id}");
+        if (item == null)
+        {
+            Snackbar.Add(Localizer[Resource.message_ItemDoesNotExist], Severity.Warning);
+            await UpdateGridAsync();
+        }
+        else
+        {
+            var parameters = SetParametersForShow();
+            parameters.Add("item", item);
+            parameters.Add("DeleteMode", true);
+            dialogReference = Dialog.Show<ShowGateway>("",parameters,dialogOptions);            
+        }
+    }
+
+    private bool FilterFunc1(GatewayDto item) => FilterFunc(item, searchString);
+
+    private bool FilterFunc(GatewayDto item, string searchString)
+    {
+        if (string.IsNullOrWhiteSpace(searchString) || string.IsNullOrEmpty(searchString))
+            return true;
+        if (item.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ((item.Ipv4Address).Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        return false;
+    }
+}
