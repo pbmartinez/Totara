@@ -112,6 +112,7 @@ namespace WebApi.Controllers
             var item = await AppService.GetAsync(id.Value);
             if (item==null)
                 return NotFound();
+            var result = await AppService.RemoveAsync(id.Value);
             return NoContent();
         }
 

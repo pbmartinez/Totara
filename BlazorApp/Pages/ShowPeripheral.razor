@@ -2,7 +2,9 @@
 @using Application.DataAnnotations
 @using Domain.Localization
 @using Microsoft.Extensions.Localization
+@using System
 @using System.Net
+
 
 @inject ISnackbar Snackbar
 @inject IStringLocalizer<Resource> Localizer
@@ -19,15 +21,21 @@
             <MudGrid>
 
                 <MudItem xs="6" sm="4">
-                    <MudTextField @bind-Value=@(item.Name) Disabled=@(disabled) Label="@Localizer[Resource.GatewayDtoName]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoName]} ...")"
+                    <MudTextField @bind-Value=@(item.Vendor) Disabled=@(disabled) Label="@Localizer[Resource.PeripheralDtoVendor]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.PeripheralDtoVendor]} ...")"
                                   Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]">
                     </MudTextField>
                 </MudItem>
 
-                <MudItem xs="6" sm="4">
-                    <MudTextField @bind-Value=item.Ipv4Address Disabled=@(disabled) Label="@Localizer[Resource.GatewayDtoIpv4Address]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoIpv4Address]} ...")"
-                                  Validation="@(new Ipv4Address(){ErrorMessage=Localizer[Resource.validation_Ipv4AddressBadFormat]})">
-                    </MudTextField>
+                <MudItem xs="6" sm="4">  
+                    <MudDatePicker @bind-Date=@(fecha) Disabled=@(disabled) Label="@Localizer[Resource.PeripheralDtoCreatedDate]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.PeripheralDtoCreatedDate]} ...")"
+                                Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]" />
+                    
+                </MudItem>
+
+
+                <MudItem xs="6" sm="4">                    
+                    <MudSwitch @bind-Checked=@(item.Status)  Disabled=@(disabled) Label="@Localizer[Resource.PeripheralDtoStatus]" Color="Color.Primary" 
+                                Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]"/>
                 </MudItem>
 
             </MudGrid>
@@ -67,7 +75,7 @@
 
 @code {
     [Parameter]
-    public GatewayDto item { get; set; } = new GatewayDto();
+    public PeripheralDto item { get; set; } = new PeripheralDto() { CreatedDate = DateTime.Today};
 
     [Parameter]
     public Action OnSuccessfullySaveAsync { get; set; } = () => { };
@@ -92,9 +100,11 @@
 
     private bool success = false;
 
-    private bool disabled => ShowMode || DeleteMode;
+    private bool disabled => ShowMode || DeleteMode || EditMode;
 
     private string CardHeader = string.Empty;
+
+    private DateTime? fecha = DateTime.Today;
 
     private void UpdateCardHeader()
     {
@@ -126,7 +136,7 @@
         }
         else
         {
-            var itemToDelete = await Http.GetFromJsonAsync<GatewayDto>($"api/gateway/{item.Id}");
+            var itemToDelete = await Http.GetFromJsonAsync<PeripheralDto>($"api/peripheral/{item.Id}");
 
             if (itemToDelete == null)
             {
@@ -134,7 +144,7 @@
             }
             else
             {
-                var result = await Http.DeleteAsync($"api/gateway/{item.Id}");
+                var result = await Http.DeleteAsync($"api/peripheral/{item.Id}");
                 if (result.StatusCode == HttpStatusCode.NoContent)
                 {
                     Snackbar.Add(Localizer[Resource.message_SuccesfullyDeleted], Severity.Success);
@@ -146,7 +156,7 @@
     }
     private async Task EditAsync()
     {
-        var itemToEdit = await Http.GetFromJsonAsync<GatewayDto>($"api/gateway/{item.Id}");
+        var itemToEdit = await Http.GetFromJsonAsync<PeripheralDto>($"api/peripheral/{item.Id}");
 
         if (itemToEdit == null)
         {
@@ -154,7 +164,7 @@
         }
         else
         {
-            var result = await Http.PutAsJsonAsync<GatewayDto>($"api/gateway/{item.Id}", item);
+            var result = await Http.PutAsJsonAsync<PeripheralDto>($"api/peripheral/{item.Id}", item);
             if (result.StatusCode == HttpStatusCode.NoContent)
             {
                 Snackbar.Add(Localizer[Resource.message_SuccesfullyEdited], Severity.Success);
@@ -165,7 +175,7 @@
     }
     private async Task AddAsync()
     {
-        var result = await Http.PostAsJsonAsync<GatewayDto>($"api/gateway", item);
+        var result = await Http.PostAsJsonAsync<PeripheralDto>($"api/peripheral", item);
         if (result.StatusCode == HttpStatusCode.Created || result.StatusCode == HttpStatusCode.OK)
         {
             Snackbar.Add(Localizer[Resource.message_SuccesfullyAdded], Severity.Success);
