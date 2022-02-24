@@ -40,13 +40,13 @@
                 </MudItem>
                 
                 <MudItem xs="6" sm="4">                    
-                    <MudSelect T="Guid" @bind-Value="item.GatewayId" SelectedValues="new List<Guid>()" Label="@Localizer[Resource.PeripheralDtoGatewayId]" AnchorOrigin="Origin.BottomCenter" 
+                    <MudSelect T="Guid" @bind-Value="item.GatewayId" Label="@Localizer[Resource.PeripheralDtoGatewayId]" AnchorOrigin="Origin.BottomCenter" 
                                AdornmentIcon="@Icons.Filled.DeviceHub"
                                Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]">
                         
                         @foreach (var gateway in Gateways)
                         {
-                            <MudSelectItem Value="@gateway.Id" Text="@gateway.Name">@gateway.Name</MudSelectItem>
+                            <MudSelectItem Value="@gateway.Id">@gateway.Name</MudSelectItem>
                         }
                     </MudSelect>
                 </MudItem>

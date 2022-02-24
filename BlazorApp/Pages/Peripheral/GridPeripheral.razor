@@ -1,5 +1,6 @@
-﻿@page "/gateways"
+﻿@page "/peripherals"
 @using Application.Dtos
+@using BlazorApp.Pages.Skeletons
 @using Domain.Localization
 @using Microsoft.Extensions.Localization
 @using Newtonsoft.Json
@@ -12,20 +13,20 @@
 @inject IStringLocalizer<Resource> Localizer
 
 
-<MudText Typo="Typo.h3" GutterBottom="true">@Localizer[Resource.GatewayDto]</MudText>
-<MudText Class="mb-8">@(string.Format( Localizer[Resource.display_ListOfXXX], Localizer[Resource.GatewayDtos]))</MudText>
+<MudText Typo="Typo.h3" GutterBottom="true">@Localizer[Resource.PeripheralDto]</MudText>
+<MudText Class="mb-8">@(string.Format( Localizer[Resource.display_ListOfXXX], Localizer[Resource.PeripheralDtos]))</MudText>
 
 
 <br />
 <MudCard Elevation="2">
-    @if (Gateways == null)
+    @if (Peripherals == null)
     {
-        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+        <SkeletonGrid />
     }
     else
     {
-        <MudTable Items="Gateways" Hover="true" SortLabel="Sort By" Elevation="0" MultiSelection="false" Dense="true"
-              Filter="new Func<GatewayDto,bool>(FilterFunc1)">
+        <MudTable Items="Peripherals" Hover="true" SortLabel="Sort By" Elevation="0" MultiSelection="false" Dense="true"
+              Filter="new Func<PeripheralDto,bool>(FilterFunc1)">
             <ToolBarContent>
                 <MudTooltip Text=@Localizer[Resource.btn_Add]>
                     <MudIconButton @onclick="Add" Icon="@Icons.Material.Filled.Add" Color=Color.Inherit></MudIconButton>
@@ -37,13 +38,15 @@
                 </MudTextField>
             </ToolBarContent>
             <HeaderContent>
-                <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<GatewayDto, object>(x=>x.Name)">@Localizer[Resource.GatewayDtoName]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<GatewayDto, object>(x=>x.Ipv4Address)">@Localizer[Resource.GatewayDtoIpv4Address]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<PeripheralDto, object>(x=>x.Vendor)">@Localizer[Resource.PeripheralDtoVendor]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<PeripheralDto, object>(x=>x.CreatedDate)">@Localizer[Resource.PeripheralDtoCreatedDate]</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<PeripheralDto, object>(x=>x.Status)">@Localizer[Resource.PeripheralDtoStatus]</MudTableSortLabel></MudTh>
                 <MudTh>@Localizer[Resource.display_Actions]</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel=@Localizer[Resource.GatewayDtoName]>@context.Name</MudTd>
-                <MudTd DataLabel=@Localizer[Resource.GatewayDtoIpv4Address]>@context.Ipv4Address</MudTd>
+                <MudTd DataLabel=@Localizer[Resource.PeripheralDtoVendor]>@context.Vendor</MudTd>
+                <MudTd DataLabel=@Localizer[Resource.PeripheralDtoCreatedDate]>@context.CreatedDate</MudTd>
+                <MudTd DataLabel=@Localizer[Resource.PeripheralDtoStatus]>@context.Status</MudTd>
                 <MudTd DataLabel="">                                        
                     <MudTooltip Text=@Localizer[Resource.btn_Details]>
                         <MudFab @onclick="@(()=>Show(context))" Color=Color.Default Icon="@Icons.Material.Filled.Visibility" Size=Size.Medium> </MudFab>
@@ -67,7 +70,7 @@
 
 
 @code {
-    private List<GatewayDto>? Gateways ;
+    private List<PeripheralDto>? Peripherals ;
     private IDialogReference? dialogReference;
     private string searchString = "";
     private DialogOptions dialogOptions = new DialogOptions { CloseButton = true};
@@ -79,7 +82,7 @@
 
     private async Task UpdateGridAsync()
     {
-        Gateways = await Http.GetFromJsonAsync<List<GatewayDto>>("api/gateway") ?? new List<GatewayDto>();        
+        Peripherals = await Http.GetFromJsonAsync<List<PeripheralDto>>("api/peripheral") ?? new List<PeripheralDto>();        
     }
 
     private void OnCancelled()
@@ -109,9 +112,9 @@
         parameters.Add("OnCancelled", () => OnCancelled());
         return parameters;
     }    
-    private async Task Show(GatewayDto pivot) 
+    private async Task Show(PeripheralDto pivot) 
     {
-        var item = await Http.GetFromJsonAsync<GatewayDto>($"/api/gateway/{pivot.Id}");
+        var item = await Http.GetFromJsonAsync<PeripheralDto>($"/api/peripheral/{pivot.Id}");
         if (item == null)
         {
             Snackbar.Add(Localizer[Resource.message_ItemDoesNotExist], Severity.Warning);
@@ -122,20 +125,20 @@
             var parameters = SetParametersForShow();
             parameters.Add("item", item);
             parameters.Add("ShowMode", true);
-            dialogReference = Dialog.Show<ShowGateway>("",parameters, dialogOptions);
+            dialogReference = Dialog.Show<ShowPeripheral>("",parameters, dialogOptions);
         }
     }
     private void Add()
     {
         var parameters = SetParametersForShow();
-        parameters.Add("item", new GatewayDto());
+        parameters.Add("item", new PeripheralDto());
         parameters.Add("AddMode", true);
-        dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);
+        dialogReference = Dialog.Show<ShowPeripheral>("", parameters, dialogOptions);
         
     }
-    private async Task Edit(GatewayDto pivot)
+    private async Task Edit(PeripheralDto pivot)
     {
-        var item = await Http.GetFromJsonAsync<GatewayDto>($"/api/gateway/{pivot.Id}");
+        var item = await Http.GetFromJsonAsync<PeripheralDto>($"/api/peripheral/{pivot.Id}");
         if (item == null)
         {
             Snackbar.Add(Localizer[Resource.message_ItemDoesNotExist], Severity.Warning);
@@ -146,12 +149,12 @@
             var parameters = SetParametersForShow();
             parameters.Add("item", item);
             parameters.Add("EditMode", true);
-            dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);        
+            dialogReference = Dialog.Show<ShowPeripheral>("", parameters, dialogOptions);        
         }
     }
-    private async Task Delete(GatewayDto pivot)
+    private async Task Delete(PeripheralDto pivot)
     {
-        var item = await Http.GetFromJsonAsync<GatewayDto>($"/api/gateway/{pivot.Id}");
+        var item = await Http.GetFromJsonAsync<PeripheralDto>($"/api/peripheral/{pivot.Id}");
         if (item == null)
         {
             Snackbar.Add(Localizer[Resource.message_ItemDoesNotExist], Severity.Warning);
@@ -162,19 +165,21 @@
             var parameters = SetParametersForShow();
             parameters.Add("item", item);
             parameters.Add("DeleteMode", true);
-            dialogReference = Dialog.Show<ShowGateway>("",parameters,dialogOptions);            
+            dialogReference = Dialog.Show<ShowPeripheral>("",parameters,dialogOptions);            
         }
     }
 
-    private bool FilterFunc1(GatewayDto item) => FilterFunc(item, searchString);
+    private bool FilterFunc1(PeripheralDto item) => FilterFunc(item, searchString);
 
-    private bool FilterFunc(GatewayDto item, string searchString)
+    private bool FilterFunc(PeripheralDto item, string searchString)
     {
         if (string.IsNullOrWhiteSpace(searchString) || string.IsNullOrEmpty(searchString))
             return true;
-        if (item.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if (item.Vendor.Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
-        if ((item.Ipv4Address).Contains(searchString, StringComparison.OrdinalIgnoreCase))
+        if ((item.CreatedDate.ToShortDateString()).Contains(searchString, StringComparison.OrdinalIgnoreCase))
+            return true;
+        if ((item.Status.ToString()).Contains(searchString, StringComparison.OrdinalIgnoreCase))
             return true;
         return false;
     }
