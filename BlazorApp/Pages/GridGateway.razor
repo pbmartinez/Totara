@@ -24,7 +24,7 @@
     }
     else
     {
-        <MudTable Items="Gateways" Hover="true" SortLabel="Sort By" Elevation="0" MultiSelection="true" Dense="true"
+        <MudTable Items="Gateways" Hover="true" SortLabel="Sort By" Elevation="0" MultiSelection="false" Dense="true"
               Filter="new Func<GatewayDto,bool>(FilterFunc1)">
             <ToolBarContent>
                 <MudTooltip Text=@Localizer[Resource.btn_Add]>
@@ -67,10 +67,9 @@
 
 
 @code {
-    private GatewayDto cajaToSave = new GatewayDto();
-    private List<GatewayDto> Gateways ;
-    private IDialogReference dialogReference;
-    private string searchString;
+    private List<GatewayDto>? Gateways ;
+    private IDialogReference? dialogReference;
+    private string searchString = "";
     private DialogOptions dialogOptions = new DialogOptions { CloseButton = true};
 
     protected override async Task OnInitializedAsync()
@@ -128,19 +127,11 @@
     }
     private void Add()
     {
-        try
-        {
-            var parameters = SetParametersForShow();
-            parameters.Add("item", new GatewayDto());
-            parameters.Add("itemForCreate", new GatewayDto());
-            parameters.Add("EditMode", true);
-            dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);
-        }
-        catch (Exception es)
-        {
-            var a = es;
-        }
-
+        var parameters = SetParametersForShow();
+        parameters.Add("item", new GatewayDto());
+        parameters.Add("AddMode", true);
+        dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);
+        
     }
     private async Task Edit(GatewayDto pivot)
     {

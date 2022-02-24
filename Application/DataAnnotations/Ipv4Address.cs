@@ -16,20 +16,16 @@ namespace Application.DataAnnotations
 
         }
 
-        //public override bool IsValid(object value)
-        //{
-        //    var IpAddress = value as string;
-        //    if (string.IsNullOrEmpty(IpAddress) || string.IsNullOrWhiteSpace(IpAddress))
-        //        return false;
-        //    // decimal base regular expression pattern
-        //    var regExpression = new Regex(@"^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?).){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$");
-        //    return regExpression.IsMatch(IpAddress);
-        //}
-
         public override bool IsValid(object value)
         {
             var IpAddress = value as string;
             if (string.IsNullOrEmpty(IpAddress) || string.IsNullOrWhiteSpace(IpAddress))
+                return false;
+            var octects = IpAddress.Split('.');
+            if (octects.Length != 4)
+                return false;
+            var anyNull = octects.Any(o => string.IsNullOrEmpty(o) || string.IsNullOrWhiteSpace(o));
+            if(anyNull)
                 return false;
             var result = IPAddress.TryParse(IpAddress, out _);
             return result;
