@@ -1,6 +1,8 @@
-﻿
+﻿@using Domain.Localization
+@using Microsoft.Extensions.Localization
+@inject IStringLocalizer<Resource> Localizer
 <MudNavMenu>
-    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-    <MudNavLink Href="/gateways" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.PointOfSale">Traducir (Gateways)</MudNavLink>
-    <MudNavLink Href="/peripherals" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Settings">Traducir (Peripherals)</MudNavLink>
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">@Localizer[Resource.menu_Home]</MudNavLink>
+    <MudNavLink Href="/gateways" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.DeviceHub">@Localizer[Resource.menu_Gateway]</MudNavLink>
+    <MudNavLink Href="/peripherals" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.DevicesOther">@Localizer[Resource.menu_Peripheral]</MudNavLink>
 </MudNavMenu>

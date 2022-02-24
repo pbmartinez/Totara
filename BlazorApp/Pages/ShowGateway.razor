@@ -17,17 +17,6 @@
         <MudForm @bind-IsValid="@success">
             <MudGrid>
 
-                @*<MudItem xs="6" sm="4">
-                    <MudTextField @bind-Value=@(ShowMode ? item.Name: AddMode? itemForCreate.Name:itemForUpdate.Name) Disabled=(!EditMode) Label="@Localizer[Resource.GatewayDtoName]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoName]} ...")"
-                                  Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]">
-                    </MudTextField>
-                </MudItem>
-                <MudItem xs="6" sm="4">
-                    <MudTextField @bind-Value=@(ShowMode ? item.Ipv4Address: AddMode? itemForCreate.Ipv4Address:itemForUpdate.Ipv4Address) Disabled=(!EditMode) Label="@Localizer[Resource.GatewayDtoIpv4Address]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoIpv4Address]} ...")"
-                                  Validation="@(new Ipv4Address(){ErrorMessage=Localizer[Resource.validation_Ipv4AddressBadFormat]})">
-                    </MudTextField>
-                </MudItem>*@
-
                 <MudItem xs="6" sm="4">
                     <MudTextField @bind-Value=@(item.Name) Disabled=(!EditMode) Label="@Localizer[Resource.GatewayDtoName]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoName]} ...")"
                                   Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]">

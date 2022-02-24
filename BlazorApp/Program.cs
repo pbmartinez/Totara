@@ -9,8 +9,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 
 
 var apiBaseUrl = builder.Configuration["ApiBaseUrl"] ?? "";
-//var clin = new HttpClient();
-//clin.DefaultRequestHeaders.c
+
 builder.Services.AddScoped(sp => 
     new HttpClient {
         BaseAddress = new Uri(apiBaseUrl)

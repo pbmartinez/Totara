@@ -13,7 +13,7 @@
 
 
 <MudText Typo="Typo.h3" GutterBottom="true">@Localizer[Resource.GatewayDto]</MudText>
-<MudText Class="mb-8">Listado de las cajas registradoras</MudText>
+<MudText Class="mb-8">@(string.Format( Localizer[Resource.display_ListOfXXX], Localizer[Resource.GatewayDtos]))</MudText>
 
 
 <br />
@@ -42,8 +42,8 @@
                 <MudTh>@Localizer[Resource.display_Actions]</MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Name">@context.Name</MudTd>
-                <MudTd DataLabel="Ipv4">@context.Ipv4Address</MudTd>
+                <MudTd DataLabel=@Localizer[Resource.GatewayDtoName]>@context.Name</MudTd>
+                <MudTd DataLabel=@Localizer[Resource.GatewayDtoIpv4Address]>@context.Ipv4Address</MudTd>
                 <MudTd DataLabel="">                                        
                     <MudTooltip Text=@Localizer[Resource.btn_Details]>
                         <MudFab @onclick="@(()=>Show(context))" Color=Color.Default Icon="@Icons.Material.Filled.Visibility" Size=Size.Medium> </MudFab>

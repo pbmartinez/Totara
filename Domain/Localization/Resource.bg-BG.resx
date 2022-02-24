@@ -118,117 +118,117 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="btn_Add" xml:space="preserve">
-    <value>Add</value>
+    <value>добавете</value>
   </data>
   <data name="btn_Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Отмяна</value>
   </data>
   <data name="btn_Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Отървавам се от</value>
   </data>
   <data name="btn_Details" xml:space="preserve">
-    <value>Details</value>
+    <value>Подробности</value>
   </data>
   <data name="btn_Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>редактиране</value>
   </data>
   <data name="btn_Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Пазя</value>
   </data>
   <data name="display_Actions" xml:space="preserve">
-    <value>Actions</value>
+    <value>Действия</value>
   </data>
   <data name="display_AddEdit" xml:space="preserve">
-    <value>Add / Edit</value>
+    <value>Добавяне/Редактиране</value>
   </data>
   <data name="display_AppName" xml:space="preserve">
-    <value>Musala Pasarelas</value>
+    <value>Пътеки на Мусала</value>
   </data>
   <data name="display_Buscar" xml:space="preserve">
-    <value>Find ...</value>
+    <value>Търсете...</value>
   </data>
   <data name="display_ConfirmOnDelete" xml:space="preserve">
-    <value>Are you sure you want to delete ?</value>
+    <value>Сигурен ли си, че искаш да изтриеш ?</value>
   </data>
   <data name="display_DetailsOf" xml:space="preserve">
-    <value>Details of {0}</value>
+    <value>Подробности за {0}</value>
   </data>
   <data name="display_ListOfXXX" xml:space="preserve">
-    <value>Listado de {0}</value>
+    <value>Списък на {0}</value>
   </data>
   <data name="Exception_ApplicationValidationError" xml:space="preserve">
-    <value>Validation errors, for more information check validation errors</value>
+    <value>Грешка при валидиране, проверете грешките при валидиране за повече информация.</value>
   </data>
   <data name="Exception_MultipleModeOnShowView" xml:space="preserve">
-    <value>Must been provided just one mode and only one mode. Either ShowMode, EditMode or DeleteMode.</value>
+    <value>Трябва да посочите само един режим при показване на изгледа. Или ShowMode или EditMode или DeleteMode.</value>
   </data>
   <data name="Exception_NullFieldOnOrderingEntity" xml:space="preserve">
-    <value>The property specified {0} can not be defined for ordering collection of {1}.</value>
+    <value>Посоченото свойство {0} не може да бъде избрано за колекция от сортиране на {1}.</value>
   </data>
   <data name="GatewayDto" xml:space="preserve">
-    <value>Gateway</value>
+    <value>Самолетна писта</value>
   </data>
   <data name="GatewayDtoIpv4Address" xml:space="preserve">
-    <value>Ipv4</value>
+    <value>IPv4</value>
   </data>
   <data name="GatewayDtoName" xml:space="preserve">
-    <value>Name</value>
+    <value>име</value>
   </data>
   <data name="GatewayDtoPeripherals" xml:space="preserve">
-    <value>Peripherals</value>
+    <value>Периферни устройства</value>
   </data>
   <data name="GatewayDtos" xml:space="preserve">
-    <value>Gateways</value>
+    <value>пешеходни пътеки</value>
   </data>
   <data name="menu_Gateway" xml:space="preserve">
-    <value>Pasarelas</value>
+    <value>пешеходни пътеки</value>
   </data>
   <data name="menu_Home" xml:space="preserve">
-    <value>Inicio</value>
+    <value>Започнете</value>
   </data>
   <data name="menu_Peripheral" xml:space="preserve">
-    <value>Periféricos</value>
+    <value>Периферни устройства</value>
   </data>
   <data name="message_ItemDoesNotExist" xml:space="preserve">
-    <value>Item does not exist</value>
+    <value>субект не съществува</value>
   </data>
   <data name="message_PageNotFound" xml:space="preserve">
-    <value>Sorry, there's nothing at this address.</value>
+    <value>Здравейте, явно се опитвате да осъществите достъп до страница, която не съществува.</value>
   </data>
   <data name="message_SuccesfullyAdded" xml:space="preserve">
-    <value>Successfully added</value>
+    <value>Успешно сте добавени</value>
   </data>
   <data name="message_SuccesfullyDeleted" xml:space="preserve">
-    <value>Successfully deleted</value>
+    <value>Успешно сте премахнати</value>
   </data>
   <data name="message_SuccesfullyEdited" xml:space="preserve">
-    <value>Successfully edited</value>
+    <value>Редактирано е успешно</value>
   </data>
   <data name="PeripheralDto" xml:space="preserve">
-    <value>Peripheral</value>
+    <value>Периферни</value>
   </data>
   <data name="PeripheralDtoCreatedDate" xml:space="preserve">
-    <value>CreatedDate</value>
+    <value>дата на създаване</value>
   </data>
   <data name="PeripheralDtoGatewayId" xml:space="preserve">
-    <value>Gateway</value>
+    <value>Самолетна писта</value>
   </data>
   <data name="PeripheralDtos" xml:space="preserve">
-    <value>Peripherals</value>
+    <value>Периферни устройства</value>
   </data>
   <data name="PeripheralDtoStatus" xml:space="preserve">
-    <value>Status</value>
+    <value>Състояние</value>
   </data>
   <data name="PeripheralDtoVendor" xml:space="preserve">
-    <value>Vendor</value>
+    <value>Доставчик</value>
   </data>
   <data name="validation_FieldRequired" xml:space="preserve">
-    <value>Field required</value>
+    <value>задължително поле</value>
   </data>
   <data name="validation_Ipv4AddressBadFormat" xml:space="preserve">
-    <value>Ipv4 it has bad format</value>
+    <value>IP адресът не е валиден</value>
   </data>
   <data name="validation_MaxPeriphelsAllowed" xml:space="preserve">
-    <value>No more then {0} peripherals by gateway are allowed</value>
+    <value>Не са разрешени повече от {0} периферни устройства на шлюз</value>
   </data>
 </root>
