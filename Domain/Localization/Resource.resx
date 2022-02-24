@@ -141,6 +141,9 @@
   <data name="display_AddEdit" xml:space="preserve">
     <value>Adicionar / Editar</value>
   </data>
+  <data name="display_AppName" xml:space="preserve">
+    <value>Musala Pasarelas</value>
+  </data>
   <data name="display_Buscar" xml:space="preserve">
     <value>Buscar ...</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="display_DetailsOf" xml:space="preserve">
     <value>Detalles de  {0}</value>
+  </data>
+  <data name="display_ListOfXXX" xml:space="preserve">
+    <value>Listado de {0}</value>
   </data>
   <data name="Exception_ApplicationValidationError" xml:space="preserve">
     <value>Error de validación, compruebe los errores de la validación para más información.</value>
@@ -174,8 +180,20 @@
   <data name="GatewayDtos" xml:space="preserve">
     <value>Pasarelas</value>
   </data>
+  <data name="menu_Gateway" xml:space="preserve">
+    <value>Pasarelas</value>
+  </data>
+  <data name="menu_Home" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="menu_Peripheral" xml:space="preserve">
+    <value>Periféricos</value>
+  </data>
   <data name="message_ItemDoesNotExist" xml:space="preserve">
     <value>La entidad no existe</value>
+  </data>
+  <data name="message_PageNotFound" xml:space="preserve">
+    <value>Hola, al parecer intentar acceder a una página que no existe.</value>
   </data>
   <data name="message_SuccesfullyAdded" xml:space="preserve">
     <value>Ha sido adicionado/a satisfactoriamente</value>
