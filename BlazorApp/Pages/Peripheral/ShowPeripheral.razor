@@ -35,12 +35,13 @@
 
 
                 <MudItem xs="6" sm="4">                    
-                    <MudSwitch @bind-Checked="@item.Status" Label="@Localizer[Resource.PeripheralDtoStatus]" Color="Color.Primary" 
-                                />
+                    <MudSwitch @bind-Checked="@item.Status" Label="@Localizer[Resource.PeripheralDtoStatus]" Color="Color.Primary">
+
+                    </MudSwitch>
                 </MudItem>
                 
                 <MudItem xs="6" sm="4">                    
-                    <MudSelect T="Guid" @bind-Value="item.GatewayId" Label="@Localizer[Resource.PeripheralDtoGatewayId]" AnchorOrigin="Origin.BottomCenter" 
+                    <MudSelect T="Guid" @bind-Value="item.GatewayId" Strict=true Label="@Localizer[Resource.PeripheralDtoGatewayId]" AnchorOrigin="Origin.BottomCenter" 
                                AdornmentIcon="@Icons.Filled.DeviceHub"
                                Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]">
                         
