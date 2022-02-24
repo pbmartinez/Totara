@@ -26,17 +26,31 @@
                     </MudTextField>
                 </MudItem>
 
+                
                 <MudItem xs="6" sm="4">  
-                    <MudDatePicker @bind-Date=@(fecha) Disabled=@(disabled) Label="@Localizer[Resource.PeripheralDtoCreatedDate]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.PeripheralDtoCreatedDate]} ...")"
+                    <MudDatePicker @bind-Date="item.CreatedDateHelper" Disabled=@(disabledDate) Label="@Localizer[Resource.PeripheralDtoCreatedDate]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.PeripheralDtoCreatedDate]} ...")"
                                 Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]" />
                     
                 </MudItem>
 
 
                 <MudItem xs="6" sm="4">                    
-                    <MudSwitch @bind-Checked=@(item.Status)  Disabled=@(disabled) Label="@Localizer[Resource.PeripheralDtoStatus]" Color="Color.Primary" 
-                                Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]"/>
+                    <MudSwitch @bind-Checked="@item.Status" Label="@Localizer[Resource.PeripheralDtoStatus]" Color="Color.Primary" 
+                                />
                 </MudItem>
+                
+                <MudItem xs="6" sm="4">                    
+                    <MudSelect T="Guid" @bind-Value="item.GatewayId" SelectedValues="new List<Guid>()" Label="@Localizer[Resource.PeripheralDtoGatewayId]" AnchorOrigin="Origin.BottomCenter" 
+                               AdornmentIcon="@Icons.Filled.DeviceHub"
+                               Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]">
+                        
+                        @foreach (var gateway in Gateways)
+                        {
+                            <MudSelectItem Value="@gateway.Id" Text="@gateway.Name">@gateway.Name</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
 
             </MudGrid>
             <br />
@@ -51,9 +65,7 @@
             @if (AddMode)
             {
                 <MudButton OnClick="Cancel" Variant="Variant.Filled" Color="Color.Default">@Localizer[Resource.btn_Cancel]</MudButton>
-                <MudButton OnClick="ChangeToShowMode" Variant="Variant.Filled" Color="Color.Info">@Localizer[Resource.btn_Details]</MudButton>
                 <MudButton OnClick="AddAsync" Variant="Variant.Filled" Color="Color.Success" Disabled="@(!success)">@Localizer[Resource.btn_Save]</MudButton>
-                <MudButton OnClick="ChangeToDeleteMode" Variant="Variant.Filled" Color="Color.Error">@Localizer[Resource.btn_Delete]</MudButton>
             }
             @if (EditMode)
             {
@@ -75,7 +87,7 @@
 
 @code {
     [Parameter]
-    public PeripheralDto item { get; set; } = new PeripheralDto() { CreatedDate = DateTime.Today};
+    public PeripheralDto item { get; set; } = new PeripheralDto();
 
     [Parameter]
     public Action OnSuccessfullySaveAsync { get; set; } = () => { };
@@ -100,11 +112,11 @@
 
     private bool success = false;
 
-    private bool disabled => ShowMode || DeleteMode || EditMode;
+    private bool disabled => ShowMode || DeleteMode;
+    private bool disabledDate => ShowMode || DeleteMode || EditMode;
 
     private string CardHeader = string.Empty;
-
-    private DateTime? fecha = DateTime.Today;
+    private List<GatewayDto> Gateways = new List<GatewayDto>();
 
     private void UpdateCardHeader()
     {
@@ -122,7 +134,15 @@
         if (!justOneFlag)
             throw new ArgumentException(Localizer[Resource.Exception_MultipleModeOnShowView]);
     }
-
+    protected override async Task OnInitializedAsync()
+    {
+        await UpdateAsync();
+    }
+    private async Task UpdateAsync()
+    { 
+        var updatedGateways = await Http.GetFromJsonAsync<List<GatewayDto>>("/api/gateway");
+        Gateways = updatedGateways ?? new List<GatewayDto>();
+    }
     private void Cancel()
     {
         OnCancelled.Invoke();
@@ -175,6 +195,7 @@
     }
     private async Task AddAsync()
     {
+        item.CreatedDate = item.CreatedDateHelper != null ? item.CreatedDateHelper.Value : DateTime.Today;
         var result = await Http.PostAsJsonAsync<PeripheralDto>($"api/peripheral", item);
         if (result.StatusCode == HttpStatusCode.Created || result.StatusCode == HttpStatusCode.OK)
         {

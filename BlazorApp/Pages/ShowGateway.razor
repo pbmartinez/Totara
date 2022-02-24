@@ -26,6 +26,7 @@
 
                 <MudItem xs="6" sm="4">
                     <MudTextField @bind-Value=item.Ipv4Address Disabled=@(disabled) Label="@Localizer[Resource.GatewayDtoIpv4Address]" Margin="Margin.Normal" Placeholder="@($"{Localizer[Resource.GatewayDtoIpv4Address]} ...")"
+                                  Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]"
                                   Validation="@(new Ipv4Address(){ErrorMessage=Localizer[Resource.validation_Ipv4AddressBadFormat]})">
                     </MudTextField>
                 </MudItem>
@@ -43,9 +44,7 @@
             @if (AddMode)
             {
                 <MudButton OnClick="Cancel" Variant="Variant.Filled" Color="Color.Default">@Localizer[Resource.btn_Cancel]</MudButton>
-                <MudButton OnClick="ChangeToShowMode" Variant="Variant.Filled" Color="Color.Info">@Localizer[Resource.btn_Details]</MudButton>
                 <MudButton OnClick="AddAsync" Variant="Variant.Filled" Color="Color.Success" Disabled="@(!success)">@Localizer[Resource.btn_Save]</MudButton>
-                <MudButton OnClick="ChangeToDeleteMode" Variant="Variant.Filled" Color="Color.Error">@Localizer[Resource.btn_Delete]</MudButton>
             }
             @if (EditMode)
             {

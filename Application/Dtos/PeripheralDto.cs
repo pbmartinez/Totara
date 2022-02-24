@@ -13,7 +13,8 @@ namespace Application.Dtos
         private readonly IGatewayAppService _gatewayAppService;
         public PeripheralDto()
         {
-                
+            CreatedDate = DateTime.Today;
+            CreatedDateHelper = DateTime.Today;
         }
         public PeripheralDto(IGatewayAppService gatewayAppService) 
         {
@@ -27,6 +28,8 @@ namespace Application.Dtos
         [Display(ResourceType = typeof(Resource), Name = $"{nameof(PeripheralDto)}{nameof(CreatedDate)}")]
         [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
         public DateTime CreatedDate { get; set; }
+        
+        public DateTime? CreatedDateHelper { get; set; }
 
         [Display(ResourceType = typeof(Resource), Name = $"{nameof(PeripheralDto)}{nameof(Status)}")]
         [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]

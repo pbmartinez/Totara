@@ -130,7 +130,7 @@
     private void Add()
     {
         var parameters = SetParametersForShow();
-        parameters.Add("item", new PeripheralDto() { CreatedDate = DateTime.Today });
+        parameters.Add("item", new PeripheralDto());
         parameters.Add("AddMode", true);
         dialogReference = Dialog.Show<ShowPeripheral>("", parameters, dialogOptions);
         
