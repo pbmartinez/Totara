@@ -8,19 +8,6 @@ using System.Text;
 
 namespace Application.Dtos
 {
-    public class GatewayDtoMetadata 
-    {
-        [Display(ResourceType = typeof(Resource), Name = $"{nameof(GatewayDto)}{nameof(Name)}")]
-        [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
-        public string Name { get; set; }
-
-
-        [Display(ResourceType = typeof(Resource), Name = $"{nameof(GatewayDto)}{nameof(Ipv4Address)}")]
-        [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
-        [Ipv4Address(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_Ipv4AddressBadFormat")]
-        public string Ipv4Address { get; set; }
-    }
-    [MetadataType(typeof(GatewayDtoMetadata))]
     public partial class GatewayDto : Entity, IValidatableObject 
     {
         public GatewayDto()
@@ -28,9 +15,13 @@ namespace Application.Dtos
             Peripherals = new List<PeripheralDto>();
         }
 
+        [Display(ResourceType = typeof(Resource), Name = $"{nameof(GatewayDto)}{nameof(Name)}")]
+        [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
         public string Name { get; set; }
 
-
+        [Display(ResourceType = typeof(Resource), Name = $"{nameof(GatewayDto)}{nameof(Ipv4Address)}")]
+        [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
+        [Ipv4Address(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_Ipv4AddressBadFormat")]
         public string Ipv4Address { get; set; }
 
         public List<PeripheralDto> Peripherals { get; set; }
