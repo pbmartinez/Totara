@@ -21,6 +21,18 @@ builder.Services.AddHttpClient("MusalaGatewaysApi", client =>
 
 builder.Services.AddTransient(sp=>sp.GetRequiredService<IHttpClientFactory>().CreateClient("MusalaGatewaysApi"));
 
+builder.Services.AddMsalAuthentication(options =>
+{
+    builder.Configuration.Bind("AzureAd", options.ProviderOptions.Authentication);
+    options.ProviderOptions.LoginMode = "redirect";
+
+    //Default scopes in access token
+    //options.ProviderOptions.DefaultAccessTokenScopes.Add("{SCOPE URI}");
+
+    //Additional scopes
+    //options.ProviderOptions.AdditionalScopesToConsent.Add("{ADDITIONAL SCOPE URI}");
+});
+
 
 
 builder.Services.AddApiAuthorization();
