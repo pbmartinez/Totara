@@ -2,8 +2,10 @@
 @using Application.Dtos
 @using BlazorApp.Pages.Skeletons
 @using Domain.Localization
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
 @using Newtonsoft.Json
+@attribute [Authorize]
 
 
 @inject ISnackbar Snackbar
