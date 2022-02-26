@@ -97,7 +97,20 @@ builder.Services.AddDbContext<UnitOfWorkContainer>( options =>
         sqlServerOptions.EnableRetryOnFailure(3);
     }));
 
+
+builder.Services.AddAuthentication();
+
+
+
 var app = builder.Build();
+
+
+
+
+
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -117,6 +130,7 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowedHosts");
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
