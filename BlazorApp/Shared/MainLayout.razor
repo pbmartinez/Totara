@@ -13,21 +13,13 @@
 <MudLayout>
     <MudAppBar Elevation="0">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudSpacer />
-        
+        <MudSpacer />        
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
         <MudDrawerHeader>
             <MudText Typo="Typo.h6">@Localizer[Resource.display_AppName]</MudText>
         </MudDrawerHeader>
-        <AuthorizeView>
-            <Authorized>
-                <NavMenu />
-            </Authorized>
-            <NotAuthorized>
-                <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Inherit" Link="authentication/login" Target="_blank" />
-            </NotAuthorized>
-        </AuthorizeView>
+        <NavMenu />
     </MudDrawer>
     <MudMainContent>
         <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">

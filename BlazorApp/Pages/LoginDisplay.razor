@@ -15,17 +15,18 @@
                     <MudText Typo="Typo.body2">@context.User.Identity?.Name?.Split(' ')[0]</MudText>
                 </CardHeaderContent>
             </MudCardHeader>
-            <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" Link="authentication/logout" Target="_blank" />
         </Authorized>
         <NotAuthorized>     
-            <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Inherit" Link="authentication/login" Target="_blank" />
+            
         </NotAuthorized>
     </AuthorizeView>
 </MudCard>
 
+
+
+
 @code   
 {
-    
     private async Task BeginSignOut(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();
