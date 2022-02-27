@@ -132,6 +132,12 @@
   <data name="btn_Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="btn_Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="btn_Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
   <data name="btn_Save" xml:space="preserve">
     <value>Save</value>
   </data>

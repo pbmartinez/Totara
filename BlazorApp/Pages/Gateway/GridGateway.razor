@@ -1,8 +1,11 @@
 ﻿@page "/gateways"
 @using Application.Dtos
+@using BlazorApp.Pages.Skeletons
 @using Domain.Localization
+@using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
 @using Newtonsoft.Json
+@attribute [Authorize]
 
 
 @inject ISnackbar Snackbar
@@ -20,7 +23,7 @@
 <MudCard Elevation="2">
     @if (Gateways == null)
     {
-        <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+        <SkeletonGrid />
     }
     else
     {
@@ -79,7 +82,7 @@
 
     private async Task UpdateGridAsync()
     {
-        Gateways = await Http.GetFromJsonAsync<List<GatewayDto>>("api/gateway") ?? new List<GatewayDto>();        
+        Gateways = await Http.GetFromJsonAsync<List<GatewayDto>>("api/gateway") ?? new List<GatewayDto>();
     }
 
     private void OnCancelled()

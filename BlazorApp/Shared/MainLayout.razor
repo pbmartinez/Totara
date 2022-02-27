@@ -1,4 +1,6 @@
-﻿@using Domain.Localization
+﻿@using BlazorApp.Pages
+@using Domain.Localization
+@using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.Extensions.Localization
 @inherits LayoutComponentBase
 
@@ -11,8 +13,7 @@
 <MudLayout>
     <MudAppBar Elevation="0">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => DrawerToggle())" />
-        <MudSpacer />
-        @*<MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Link="https://github.com/Garderoben/MudBlazor" Target="_blank" />*@
+        <MudSpacer />        
     </MudAppBar>
     <MudDrawer @bind-Open="_drawerOpen" Elevation="1">
         <MudDrawerHeader>

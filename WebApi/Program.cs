@@ -5,6 +5,11 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System.Text.Json.Serialization;
 using Infraestructure.Domain.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
+using System.Configuration;
+using Microsoft.IdentityModel.Logging;
+using WebApi.WellKnownNames;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,8 +20,6 @@ builder.Services.AddControllers(setupAction =>
     //Return Not Acceptable Status Code when api is requested in a format that it does not support
     setupAction.ReturnHttpNotAcceptable = true;
 })
-//.AddXmlDataContractSerializerFormatters() // XML output formatter for support responses in xml format
-
 .AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
 .ConfigureApiBehaviorOptions(setupAction =>
  {
@@ -42,7 +45,7 @@ builder.Services.AddControllers(setupAction =>
          if ((context.ModelState.ErrorCount > 0) &&
              (actionExecutingContext?.ActionArguments.Count == context.ActionDescriptor.Parameters.Count))
          {
-             problemDetails.Type = "https://courselibrary.com/modelvalidationproblem";
+             //problemDetails.Type = "";
              problemDetails.Status = StatusCodes.Status422UnprocessableEntity;
              problemDetails.Title = "One or more validation errors occurred.";
 
@@ -61,43 +64,49 @@ builder.Services.AddControllers(setupAction =>
              ContentTypes = { "application/problem+json" }
          };
      };
- });
+ })
+;
 // CORS Configuration
-var allowedHosts = builder.Configuration["AllowedHosts"].Split(',');
+var allowedHosts = builder.Configuration[AppSettings.AllowedHosts].Split(',');
 
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: "AllowedHosts", builder =>
     {
-        builder.WithOrigins("https://localhost:7122");
+        builder.WithOrigins(allowedHosts.ToArray());
         builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
         builder.SetIsOriginAllowedToAllowWildcardSubdomains();
     });
 });
 
-//builder.Services.Configure<JsonOptions>(o =>
-//{
-//    o.JsonSerializerOptions.WriteIndented = true;
-//    o.JsonSerializerOptions.
-//});
-
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+//Api Docs Configuration
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//Application Core Services Configuration
 builder.Services.AddAutoMapperWithProfiles();
 builder.Services.AddEntitiesServicesAndRepositories();
 builder.Services.AddCustomApplicationServices();
 
+//Unit of Work Implementation Configuration
 builder.Services.AddDbContext<UnitOfWorkContainer>( options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"), sqlServerOptions =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString(AppSettings.DefaultConnectionString), sqlServerOptions =>
     {
         sqlServerOptions.CommandTimeout(30);
         sqlServerOptions.EnableRetryOnFailure(3);
     }));
 
+//Security Configuration
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)                
+                .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(AppSettings.AzureAd));
+
+
+IdentityModelEventSource.ShowPII = true;
+
 var app = builder.Build();
+
+
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -117,6 +126,8 @@ app.UseHttpsRedirection();
 
 app.UseCors("AllowedHosts");
 
+
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

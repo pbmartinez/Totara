@@ -1,4 +1,5 @@
 ﻿using Application.IAppServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using System.Linq.Expressions;
 namespace WebApi.Controllers
 {    
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public abstract class ApiBaseController<TEntityDto> : ControllerBase where TEntityDto : Domain.Entities.Entity
     {
@@ -48,7 +50,6 @@ namespace WebApi.Controllers
         {
             AppService = appService;
             _logger = logger;
-
             
         }
         [HttpGet]

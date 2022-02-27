@@ -10,14 +10,17 @@ namespace Application.Dtos
 {
     public partial class PeripheralDto : Entity, IValidatableObject
     {
-        private readonly IGatewayAppService _gatewayAppService;
+        public IGatewayAppService GatewayAppService { get; set; }
         public PeripheralDto()
         {
-                
+            CreatedDate = DateTime.Today;
+            CreatedDateHelper = DateTime.Today;
         }
         public PeripheralDto(IGatewayAppService gatewayAppService) 
         {
-            _gatewayAppService = gatewayAppService ?? throw new ArgumentNullException(nameof(gatewayAppService));
+            GatewayAppService = gatewayAppService ?? throw new ArgumentNullException(nameof(gatewayAppService));
+            CreatedDate = DateTime.Today;
+            CreatedDateHelper = DateTime.Today;
         }
 
         [Display(ResourceType = typeof(Resource), Name = $"{nameof(PeripheralDto)}{nameof(Vendor)}")]
@@ -27,6 +30,8 @@ namespace Application.Dtos
         [Display(ResourceType = typeof(Resource), Name = $"{nameof(PeripheralDto)}{nameof(CreatedDate)}")]
         [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
         public DateTime CreatedDate { get; set; }
+        
+        public DateTime? CreatedDateHelper { get; set; }
 
         [Display(ResourceType = typeof(Resource), Name = $"{nameof(PeripheralDto)}{nameof(Status)}")]
         [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
@@ -42,15 +47,17 @@ namespace Application.Dtos
         {
             var peripheral = (PeripheralDto)validationContext.ObjectInstance;
             var erroResults = new List<ValidationResult>();
+            
+            //TODO fix call validation from fronted app: 1. endpoint for validation :). 2. import infrastructure in fronten app :(
 
-            var gateway = _gatewayAppService.Get(peripheral.GatewayId);
+            //var gateway = GatewayAppService.Get(peripheral.GatewayId);
 
-            if (gateway.Peripherals.Count >= Constants.GatewayPeripherals.MAX_PERIPHERALS_ALLOWED_PER_GATEWAY)
-            {
-                erroResults.Add(new ValidationResult(
-                    errorMessage: string.Format(Resource.validation_MaxPeriphelsAllowed, Constants.GatewayPeripherals.MAX_PERIPHERALS_ALLOWED_PER_GATEWAY),
-                    memberNames: new[] { nameof(GatewayId) }));
-            }
+            //if (gateway.Peripherals.Count >= Constants.GatewayPeripherals.MAX_PERIPHERALS_ALLOWED_PER_GATEWAY)
+            //{
+            //    erroResults.Add(new ValidationResult(
+            //        errorMessage: string.Format(Resource.validation_MaxPeriphelsAllowed, Constants.GatewayPeripherals.MAX_PERIPHERALS_ALLOWED_PER_GATEWAY),
+            //        memberNames: new[] { nameof(GatewayId) }));
+            //}
 
             return erroResults;
         }

@@ -106,6 +106,24 @@ namespace Domain.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Iniciar sesión.
+        /// </summary>
+        public static string btn_Login {
+            get {
+                return ResourceManager.GetString("btn_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cerrar sesión.
+        /// </summary>
+        public static string btn_Logout {
+            get {
+                return ResourceManager.GetString("btn_Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Guardar.
         /// </summary>
         public static string btn_Save {
