@@ -162,6 +162,12 @@
   <data name="display_ListOfXXX" xml:space="preserve">
     <value>Списък на {0}</value>
   </data>
+  <data name="display_Welcome" xml:space="preserve">
+    <value>Добре дошли</value>
+  </data>
+  <data name="display_WelcomeMessage" xml:space="preserve">
+    <value>Добре дошли в приложението Gateways</value>
+  </data>
   <data name="Exception_ApplicationValidationError" xml:space="preserve">
     <value>Грешка при валидиране, проверете грешките при валидиране за повече информация.</value>
   </data>
@@ -209,6 +215,15 @@
   </data>
   <data name="message_SuccesfullyEdited" xml:space="preserve">
     <value>Редактирано е успешно</value>
+  </data>
+  <data name="page_GridGateways" xml:space="preserve">
+    <value>Шлюзове</value>
+  </data>
+  <data name="page_GridPeripherals" xml:space="preserve">
+    <value>Периферни устройства</value>
+  </data>
+  <data name="page_Index" xml:space="preserve">
+    <value>Индекс</value>
   </data>
   <data name="PeripheralDto" xml:space="preserve">
     <value>Периферни</value>

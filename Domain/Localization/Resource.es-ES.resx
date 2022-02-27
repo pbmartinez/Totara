@@ -162,6 +162,12 @@
   <data name="display_ListOfXXX" xml:space="preserve">
     <value>Listado de {0}</value>
   </data>
+  <data name="display_Welcome" xml:space="preserve">
+    <value>Bienvenido</value>
+  </data>
+  <data name="display_WelcomeMessage" xml:space="preserve">
+    <value>Bienvenido a la Aplicación de Pasarelas </value>
+  </data>
   <data name="Exception_ApplicationValidationError" xml:space="preserve">
     <value>Error de validación, compruebe los errores de la validación para más información.</value>
   </data>
@@ -209,6 +215,15 @@
   </data>
   <data name="message_SuccesfullyEdited" xml:space="preserve">
     <value>Ha sido editado/a satisfactoriamente</value>
+  </data>
+  <data name="page_GridGateways" xml:space="preserve">
+    <value>Pasarelas</value>
+  </data>
+  <data name="page_GridPeripherals" xml:space="preserve">
+    <value>Periphéricos</value>
+  </data>
+  <data name="page_Index" xml:space="preserve">
+    <value>Inicio</value>
   </data>
   <data name="PeripheralDto" xml:space="preserve">
     <value>Periférico</value>

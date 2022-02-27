@@ -20,7 +20,8 @@ builder.Services.AddScoped<CustomAuthorizationMessageHandler>();
 
 builder.Services.AddHttpClient(AppSettings.HttpClientGatewayApi,
         client => client.BaseAddress = new Uri(apiBaseUrl))
-    .AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
+    //.AddHttpMessageHandler<CustomAuthorizationMessageHandler>()
+    ;
 
 builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(AppSettings.HttpClientGatewayApi));
 

@@ -196,6 +196,24 @@ namespace Domain.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bienvenido.
+        /// </summary>
+        public static string display_Welcome {
+            get {
+                return ResourceManager.GetString("display_Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bienvenido a la Aplicación de Pasarelas.
+        /// </summary>
+        public static string display_WelcomeMessage {
+            get {
+                return ResourceManager.GetString("display_WelcomeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error de validación, compruebe los errores de la validación para más información..
         /// </summary>
         public static string Exception_ApplicationValidationError {
@@ -336,6 +354,33 @@ namespace Domain.Localization {
         public static string message_SuccesfullyEdited {
             get {
                 return ResourceManager.GetString("message_SuccesfullyEdited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gateways.
+        /// </summary>
+        public static string page_GridGateways {
+            get {
+                return ResourceManager.GetString("page_GridGateways", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peripherals.
+        /// </summary>
+        public static string page_GridPeripherals {
+            get {
+                return ResourceManager.GetString("page_GridPeripherals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inicio.
+        /// </summary>
+        public static string page_Index {
+            get {
+                return ResourceManager.GetString("page_Index", resourceCulture);
             }
         }
         

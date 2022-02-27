@@ -162,6 +162,12 @@
   <data name="display_ListOfXXX" xml:space="preserve">
     <value>List of {0}</value>
   </data>
+  <data name="display_Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="display_WelcomeMessage" xml:space="preserve">
+    <value>Welcome to Gateway Application</value>
+  </data>
   <data name="Exception_ApplicationValidationError" xml:space="preserve">
     <value>Validation errors, for more information check validation errors</value>
   </data>
@@ -209,6 +215,15 @@
   </data>
   <data name="message_SuccesfullyEdited" xml:space="preserve">
     <value>Successfully edited</value>
+  </data>
+  <data name="page_GridGateways" xml:space="preserve">
+    <value>Gateways</value>
+  </data>
+  <data name="page_GridPeripherals" xml:space="preserve">
+    <value>Peripherals</value>
+  </data>
+  <data name="page_Index" xml:space="preserve">
+    <value>Index</value>
   </data>
   <data name="PeripheralDto" xml:space="preserve">
     <value>Peripheral</value>

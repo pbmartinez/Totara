@@ -13,6 +13,7 @@
 @inject HttpClient Http
 @inject IStringLocalizer<Resource> Localizer
 
+<PageTitle>@Localizer[Resource.page_GridPeripherals]</PageTitle>
 
 <MudText Typo="Typo.h3" GutterBottom="true">@Localizer[Resource.PeripheralDto]</MudText>
 <MudText Class="mb-8">@(string.Format( Localizer[Resource.display_ListOfXXX], Localizer[Resource.PeripheralDtos]))</MudText>

@@ -14,6 +14,7 @@
 @inject HttpClient Http
 @inject IStringLocalizer<Resource> Localizer
 
+<PageTitle>@Localizer[Resource.page_GridGateways]</PageTitle>
 
 <MudText Typo="Typo.h3" GutterBottom="true">@Localizer[Resource.GatewayDto]</MudText>
 <MudText Class="mb-8">@(string.Format( Localizer[Resource.display_ListOfXXX], Localizer[Resource.GatewayDtos]))</MudText>
