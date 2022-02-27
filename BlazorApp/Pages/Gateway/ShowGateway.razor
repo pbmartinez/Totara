@@ -112,6 +112,11 @@
             throw new ArgumentException(Localizer[Resource.Exception_MultipleModeOnShowView]);
     }
 
+    protected override void OnInitialized()
+    {
+        UpdateCardHeader();
+    }
+
     private void Cancel()
     {
         OnCancelled.Invoke();
