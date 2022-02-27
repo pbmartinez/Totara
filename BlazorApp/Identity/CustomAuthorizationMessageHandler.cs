@@ -1,20 +1,16 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using BlazorApp.WellKnownNames;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 namespace BlazorApp.Identity
 {
     public class CustomAuthorizationMessageHandler : AuthorizationMessageHandler
     {
-        public CustomAuthorizationMessageHandler(IAccessTokenProvider provider,
-            NavigationManager navigationManager)
+        public CustomAuthorizationMessageHandler(IAccessTokenProvider provider, NavigationManager navigationManager, IConfiguration configuration)
             : base(provider, navigationManager)
         {
             ConfigureHandler(
-                authorizedUrls: new[] { "https://localhost:7219" }
-                ,
-                scopes: new[] { "api://5e93c8a0-275a-482b-83c6-f4c2c49e18d1/access_as_user" }
-                );
+                authorizedUrls: new[] { configuration[AppSettings.ApiBaseUrl] },
+                scopes: new[] { configuration[AppSettings.ScopeGatewayApiAccess], "openid", "profile", "offline_access" });
         }
-
-        
     }
 }
