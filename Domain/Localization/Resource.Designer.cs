@@ -61,7 +61,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adicionar.
+        ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string btn_Add {
             get {
@@ -70,7 +70,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancelar.
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string btn_Cancel {
             get {
@@ -79,7 +79,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Eliminar.
+        ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string btn_Delete {
             get {
@@ -88,7 +88,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Detalles.
+        ///   Looks up a localized string similar to Details.
         /// </summary>
         public static string btn_Details {
             get {
@@ -97,7 +97,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Editar.
+        ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string btn_Edit {
             get {
@@ -106,7 +106,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Iniciar sesión.
+        ///   Looks up a localized string similar to Login.
         /// </summary>
         public static string btn_Login {
             get {
@@ -115,7 +115,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cerrar sesión.
+        ///   Looks up a localized string similar to Logout.
         /// </summary>
         public static string btn_Logout {
             get {
@@ -124,7 +124,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Guardar.
+        ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string btn_Save {
             get {
@@ -142,7 +142,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No está autorizado a acceder al recurso.
+        ///   Looks up a localized string similar to Not authorized.
         /// </summary>
         public static string display_401_Description {
             get {
@@ -151,7 +151,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No tiene acceso al recurso.
+        ///   Looks up a localized string similar to 403.
         /// </summary>
         public static string display_403 {
             get {
@@ -160,7 +160,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No tiene acceso al recurso.
+        ///   Looks up a localized string similar to You have not access.
         /// </summary>
         public static string display_403_Description {
             get {
@@ -178,7 +178,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to El recurso que intenta acceder no se encuentra.
+        ///   Looks up a localized string similar to Resource not found.
         /// </summary>
         public static string display_404_Description {
             get {
@@ -196,7 +196,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error en el servidor.
+        ///   Looks up a localized string similar to Internal Server Error.
         /// </summary>
         public static string display_500_Description {
             get {
@@ -205,7 +205,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Acciones.
+        ///   Looks up a localized string similar to Actions.
         /// </summary>
         public static string display_Actions {
             get {
@@ -214,7 +214,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adicionar / Editar.
+        ///   Looks up a localized string similar to Add / Edit.
         /// </summary>
         public static string display_AddEdit {
             get {
@@ -223,7 +223,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Musala Pasarelas.
+        ///   Looks up a localized string similar to Musala Gateways.
         /// </summary>
         public static string display_AppName {
             get {
@@ -232,7 +232,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Buscar ....
+        ///   Looks up a localized string similar to Find ....
         /// </summary>
         public static string display_Buscar {
             get {
@@ -241,7 +241,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Está seguro que desea eliminar ?.
+        ///   Looks up a localized string similar to Are you sure you want to delete ?.
         /// </summary>
         public static string display_ConfirmOnDelete {
             get {
@@ -250,7 +250,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Detalles de  {0}.
+        ///   Looks up a localized string similar to Details of {0}.
         /// </summary>
         public static string display_DetailsOf {
             get {
@@ -259,7 +259,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Listado de {0}.
+        ///   Looks up a localized string similar to List of {0}.
         /// </summary>
         public static string display_ListOfXXX {
             get {
@@ -268,7 +268,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bienvenido.
+        ///   Looks up a localized string similar to Welcome.
         /// </summary>
         public static string display_Welcome {
             get {
@@ -277,7 +277,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bienvenido a la Aplicación de Pasarelas.
+        ///   Looks up a localized string similar to Welcome to Gateway Application.
         /// </summary>
         public static string display_WelcomeMessage {
             get {
@@ -286,7 +286,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error de validación, compruebe los errores de la validación para más información..
+        ///   Looks up a localized string similar to Validation errors, for more information check validation errors.
         /// </summary>
         public static string Exception_ApplicationValidationError {
             get {
@@ -295,7 +295,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Debe especificar solo un modo al mostrar la vista. Ó ShowMode ó EditMode ó DeleteMode..
+        ///   Looks up a localized string similar to Must been provided just one mode and only one mode. Either ShowMode, EditMode or DeleteMode..
         /// </summary>
         public static string Exception_MultipleModeOnShowView {
             get {
@@ -304,7 +304,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La propiedad especificada {0} no puede ser seleccionada para ordernar colección de {1}..
+        ///   Looks up a localized string similar to The property specified {0} can not be defined for ordering collection of {1}..
         /// </summary>
         public static string Exception_NullFieldOnOrderingEntity {
             get {
@@ -313,7 +313,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pasarela.
+        ///   Looks up a localized string similar to Gateway.
         /// </summary>
         public static string GatewayDto {
             get {
@@ -331,7 +331,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Nombre.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string GatewayDtoName {
             get {
@@ -340,7 +340,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Periféricos.
+        ///   Looks up a localized string similar to Peripherals.
         /// </summary>
         public static string GatewayDtoPeripherals {
             get {
@@ -349,7 +349,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pasarelas.
+        ///   Looks up a localized string similar to Gateways.
         /// </summary>
         public static string GatewayDtos {
             get {
@@ -358,7 +358,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pasarelas.
+        ///   Looks up a localized string similar to Gateways.
         /// </summary>
         public static string menu_Gateway {
             get {
@@ -367,7 +367,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inicio.
+        ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string menu_Home {
             get {
@@ -376,7 +376,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Periféricos.
+        ///   Looks up a localized string similar to Peripherals.
         /// </summary>
         public static string menu_Peripheral {
             get {
@@ -385,7 +385,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La entidad no existe.
+        ///   Looks up a localized string similar to Item does not exist.
         /// </summary>
         public static string message_ItemDoesNotExist {
             get {
@@ -394,7 +394,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hola, al parecer intentar acceder a una página que no existe..
+        ///   Looks up a localized string similar to Sorry, there&apos;s nothing at this address..
         /// </summary>
         public static string message_PageNotFound {
             get {
@@ -403,7 +403,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ha sido adicionado/a satisfactoriamente.
+        ///   Looks up a localized string similar to Successfully added.
         /// </summary>
         public static string message_SuccesfullyAdded {
             get {
@@ -412,7 +412,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ha sido eliminado/a satisfactoriamente.
+        ///   Looks up a localized string similar to Successfully deleted.
         /// </summary>
         public static string message_SuccesfullyDeleted {
             get {
@@ -421,7 +421,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Ha sido editado/a satisfactoriamente.
+        ///   Looks up a localized string similar to Successfully edited.
         /// </summary>
         public static string message_SuccesfullyEdited {
             get {
@@ -484,7 +484,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Inicio.
+        ///   Looks up a localized string similar to Index.
         /// </summary>
         public static string page_Index {
             get {
@@ -493,7 +493,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Periférico.
+        ///   Looks up a localized string similar to Peripheral.
         /// </summary>
         public static string PeripheralDto {
             get {
@@ -502,7 +502,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Fecha creado.
+        ///   Looks up a localized string similar to Created Date.
         /// </summary>
         public static string PeripheralDtoCreatedDate {
             get {
@@ -511,7 +511,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pasarela.
+        ///   Looks up a localized string similar to Gateway.
         /// </summary>
         public static string PeripheralDtoGatewayId {
             get {
@@ -520,7 +520,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Periféricos.
+        ///   Looks up a localized string similar to Peripherals.
         /// </summary>
         public static string PeripheralDtos {
             get {
@@ -529,7 +529,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Estatus.
+        ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string PeripheralDtoStatus {
             get {
@@ -538,7 +538,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Proveedor.
+        ///   Looks up a localized string similar to Vendor.
         /// </summary>
         public static string PeripheralDtoVendor {
             get {
@@ -547,7 +547,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Campo requerido.
+        ///   Looks up a localized string similar to Field required.
         /// </summary>
         public static string validation_FieldRequired {
             get {
@@ -556,7 +556,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La dirección Ip no es válida.
+        ///   Looks up a localized string similar to Ipv4 it has bad format.
         /// </summary>
         public static string validation_Ipv4AddressBadFormat {
             get {
@@ -565,7 +565,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No son permitidos más de {0} periféricos por pasarela.
+        ///   Looks up a localized string similar to No more then {0} peripherals by gateway are allowed.
         /// </summary>
         public static string validation_MaxPeriphelsAllowed {
             get {
