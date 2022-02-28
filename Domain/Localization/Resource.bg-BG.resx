@@ -141,6 +141,30 @@
   <data name="btn_Save" xml:space="preserve">
     <value>Пазя</value>
   </data>
+  <data name="display_401" xml:space="preserve">
+    <value>401</value>
+  </data>
+  <data name="display_401_Description" xml:space="preserve">
+    <value>Нямате разрешение за достъп до ресурса</value>
+  </data>
+  <data name="display_403" xml:space="preserve">
+    <value>403</value>
+  </data>
+  <data name="display_403_Description" xml:space="preserve">
+    <value>Нямате достъп до ресурса</value>
+  </data>
+  <data name="display_404" xml:space="preserve">
+    <value>404</value>
+  </data>
+  <data name="display_404_Description" xml:space="preserve">
+    <value>Ресурсът, до който се опитвате да получите достъп, не може да бъде намерен</value>
+  </data>
+  <data name="display_500" xml:space="preserve">
+    <value>500</value>
+  </data>
+  <data name="display_500_Description" xml:space="preserve">
+    <value>грешка в сървъра</value>
+  </data>
   <data name="display_Actions" xml:space="preserve">
     <value>Действия</value>
   </data>
@@ -215,6 +239,18 @@
   </data>
   <data name="message_SuccesfullyEdited" xml:space="preserve">
     <value>Редактирано е успешно</value>
+  </data>
+  <data name="page_401" xml:space="preserve">
+    <value>401</value>
+  </data>
+  <data name="page_403" xml:space="preserve">
+    <value>403</value>
+  </data>
+  <data name="page_404" xml:space="preserve">
+    <value>404</value>
+  </data>
+  <data name="page_500" xml:space="preserve">
+    <value>500</value>
   </data>
   <data name="page_GridGateways" xml:space="preserve">
     <value>Шлюзове</value>

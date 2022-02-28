@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 namespace WebApi.Controllers
 {    
     [ApiController]
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     public abstract class ApiBaseController<TEntityDto> : ControllerBase where TEntityDto : Domain.Entities.Entity
     {

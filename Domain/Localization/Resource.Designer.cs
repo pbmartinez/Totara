@@ -133,6 +133,78 @@ namespace Domain.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 401.
+        /// </summary>
+        public static string display_401 {
+            get {
+                return ResourceManager.GetString("display_401", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No está autorizado a acceder al recurso.
+        /// </summary>
+        public static string display_401_Description {
+            get {
+                return ResourceManager.GetString("display_401_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No tiene acceso al recurso.
+        /// </summary>
+        public static string display_403 {
+            get {
+                return ResourceManager.GetString("display_403", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No tiene acceso al recurso.
+        /// </summary>
+        public static string display_403_Description {
+            get {
+                return ResourceManager.GetString("display_403_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 404.
+        /// </summary>
+        public static string display_404 {
+            get {
+                return ResourceManager.GetString("display_404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to El recurso que intenta acceder no se encuentra.
+        /// </summary>
+        public static string display_404_Description {
+            get {
+                return ResourceManager.GetString("display_404_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 500.
+        /// </summary>
+        public static string display_500 {
+            get {
+                return ResourceManager.GetString("display_500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error en el servidor.
+        /// </summary>
+        public static string display_500_Description {
+            get {
+                return ResourceManager.GetString("display_500_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Acciones.
         /// </summary>
         public static string display_Actions {
@@ -354,6 +426,42 @@ namespace Domain.Localization {
         public static string message_SuccesfullyEdited {
             get {
                 return ResourceManager.GetString("message_SuccesfullyEdited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 401.
+        /// </summary>
+        public static string page_401 {
+            get {
+                return ResourceManager.GetString("page_401", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 403.
+        /// </summary>
+        public static string page_403 {
+            get {
+                return ResourceManager.GetString("page_403", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 404.
+        /// </summary>
+        public static string page_404 {
+            get {
+                return ResourceManager.GetString("page_404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 500.
+        /// </summary>
+        public static string page_500 {
+            get {
+                return ResourceManager.GetString("page_500", resourceCulture);
             }
         }
         

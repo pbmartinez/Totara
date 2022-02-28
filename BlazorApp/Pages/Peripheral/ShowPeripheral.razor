@@ -1,5 +1,6 @@
 ﻿@using Application.Dtos
 @using Application.DataAnnotations
+@using BlazorApp.Services
 @using Domain.Localization
 @using Microsoft.Extensions.Localization
 @using System
@@ -9,6 +10,7 @@
 @inject ISnackbar Snackbar
 @inject IStringLocalizer<Resource> Localizer
 @inject HttpClient Http
+@inject HttpInterceptorService Interceptor
 
 <MudCard Elevation="2">
     <MudCardHeader>
@@ -135,8 +137,10 @@
         if (!justOneFlag)
             throw new ArgumentException(Localizer[Resource.Exception_MultipleModeOnShowView]);
     }
+    public void Dispose() => Interceptor.DisposeEvent();
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
         await UpdateAsync();
         UpdateCardHeader();
     }

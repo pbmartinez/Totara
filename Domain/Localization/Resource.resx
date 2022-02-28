@@ -141,6 +141,30 @@
   <data name="btn_Save" xml:space="preserve">
     <value>Guardar</value>
   </data>
+  <data name="display_401" xml:space="preserve">
+    <value>401</value>
+  </data>
+  <data name="display_401_Description" xml:space="preserve">
+    <value>No está autorizado a acceder al recurso</value>
+  </data>
+  <data name="display_403" xml:space="preserve">
+    <value>No tiene acceso al recurso</value>
+  </data>
+  <data name="display_403_Description" xml:space="preserve">
+    <value>No tiene acceso al recurso</value>
+  </data>
+  <data name="display_404" xml:space="preserve">
+    <value>404</value>
+  </data>
+  <data name="display_404_Description" xml:space="preserve">
+    <value>El recurso que intenta acceder no se encuentra</value>
+  </data>
+  <data name="display_500" xml:space="preserve">
+    <value>500</value>
+  </data>
+  <data name="display_500_Description" xml:space="preserve">
+    <value>Error en el servidor</value>
+  </data>
   <data name="display_Actions" xml:space="preserve">
     <value>Acciones</value>
   </data>
@@ -215,6 +239,18 @@
   </data>
   <data name="message_SuccesfullyEdited" xml:space="preserve">
     <value>Ha sido editado/a satisfactoriamente</value>
+  </data>
+  <data name="page_401" xml:space="preserve">
+    <value>401</value>
+  </data>
+  <data name="page_403" xml:space="preserve">
+    <value>403</value>
+  </data>
+  <data name="page_404" xml:space="preserve">
+    <value>404</value>
+  </data>
+  <data name="page_500" xml:space="preserve">
+    <value>500</value>
   </data>
   <data name="page_GridGateways" xml:space="preserve">
     <value>Gateways</value>

@@ -1,6 +1,7 @@
 ﻿@page "/gateways"
 @using Application.Dtos
 @using BlazorApp.Pages.Skeletons
+@using BlazorApp.Services
 @using Domain.Localization
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.Extensions.Localization
@@ -13,6 +14,7 @@
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 @inject IStringLocalizer<Resource> Localizer
+@inject HttpInterceptorService Interceptor
 
 <PageTitle>@Localizer[Resource.page_GridGateways]</PageTitle>
 
@@ -71,13 +73,17 @@
 
 
 @code {
+
     private List<GatewayDto>? Gateways ;
     private IDialogReference? dialogReference;
     private string searchString = "";
     private DialogOptions dialogOptions = new DialogOptions { CloseButton = true};
 
+    public void Dispose() => Interceptor.DisposeEvent();
     protected override async Task OnInitializedAsync()
     {
+        Interceptor.RegisterEvent();
+
         await UpdateGridAsync();
     }
 
