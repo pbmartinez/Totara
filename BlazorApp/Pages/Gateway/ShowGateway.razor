@@ -1,5 +1,6 @@
 ﻿@using Application.Dtos
 @using Application.DataAnnotations
+@using BlazorApp.Services
 @using Domain.Localization
 @using Microsoft.Extensions.Localization
 @using System.Net
@@ -7,6 +8,7 @@
 @inject ISnackbar Snackbar
 @inject IStringLocalizer<Resource> Localizer
 @inject HttpClient Http
+@inject HttpInterceptorService Interceptor
 
 <MudCard Elevation="2">
     <MudCardHeader>
@@ -111,6 +113,12 @@
         if (!justOneFlag)
             throw new ArgumentException(Localizer[Resource.Exception_MultipleModeOnShowView]);
     }
+    public void Dispose() => Interceptor.DisposeEvent();
+    protected override void OnInitialized()
+    {
+        Interceptor.RegisterEvent();
+        UpdateCardHeader();
+    }
 
     private void Cancel()
     {
@@ -139,7 +147,6 @@
                     Snackbar.Add(Localizer[Resource.message_SuccesfullyDeleted], Severity.Success);
                     OnSuccessfullyDeletedAsync.Invoke();
                 }
-                //TODO: Handle fail on Delete
             }
         }
     }
@@ -159,7 +166,6 @@
                 Snackbar.Add(Localizer[Resource.message_SuccesfullyEdited], Severity.Success);
                 OnSuccessfullySaveAsync.Invoke();
             }
-            //TODO: Handle fail on Edit
         }
     }
     private async Task AddAsync()
@@ -170,7 +176,6 @@
             Snackbar.Add(Localizer[Resource.message_SuccesfullyAdded], Severity.Success);
             OnSuccessfullySaveAsync.Invoke();
         }
-        //TODO: Handle fail on Add
         var response = result.Content.ReadAsStringAsync();
     }
 
@@ -207,5 +212,4 @@
         AddMode = true;
         UpdateCardHeader();
     }
-
 }
