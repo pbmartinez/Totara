@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 namespace WebApi.Controllers
 {    
     [ApiController]
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     public abstract class ApiBaseController<TEntityDto> : ControllerBase where TEntityDto : Domain.Entities.Entity
     {
@@ -75,6 +75,8 @@ namespace WebApi.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Post(TEntityDto item)
         {
+            if(item.IsTransient)
+                item.GenerateIdentity();
             var result = await AppService.AddAsync(item);
             return CreatedAtAction(nameof(Get), new { id = item.Id }, item);
         }
