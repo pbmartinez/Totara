@@ -27,6 +27,9 @@ namespace Application.Dtos
 
         public List<PeripheralDto> Peripherals { get; set; }
 
+
+        public bool ShowPeripherlsInGrid { get; set; } = false;
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var gateway = (GatewayDto)validationContext.ObjectInstance;

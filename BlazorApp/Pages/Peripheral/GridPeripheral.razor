@@ -15,9 +15,12 @@
 @inject IStringLocalizer<Resource> Localizer
 @inject HttpInterceptorService Interceptor
 
-<PageTitle>@Localizer[Resource.page_GridPeripherals]</PageTitle>
 
-<MudText Typo="Typo.h3" GutterBottom="true">@Localizer[Resource.PeripheralDto]</MudText>
+@if (!IsComponent)
+{
+    <PageTitle>@Localizer[Resource.page_GridPeripherals]</PageTitle>
+    <MudText Typo="Typo.h3" GutterBottom="true">@Localizer[Resource.PeripheralDto]</MudText>
+}
 <MudText Class="mb-8">@(string.Format( Localizer[Resource.display_ListOfXXX], Localizer[Resource.PeripheralDtos]))</MudText>
 
 
@@ -55,13 +58,13 @@
                 <MudTd DataLabel=@Localizer[Resource.PeripheralDtoStatus]>@context.Gateway.Name</MudTd>
                 <MudTd DataLabel="">                                        
                     <MudTooltip Text=@Localizer[Resource.btn_Details]>
-                        <MudFab @onclick="@(()=>Show(context))" Color=Color.Default Icon="@Icons.Material.Filled.Visibility" Size=Size.Medium> </MudFab>
+                        <MudFab @onclick="@(()=>Show(context))" Color=Color.Default Icon="@Icons.Material.Filled.Visibility" Size=Size.Small> </MudFab>
                     </MudTooltip>
                     <MudTooltip Text=@Localizer[Resource.btn_Edit]>
-                        <MudFab @onclick="@(()=>Edit(context))" Color=Color.Warning Icon="@Icons.Material.Filled.Edit" Size=Size.Medium> </MudFab>
+                        <MudFab @onclick="@(()=>Edit(context))" Color=Color.Warning Icon="@Icons.Material.Filled.Edit" Size=Size.Small> </MudFab>
                     </MudTooltip>
                     <MudTooltip Text=@Localizer[Resource.btn_Delete]>
-                        <MudFab @onclick="@(()=>Delete(context))" Color=Color.Error Icon="@Icons.Material.Filled.Delete" Size=Size.Medium> </MudFab>
+                        <MudFab @onclick="@(()=>Delete(context))" Color=Color.Error Icon="@Icons.Material.Filled.Delete" Size=Size.Small> </MudFab>
                     </MudTooltip>
                 </MudTd>
             </RowTemplate>
@@ -76,6 +79,10 @@
 
 
 @code {
+    [Parameter]
+    public Guid? GatewayId { get; set; }
+    [Parameter]
+    public bool IsComponent { get; set; }
     private List<PeripheralDto>? Peripherals ;
     private IDialogReference? dialogReference;
     private string searchString = "";
@@ -89,7 +96,10 @@
 
     private async Task UpdateGridAsync()
     {
-        Peripherals = await Http.GetFromJsonAsync<List<PeripheralDto>>("api/peripheral") ?? new List<PeripheralDto>();        
+        if(GatewayId == null || GatewayId == Guid.Empty)
+            Peripherals = await Http.GetFromJsonAsync<List<PeripheralDto>>("api/peripheral") ?? new List<PeripheralDto>();        
+        else
+            Peripherals = await Http.GetFromJsonAsync<List<PeripheralDto>>($"api/gateway/{GatewayId.Value}/peripheral") ?? new List<PeripheralDto>();        
     }
 
     private void OnCancelled()

@@ -37,6 +37,18 @@ namespace WebApi.Controllers
                 return NotFound();
             return Ok(peripheral);
         }
+        [HttpGet]
+        [HttpHead]
+        [Route("~/api/gateway/{gatewayId}/peripheral")]
+        public async Task<ActionResult<PeripheralDto>> GetAllPeripheralForGateway(Guid? gatewayId)
+        {
+            if (gatewayId == null || gatewayId == Guid.Empty)
+                return BadRequest();
+            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, new List<Expression<Func<GatewayDto, object>>> { g=>g.Peripherals});
+            if (gateway == null)
+                return NotFound();
+            return Ok(gateway.Peripherals);
+        }
 
         [HttpPost]
         [Route("~/api/gateway/{gatewayId}/peripheral")]

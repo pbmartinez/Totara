@@ -1,5 +1,6 @@
 ﻿@page "/gateways"
 @using Application.Dtos
+@using BlazorApp.Pages.Peripheral
 @using BlazorApp.Pages.Skeletons
 @using BlazorApp.Services
 @using Domain.Localization
@@ -26,43 +27,56 @@
 <MudCard Elevation="2">
     @if (Gateways == null)
     {
-        <SkeletonGrid />
+            <SkeletonGrid />
     }
     else
     {
-        <MudTable Items="Gateways" Hover="true" SortLabel="Sort By" Elevation="0" MultiSelection="false" Dense="true"
+            <MudTable Items="Gateways" Hover="true" SortLabel="Sort By" Elevation="0" MultiSelection="false" Dense="true"
               Filter="new Func<GatewayDto,bool>(FilterFunc1)">
-            <ToolBarContent>
-                <MudTooltip Text=@Localizer[Resource.btn_Add]>
-                    <MudIconButton @onclick="Add" Icon="@Icons.Material.Filled.Add" Color=Color.Inherit></MudIconButton>
-                </MudTooltip>
-                <MudSpacer />
-                <MudTextField @bind-Value="searchString" Placeholder=@Localizer[Resource.display_Buscar]
+                <ColGroup>
+                    <col style="width:400px;" />
+                    <col style="width:100px;" />        
+                    <col style="width:150px;" />
+                </ColGroup>
+                <ToolBarContent>
+                    <MudTooltip Text=@Localizer[Resource.btn_Add]>
+                        <MudIconButton @onclick="Add" Icon="@Icons.Material.Filled.Add" Color=Color.Inherit></MudIconButton>
+                    </MudTooltip>
+                    <MudSpacer />
+                    <MudTextField @bind-Value="searchString" Placeholder=@Localizer[Resource.display_Buscar]
                     Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium"
                     Class="mt-0">
-                </MudTextField>
-            </ToolBarContent>
-            <HeaderContent>
-                <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<GatewayDto, object>(x=>x.Name)">@Localizer[Resource.GatewayDtoName]</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<GatewayDto, object>(x=>x.Ipv4Address)">@Localizer[Resource.GatewayDtoIpv4Address]</MudTableSortLabel></MudTh>
-                <MudTh>@Localizer[Resource.display_Actions]</MudTh>
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel=@Localizer[Resource.GatewayDtoName]>@context.Name</MudTd>
-                <MudTd DataLabel=@Localizer[Resource.GatewayDtoIpv4Address]>@context.Ipv4Address</MudTd>
-                <MudTd DataLabel="">                                        
-                    <MudTooltip Text=@Localizer[Resource.btn_Details]>
-                        <MudFab @onclick="@(()=>Show(context))" Color=Color.Default Icon="@Icons.Material.Filled.Visibility" Size=Size.Medium> </MudFab>
-                    </MudTooltip>
-                    <MudTooltip Text=@Localizer[Resource.btn_Edit]>
-                        <MudFab @onclick="@(()=>Edit(context))" Color=Color.Warning Icon="@Icons.Material.Filled.Edit" Size=Size.Medium> </MudFab>
-                    </MudTooltip>
-                    <MudTooltip Text=@Localizer[Resource.btn_Delete]>
-                        <MudFab @onclick="@(()=>Delete(context))" Color=Color.Error Icon="@Icons.Material.Filled.Delete" Size=Size.Medium> </MudFab>
-                    </MudTooltip>
-                </MudTd>
-            </RowTemplate>
-
+                    </MudTextField>
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh><MudTableSortLabel InitialDirection="SortDirection.Ascending" SortBy="new Func<GatewayDto, object>(x=>x.Name)">@Localizer[Resource.GatewayDtoName]</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<GatewayDto, object>(x=>x.Ipv4Address)">@Localizer[Resource.GatewayDtoIpv4Address]</MudTableSortLabel></MudTh>
+                    <MudTh>@Localizer[Resource.display_Actions]</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel=@Localizer[Resource.GatewayDtoName]>@context.Name</MudTd>
+                    <MudTd DataLabel=@Localizer[Resource.GatewayDtoIpv4Address]>@context.Ipv4Address</MudTd>
+                    <MudTd DataLabel="">                                        
+                        <MudTooltip Text=@string.Format( Localizer[Resource.display_DetailsOf],Localizer[Resource.PeripheralDtos])>
+                            <MudFab @onclick="@(()=>ShowHideRelatedPeripherals(context))" Color=Color.Info Icon="@Icons.Material.Filled.Devices" Size=Size.Small> </MudFab>
+                        </MudTooltip>                                      
+                        <MudTooltip Text=@Localizer[Resource.btn_Details]>
+                            <MudFab @onclick="@(()=>Show(context))" Color=Color.Default Icon="@Icons.Material.Filled.Visibility" Size=Size.Small> </MudFab>
+                        </MudTooltip>
+                        <MudTooltip Text=@Localizer[Resource.btn_Edit]>
+                            <MudFab @onclick="@(()=>Edit(context))" Color=Color.Warning Icon="@Icons.Material.Filled.Edit" Size=Size.Small> </MudFab>
+                        </MudTooltip>
+                        <MudTooltip Text=@Localizer[Resource.btn_Delete]>
+                            <MudFab @onclick="@(()=>Delete(context))" Color=Color.Error Icon="@Icons.Material.Filled.Delete" Size=Size.Small> </MudFab>
+                        </MudTooltip>
+                    </MudTd>
+                </RowTemplate>
+                <ChildRowContent >
+                @if (context.ShowPeripherlsInGrid)
+                {
+                    <GridPeripheral GatewayId=context.Id IsComponent=true />
+                }
+                </ChildRowContent>
             <PagerContent>
                 <MudTablePager PageSizeOptions="new int[]{10, 25, 50}" />
             </PagerContent>
@@ -74,10 +88,10 @@
 
 @code {
 
-    private List<GatewayDto>? Gateways ;
+    private List<GatewayDto>? Gateways;
     private IDialogReference? dialogReference;
     private string searchString = "";
-    private DialogOptions dialogOptions = new DialogOptions { CloseButton = true};
+    private DialogOptions dialogOptions = new DialogOptions { CloseButton = true };
 
     public void Dispose() => Interceptor.DisposeEvent();
     protected override async Task OnInitializedAsync()
@@ -108,7 +122,7 @@
         await UpdateGridAsync();
         StateHasChanged();
     }
-    private void SuccessfullySave() => Task.FromResult( OnSuccessfullySaveAsync());
+    private void SuccessfullySave() => Task.FromResult(OnSuccessfullySaveAsync());
     private void SuccessfullyDelete() => Task.FromResult(OnSuccessfullySaveAsync());
 
     private DialogParameters SetParametersForShow()
@@ -118,8 +132,13 @@
         parameters.Add("OnSuccessfullyDeletedAsync", () => SuccessfullyDelete());
         parameters.Add("OnCancelled", () => OnCancelled());
         return parameters;
-    }    
-    private async Task Show(GatewayDto pivot) 
+    }
+    private void ShowHideRelatedPeripherals(GatewayDto item)
+    {
+        item.ShowPeripherlsInGrid = !item.ShowPeripherlsInGrid;
+    }
+
+    private async Task Show(GatewayDto pivot)
     {
         var item = await Http.GetFromJsonAsync<GatewayDto>($"/api/gateway/{pivot.Id}");
         if (item == null)
@@ -132,7 +151,7 @@
             var parameters = SetParametersForShow();
             parameters.Add("item", item);
             parameters.Add("ShowMode", true);
-            dialogReference = Dialog.Show<ShowGateway>("",parameters, dialogOptions);
+            dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);
         }
     }
     private void Add()
@@ -141,7 +160,7 @@
         parameters.Add("item", new GatewayDto());
         parameters.Add("AddMode", true);
         dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);
-        
+
     }
     private async Task Edit(GatewayDto pivot)
     {
@@ -156,7 +175,7 @@
             var parameters = SetParametersForShow();
             parameters.Add("item", item);
             parameters.Add("EditMode", true);
-            dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);        
+            dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);
         }
     }
     private async Task Delete(GatewayDto pivot)
@@ -172,7 +191,7 @@
             var parameters = SetParametersForShow();
             parameters.Add("item", item);
             parameters.Add("DeleteMode", true);
-            dialogReference = Dialog.Show<ShowGateway>("",parameters,dialogOptions);            
+            dialogReference = Dialog.Show<ShowGateway>("", parameters, dialogOptions);
         }
     }
 
