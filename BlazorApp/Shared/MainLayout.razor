@@ -5,6 +5,7 @@
 @inherits LayoutComponentBase
 
 @inject IStringLocalizer<Resource> Localizer
+@inject NavigationManager _navigationManager;
 <MudThemeProvider/>
 <MudDialogProvider/>
 <MudSnackbarProvider/>
@@ -22,6 +23,11 @@
         <NavMenu />
     </MudDrawer>
     <MudMainContent>
+        <AuthorizeView>
+            <Authorized>
+                <MudBreadcrumbs Items=Breadcrumbs></MudBreadcrumbs>
+            </Authorized>
+        </AuthorizeView>
         <MudContainer MaxWidth="MaxWidth.Large" Class="my-16 pt-16">
             @Body
         </MudContainer>
@@ -34,5 +40,16 @@
     void DrawerToggle()
     {
         _drawerOpen = !_drawerOpen;
+    }
+
+    private List<BreadcrumbItem> Breadcrumbs = new List<BreadcrumbItem>();
+    protected override void OnInitialized()
+    {
+        Breadcrumbs.Add(new BreadcrumbItem
+                        (Localizer[Resource.menu_Home], "/", false, Icons.Material.Filled.Home));
+        Breadcrumbs.Add(new BreadcrumbItem
+                        (Localizer[Resource.menu_Gateway], "/gateways", false, Icons.Material.Filled.DeviceHub));
+        Breadcrumbs.Add(new BreadcrumbItem
+                        (Localizer[Resource.menu_Peripheral], "/peripherals", false, Icons.Material.Filled.Devices));
     }
 }

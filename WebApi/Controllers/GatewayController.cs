@@ -1,5 +1,7 @@
-﻿using Application.Dtos;
+﻿using Application.Constants;
+using Application.Dtos;
 using Application.IAppServices;
+using Domain.Localization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq.Expressions;
@@ -16,5 +18,32 @@ namespace WebApi.Controllers
         {
             Includes = new List<Expression<Func<GatewayDto, object>>>() { g => g.Peripherals };
         }
+
+        [HttpGet("{gatewayId}/validation-errors")]
+        public async Task<ActionResult<List<string>>> ValidationErrors(Guid? gatewayId)
+        {
+            var validationErrors = new List<string>();
+
+            if (gatewayId == null || gatewayId.Value == Guid.Empty)
+            {
+                validationErrors.Add("gateway id is not valid");
+            }
+            else
+            {
+                var gateway = await AppService.GetAsync(gatewayId.Value, new List<Expression<Func<GatewayDto, object>>>() { a => a.Peripherals });
+
+                if (gateway == null)
+                    validationErrors.Add("gateway does not exist");
+                else
+                {
+                    if (gateway.Peripherals.Count >= 10)
+                        validationErrors.Add(string.Format(Resource.validation_MaxPeriphelsAllowed, GatewayPeripherals.MAX_PERIPHERALS_ALLOWED_PER_GATEWAY));
+                }
+
+            }
+
+            return validationErrors;
+        }
     }
+    
 }

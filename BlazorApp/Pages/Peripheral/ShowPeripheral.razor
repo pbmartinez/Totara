@@ -5,6 +5,7 @@
 @using Microsoft.Extensions.Localization
 @using System
 @using System.Net
+@using System.Net.Http
 
 
 @inject ISnackbar Snackbar
@@ -19,7 +20,7 @@
         </CardHeaderContent>
     </MudCardHeader>
     <MudCardContent>
-        <MudForm @bind-IsValid="@success">
+        <MudForm @bind-IsValid="@success" >
             <MudGrid>
 
                 <MudItem xs="6" sm="4">
@@ -45,6 +46,8 @@
                 <MudItem xs="6" sm="4">                    
                     <MudSelect T="Guid" @bind-Value="item.GatewayId" Strict=true Label="@Localizer[Resource.PeripheralDtoGatewayId]" AnchorOrigin="Origin.BottomCenter" 
                                AdornmentIcon="@Icons.Filled.DeviceHub"
+                               Validation="@(new Func<Guid, Task<List<string>>>(async a => await ValidateGateway(a)))"
+                               
                                Required="true" RequiredError="@Localizer[Resource.validation_FieldRequired]">
                         
                         @foreach (var gateway in Gateways)
@@ -153,7 +156,12 @@
     {
         OnCancelled.Invoke();
     }
-
+    
+    private async Task<List<string>> ValidateGateway(Guid gatewayId)
+    {
+        var listaErrores = await Http.GetFromJsonAsync<List<string>>($"/api/gateway/{gatewayId}/validate");
+        return listaErrores ?? new List<string>();
+    }
     private async Task DeleteAsync()
     {
         if (item == null || item.Id == Guid.Empty)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
+
 namespace Application.Dtos
 {
     public partial class GatewayDto : Entity, IValidatableObject 
