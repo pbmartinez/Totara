@@ -1,4 +1,5 @@
 ﻿using Application.IAppServices;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.Options;
 using System.Linq.Expressions;
+using WebApi.Helpers;
+using WebApi.Parameters;
 
 namespace WebApi.Controllers
 {    
@@ -43,33 +46,44 @@ namespace WebApi.Controllers
 
         protected readonly ILogger<ApiBaseController<TEntityDto>> _logger;
 
-        
+        protected readonly IPropertyCheckerService _propertyCheckerService;
 
-        public ApiBaseController(IAppService<TEntityDto> appService,
-            ILogger<ApiBaseController<TEntityDto>> logger)
+        protected ApiBaseController(IAppService<TEntityDto> appService, ILogger<ApiBaseController<TEntityDto>> logger, IPropertyCheckerService propertyCheckerService)
         {
-            AppService = appService;
-            _logger = logger;
-            
+            AppService = appService ?? throw new ArgumentNullException(nameof(appService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _propertyCheckerService = propertyCheckerService ?? throw new ArgumentNullException(nameof(propertyCheckerService));
         }
+
         [HttpGet]
         [HttpHead]
-        public virtual async Task<ActionResult<List<TEntityDto>>> Get()
+        public virtual async Task<IActionResult> Get([FromQuery]QueryStringParameters queryStringParameters)
         {
-            var items = await AppService.GetAllAsync(Includes, DefaultOrderBy);
-            return Ok(items);
+            if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(queryStringParameters.Fields))
+                return BadRequest();
+            var items = await AppService.GetAllAsync(null, DefaultOrderBy);
+            return Ok(items.ShapeData(queryStringParameters.Fields));
         }
+        //[HttpGet]
+        //[HttpHead]
+        //public virtual async Task<ActionResult<List<TEntityDto>>> Get()
+        //{
+        //    var items = await AppService.GetAllAsync(Includes, DefaultOrderBy);
+        //    return Ok(items);
+        //}
 
         [HttpGet("{id}")]
         [HttpHead("{id}")]
-        public virtual async Task<ActionResult<TEntityDto>> Get(Guid? id)
+        public virtual async Task<ActionResult<TEntityDto>> Get(Guid? id, string? fields)
         {
+            if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(fields))
+                return BadRequest();
             if (id == null || id.Value == Guid.Empty)
                 return BadRequest();
             var item = await AppService.GetAsync(id.Value, Includes);
             if (item == null)
                 return NotFound();
-            return Ok(item);
+            return Ok(item.ShapeData(fields ?? string.Empty));
         }
 
         [HttpPost]
