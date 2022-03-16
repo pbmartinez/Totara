@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Application.Specification
+namespace Application.Specifications
 {
     //Miningfull name that denotes the specification
     public class AllGatewaySpecification : Specification<GatewayDto>

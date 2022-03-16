@@ -2,12 +2,14 @@
 using Application.IValidator;
 using Application.Mappings;
 using AutoMapper.Extensions.ExpressionMapping;
+using Domain.Interfaces;
 using Domain.IRepositories;
 using Domain.UnitOfWork;
 using Infraestructure.Application.AppServices;
 using Infraestructure.Application.Validator;
 using Infraestructure.Domain.Repositories;
 using Infraestructure.Domain.UnitOfWork;
+using Infraestructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -75,6 +77,8 @@ namespace Infraestructure.DependencyInjectionExtensions
         {
             //IValidator
             services.AddScoped<IEntityValidator, DataAnnotationsEntityValidator>();
+            //Property Checker
+            services.AddScoped<IPropertyCheckerService, PropertyCheckerService>();
 
             // Inject here any other service from the Application
         }

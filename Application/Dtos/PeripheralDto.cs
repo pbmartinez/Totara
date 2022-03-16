@@ -13,14 +13,14 @@ namespace Application.Dtos
         public IGatewayAppService GatewayAppService { get; set; }
         public PeripheralDto()
         {
-            CreatedDate = DateTime.Today;
-            CreatedDateHelper = DateTime.Today;
+            CreatedDate = DateTime.Now;
+            CreatedDateHelper = DateTime.Now;
         }
         public PeripheralDto(IGatewayAppService gatewayAppService) 
         {
             GatewayAppService = gatewayAppService ?? throw new ArgumentNullException(nameof(gatewayAppService));
-            CreatedDate = DateTime.Today;
-            CreatedDateHelper = DateTime.Today;
+            CreatedDate = DateTime.Now;
+            CreatedDateHelper = DateTime.Now;
         }
 
         [Display(ResourceType = typeof(Resource), Name = $"{nameof(PeripheralDto)}{nameof(Vendor)}")]

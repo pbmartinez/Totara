@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.IAppServices;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,10 @@ namespace WebApi.Controllers
     [Route("api/peripheral")]
     public class PeripheralController : ApiBaseController<PeripheralDto>
     {
-        private readonly IGatewayAppService _gatewayAppService;
-        public PeripheralController(IGatewayAppService gatewayAppService, IPeripheralAppService appService, ILogger<ApiBaseController<PeripheralDto>> logger)
-            : base(appService, logger)
+        private readonly IGatewayAppService _gatewayAppService;        
+        public PeripheralController(IPeripheralAppService appService, ILogger<ApiBaseController<PeripheralDto>> logger, IPropertyCheckerService propertyCheckerService,
+            IGatewayAppService gatewayAppService) 
+            : base(appService, logger, propertyCheckerService)
         {
             _gatewayAppService = gatewayAppService;
             Includes = new List<Expression<Func<PeripheralDto, object>>>() { a => a.Gateway };
