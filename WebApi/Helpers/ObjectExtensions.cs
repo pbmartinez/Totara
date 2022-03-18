@@ -16,7 +16,7 @@ namespace WebApi.Helpers
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="Exception"></exception>
-        public static ExpandoObject ShapeData<TSource>(this TSource source, string fields)
+        public static ExpandoObject ShapeDataOnObject<TSource>(this TSource source, string fields)
         {
             if (source == null)
                 throw new ArgumentNullException(nameof(source));

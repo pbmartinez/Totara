@@ -62,7 +62,7 @@ namespace WebApi.Controllers
             if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(queryStringParameters.Fields))
                 return BadRequest();
             var items = await AppService.GetAllAsync(null, DefaultOrderBy);
-            return Ok(items.ShapeData(queryStringParameters.Fields));
+            return Ok(items.ShapeDataOnIEnumerable(queryStringParameters.Fields));
         }
         //[HttpGet]
         //[HttpHead]
@@ -83,7 +83,7 @@ namespace WebApi.Controllers
             var item = await AppService.GetAsync(id.Value, Includes);
             if (item == null)
                 return NotFound();
-            return Ok(item.ShapeData(fields ?? string.Empty));
+            return Ok(item.ShapeDataOnObject(fields ?? string.Empty));
         }
 
         [HttpPost]
