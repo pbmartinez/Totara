@@ -10,6 +10,7 @@ namespace Application.Mappings
         {
             CreateMap<Gateway, GatewayDto>()
                 .ForMember(g => g.Peripherals, options => options.MapFrom(f => f.Peripherals))
+                .ForMember(g => g.Brand, options => options.MapFrom(f => f.Brand))
                 .ReverseMap();
         }
     }

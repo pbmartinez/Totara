@@ -13,5 +13,6 @@ namespace Domain.Entities
         public string Ipv4Address { get; set; }
 
         public virtual List<Peripheral> Peripherals { get; set; }
+        public virtual Brand Brand { get; set; }
     }
 }

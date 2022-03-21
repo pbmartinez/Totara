@@ -8,6 +8,7 @@ namespace WebApi.Helpers
         /// <summary>
         /// It returns a new IEnumerable of Dynamic object from this IEnumerable of TSource. 
         /// From each TSource object it selects the properties specified in 'fields' as comma sparated value format.
+        /// Properties are case insensitive.
         /// If no field is specified, all properties are selected
         /// </summary>
         /// <typeparam name="TSource"></typeparam>

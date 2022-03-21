@@ -59,18 +59,13 @@ namespace WebApi.Controllers
         [HttpHead]
         public virtual async Task<IActionResult> Get([FromQuery]QueryStringParameters queryStringParameters)
         {
+            //TODO: Return bad request specifying that was by incorrect properties
             if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(queryStringParameters.Fields))
                 return BadRequest();
-            var items = await AppService.GetAllAsync(null, DefaultOrderBy);
+
+            var items = await AppService.GetAllAsync(Includes, DefaultOrderBy);
             return Ok(items.ShapeDataOnIEnumerable(queryStringParameters.Fields));
         }
-        //[HttpGet]
-        //[HttpHead]
-        //public virtual async Task<ActionResult<List<TEntityDto>>> Get()
-        //{
-        //    var items = await AppService.GetAllAsync(Includes, DefaultOrderBy);
-        //    return Ok(items);
-        //}
 
         [HttpGet("{id}")]
         [HttpHead("{id}")]

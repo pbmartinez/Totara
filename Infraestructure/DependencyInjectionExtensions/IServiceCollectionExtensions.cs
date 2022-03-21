@@ -36,6 +36,7 @@ namespace Infraestructure.DependencyInjectionExtensions
                 configuration.AddExpressionMapping();
                 configuration.AddProfile<GatewayProfile>();
                 configuration.AddProfile<PeripheralProfile>();
+                configuration.AddProfile<BrandProfile>();
                 AppDomain.CurrentDomain.GetAssemblies();
 
             });
@@ -64,10 +65,12 @@ namespace Infraestructure.DependencyInjectionExtensions
             //AppServices
             services.AddScoped<IGatewayAppService, GatewayAppService>();
             services.AddScoped<IPeripheralAppService, PeripheralAppService>();
+            services.AddScoped<IBrandAppService, BrandAppService>();
 
             //Repositories
             services.AddScoped<IGatewayRepository, GatewayRepository>();
             services.AddScoped<IPeripheralRepository, PeripheralRepository>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
         }
         /// <summary>
         /// Adds custom Application services

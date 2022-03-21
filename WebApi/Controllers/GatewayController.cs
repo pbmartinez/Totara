@@ -18,7 +18,7 @@ namespace WebApi.Controllers
         public GatewayController(IGatewayAppService appService, ILogger<ApiBaseController<GatewayDto>> logger, IPropertyCheckerService propertyCheckerService) 
             : base(appService, logger, propertyCheckerService)
         {
-            Includes = new List<Expression<Func<GatewayDto, object>>>() { g => g.Peripherals };
+            Includes = new List<Expression<Func<GatewayDto, object>>>() { g => g.Peripherals, g => g.Brand };
         }
 
         [HttpGet("{gatewayId}/validation-errors")]
