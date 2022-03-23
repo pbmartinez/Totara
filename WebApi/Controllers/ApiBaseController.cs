@@ -20,22 +20,26 @@ namespace WebApi.Controllers
     {
         protected readonly IAppService<TEntityDto> AppService;
 
+
         /// <summary>
         /// List of related entities (navigation properties) to be included. Index view.
         /// </summary>
-        protected List<Expression<Func<TEntityDto, object>>> Includes = new();
+        protected List<string> Includes = new ();
+        
         /// <summary>
         /// List of related entities (navigation properties) to be included. Details view.
         /// </summary>
-        protected List<Expression<Func<TEntityDto, object>>> DetailsIncludes = new();
+        protected List<string> DetailsIncludes = new ();
+        
         /// <summary>
         /// List of related entities (navigation properties) to be included. Edit view.
         /// </summary>
-        protected List<Expression<Func<TEntityDto, object>>> EditIncludes = new();
+        protected List<string> EditIncludes = new ();
+        
         /// <summary>
         /// List of related entities (navigation properties) to be included. Delete view.
         /// </summary>
-        protected List<Expression<Func<TEntityDto, object>>> DeleteIncludes = new();
+        protected List<string> DeleteIncludes = new ();
         /// <summary>
         /// Defines the fields by which the list items will be ordered. The list items will be ordered multiple levels, 
         /// in the same order that the diccionary is feeded. For specifying Ascending / Descending order specify true / false in each field.
@@ -61,10 +65,10 @@ namespace WebApi.Controllers
         {
             //TODO: Return bad request specifying that was by incorrect properties
             if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(queryStringParameters.Fields))
-                return BadRequest();
-
+                return BadRequest();                                
             var items = await AppService.GetAllAsync(Includes, DefaultOrderBy);
-            return Ok(items.ShapeDataOnIEnumerable(queryStringParameters.Fields));
+            var result = items.ShapeDataOnIEnumerable(queryStringParameters.Fields);
+            return Ok(result);
         }
 
         [HttpGet("{id}")]

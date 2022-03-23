@@ -18,7 +18,7 @@ namespace WebApi.Controllers
         public GatewayController(IGatewayAppService appService, ILogger<ApiBaseController<GatewayDto>> logger, IPropertyCheckerService propertyCheckerService) 
             : base(appService, logger, propertyCheckerService)
         {
-            Includes = new List<Expression<Func<GatewayDto, object>>>() { g => g.Peripherals, g => g.Brand };
+            Includes = new () { nameof(GatewayDto.Peripherals), nameof(GatewayDto.Brand) };
         }
 
         [HttpGet("{gatewayId}/validation-errors")]
@@ -32,7 +32,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                var gateway = await AppService.GetAsync(gatewayId.Value, new List<Expression<Func<GatewayDto, object>>>() { a => a.Peripherals });
+                var gateway = await AppService.GetAsync(gatewayId.Value, Includes);
 
                 if (gateway == null)
                     validationErrors.Add("gateway does not exist");

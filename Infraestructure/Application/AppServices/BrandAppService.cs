@@ -41,16 +41,13 @@ namespace Infraestructure.Application.AppServices
                 throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
-
-        public async Task<List<BrandDto>> FindAllBySpecificationPatternAsync(Specification<BrandDto>? specification = null, List<Expression<Func<BrandDto, object>>>? includes = null, Dictionary<string, bool>? order = null)
+        
+        public async Task<List<BrandDto>> FindAllBySpecificationPatternAsync(Specification<BrandDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Brand, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Brand, object>>>(includes).ToList();
             return _mapper.Map<List<BrandDto>>(
                 await _BrandRepository.FindAllByExpressionAsync(
                     _mapper.MapExpression<Expression<Func<Brand, bool>>>(
-                        specification == null ? a => true : specification.ToExpression()), domainExpressionIncludesList, order));
+                        specification == null ? a => true : specification.ToExpression()), includes, order));
         }
 
         public async Task<int> FindCountBySpecificationPatternAsync(Specification<BrandDto>? specification = null)
@@ -59,61 +56,36 @@ namespace Infraestructure.Application.AppServices
             return count;
         }
 
-        public async Task<BrandDto> FindOneBySpecificationPatternAsync(Specification<BrandDto>? specification = null, List<Expression<Func<BrandDto, object>>>? includes = null)
+        public async Task<BrandDto> FindOneBySpecificationPatternAsync(Specification<BrandDto> specification = null, List<string> includes = null)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Brand, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Brand, object>>>(includes).ToList();
-            var item = await _BrandRepository.FindOneByExpressionAsync(specification?.MapToExpressionOfType<Brand>(), domainExpressionIncludesList);
+            var item = await _BrandRepository.FindOneByExpressionAsync(specification?.MapToExpressionOfType<Brand>(), includes);
             return _mapper.Map<BrandDto>(item);
         }
 
-        public async Task<List<BrandDto>> FindPageBySpecificationPatternAsync(Specification<BrandDto>? specification = null, List<Expression<Func<BrandDto, object>>>? includes = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0)
+        public async Task<List<BrandDto>> FindPageBySpecificationPatternAsync(Specification<BrandDto> specification = null, List<string> includes = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Brand, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Brand, object>>>(includes).ToList();
             return _mapper.Map<List<BrandDto>>(
                 await _BrandRepository.FindPageByExpressionAsync(
-                    specification?.MapToExpressionOfType<Brand>(), domainExpressionIncludesList, order, pageSize, pageGo));
+                    specification?.MapToExpressionOfType<Brand>(), includes, order, pageSize, pageGo));
         }
 
-        public BrandDto Get(Guid id, List<Expression<Func<BrandDto, object>>>? includes = null)
+        
+        public BrandDto Get(Guid id, List<string> includes = null)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Brand, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Brand, object>>>(includes).ToList();
-            return _mapper.Map<BrandDto>(_BrandRepository.Get(id, domainExpressionIncludesList));
+            return _mapper.Map<BrandDto>(_BrandRepository.Get(id, includes));
         }
 
-        public async Task<List<BrandDto>> GetAllAsync(List<Expression<Func<BrandDto, object>>>? includes, Dictionary<string, bool>? order)
+        public async Task<List<BrandDto>> GetAllAsync(List<string> includes = null, Dictionary<string, bool> order = null)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Brand, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Brand, object>>>(includes).ToList();
-            var items = await _BrandRepository.GetAllAsync(domainExpressionIncludesList, order);
+            var items = await _BrandRepository.GetAllAsync(includes, order);
             var dtoItems = _mapper.Map<List<BrandDto>>(items.ToList());
             return dtoItems;
         }
 
-
-
-        public async Task<BrandDto> GetAsync(Guid id, List<Expression<Func<BrandDto, object>>>? includes = null)
+        public async Task<BrandDto> GetAsync(Guid id, List<string> includes = null)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Brand, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Brand, object>>>(includes).ToList();
-            return _mapper.Map<BrandDto>(await _BrandRepository.GetAsync(id, domainExpressionIncludesList));
+            return _mapper.Map<BrandDto>(await _BrandRepository.GetAsync(id, includes));
         }
-
-
-        //public async Task<BrandDto> GetForUpdateAsync(Guid id, List<Expression<Func<BrandDto, object>>>? includes = null)
-        //{
-        //    var domainExpressionIncludesList = includes == null
-        //        ? new List<Expression<Func<Brand, object>>>()
-        //        : _mapper.MapIncludesList<Expression<Func<Brand, object>>>(includes).ToList();
-        //    return _mapper.Map<BrandDto>(await _BrandRepository.GetAsync(id, domainExpressionIncludesList));
-        //}
 
         public async Task<bool> RemoveAsync(Guid id)
         {

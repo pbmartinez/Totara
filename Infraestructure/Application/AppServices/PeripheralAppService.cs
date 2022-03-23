@@ -42,15 +42,13 @@ namespace Infraestructure.Application.AppServices
             return commited > 0;
         }
 
-        public async Task<List<PeripheralDto>> FindAllBySpecificationPatternAsync(Specification<PeripheralDto>? specification = null, List<Expression<Func<PeripheralDto, object>>>? includes = null, Dictionary<string, bool>? order = null)
+        
+        public async Task<List<PeripheralDto>> FindAllBySpecificationPatternAsync(Specification<PeripheralDto> specification = null, List<string> includes = null, Dictionary<string, bool> order = null)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Peripheral, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Peripheral, object>>>(includes).ToList();
             return _mapper.Map<List<PeripheralDto>>(
-                await _PeripheralRepository.FindAllByExpressionAsync(
-                    _mapper.MapExpression<Expression<Func<Peripheral, bool>>>(
-                        specification == null ? a => true : specification.ToExpression()), domainExpressionIncludesList, order));
+                   await _PeripheralRepository.FindAllByExpressionAsync(
+                       _mapper.MapExpression<Expression<Func<Peripheral, bool>>>(
+                           specification == null ? a => true : specification.ToExpression()), includes, order));
         }
 
         public async Task<int> FindCountBySpecificationPatternAsync(Specification<PeripheralDto>? specification = null)
@@ -59,61 +57,44 @@ namespace Infraestructure.Application.AppServices
             return count;
         }
 
-        public async Task<PeripheralDto> FindOneBySpecificationPatternAsync(Specification<PeripheralDto>? specification = null, List<Expression<Func<PeripheralDto, object>>>? includes = null)
+       
+
+        public async Task<PeripheralDto> FindOneBySpecificationPatternAsync(Specification<PeripheralDto> specification = null, List<string> includes = null)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Peripheral, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Peripheral, object>>>(includes).ToList();
-            var item = await _PeripheralRepository.FindOneByExpressionAsync(specification?.MapToExpressionOfType<Peripheral>(), domainExpressionIncludesList);
+            var item = await _PeripheralRepository.FindOneByExpressionAsync(specification?.MapToExpressionOfType<Peripheral>(), includes);
             return _mapper.Map<PeripheralDto>(item);
         }
 
-        public async Task<List<PeripheralDto>> FindPageBySpecificationPatternAsync(Specification<PeripheralDto>? specification = null, List<Expression<Func<PeripheralDto, object>>>? includes = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0)
+        
+
+        public async Task<List<PeripheralDto>> FindPageBySpecificationPatternAsync(Specification<PeripheralDto> specification = null, List<string> includes = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Peripheral, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Peripheral, object>>>(includes).ToList();
             return _mapper.Map<List<PeripheralDto>>(
                 await _PeripheralRepository.FindPageByExpressionAsync(
-                    specification?.MapToExpressionOfType<Peripheral>(), domainExpressionIncludesList, order, pageSize, pageGo));
+                    specification?.MapToExpressionOfType<Peripheral>(), includes, order, pageSize, pageGo));
         }
 
-        public PeripheralDto Get(Guid id, List<Expression<Func<PeripheralDto, object>>>? includes = null)
+        
+
+        public PeripheralDto Get(Guid id, List<string> includes = null)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Peripheral, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Peripheral, object>>>(includes).ToList();
-            return _mapper.Map<PeripheralDto>( _PeripheralRepository.Get(id, domainExpressionIncludesList));
+            return _mapper.Map<PeripheralDto>(_PeripheralRepository.Get(id, includes));
         }
 
-        public async Task<List<PeripheralDto>> GetAllAsync(List<Expression<Func<PeripheralDto, object>>>? includes, Dictionary<string, bool>? order)
+
+        public async Task<List<PeripheralDto>> GetAllAsync(List<string> includes = null, Dictionary<string, bool> order = null)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Peripheral, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Peripheral, object>>>(includes).ToList();
-            var items = await _PeripheralRepository.GetAllAsync(domainExpressionIncludesList, order);
+            var items = await _PeripheralRepository.GetAllAsync(includes, order);
             var dtoItems = _mapper.Map<List<PeripheralDto>>(items.ToList());
             return dtoItems;
         }
 
 
-
-        public async Task<PeripheralDto> GetAsync(Guid id, List<Expression<Func<PeripheralDto, object>>>? includes = null)
+        public async Task<PeripheralDto> GetAsync(Guid id, List<string> includes = null)
         {
-            var domainExpressionIncludesList = includes == null
-                ? new List<Expression<Func<Peripheral, object>>>()
-                : _mapper.MapIncludesList<Expression<Func<Peripheral, object>>>(includes).ToList();
-            return _mapper.Map<PeripheralDto>(await _PeripheralRepository.GetAsync(id, domainExpressionIncludesList));
+            return _mapper.Map<PeripheralDto>(await _PeripheralRepository.GetAsync(id, includes));
         }
 
-
-        //public async Task<PeripheralDto> GetForUpdateAsync(Guid id, List<Expression<Func<PeripheralDto, object>>>? includes = null)
-        //{
-        //    var domainExpressionIncludesList = includes == null
-        //        ? new List<Expression<Func<Peripheral, object>>>()
-        //        : _mapper.MapIncludesList<Expression<Func<Peripheral, object>>>(includes).ToList();
-        //    return _mapper.Map<PeripheralDto>(await _PeripheralRepository.GetAsync(id, domainExpressionIncludesList));
-        //}
 
         public async Task<bool> RemoveAsync(Guid id)
         {
