@@ -9,5 +9,16 @@ namespace Domain.Entities
     {
         [Key]
         public Guid Id { get; set; }
+
+
+
+        public bool IsTransient => Id == Guid.Empty;
+
+        public void GenerateIdentity()
+        {
+            if(IsTransient)
+                Id = Guid.NewGuid();
+        }
+
     }
 }

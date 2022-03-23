@@ -29,6 +29,25 @@ namespace Domain.Utils
         [DataMember]
         public Dictionary<string, bool> Order { get; set; }
 
+
+
+        //public int CurrentPage { get; set; }
+        //public int TotalPages { get; set; }
+        //public bool HasPrevious => CurrentPage > 1;
+        //public bool HasNext => CurrentPage < TotalPages;
+
+        //public PagedCollection(int pageIndex, int pageSize, int totalItems, List<TEntity> items)
+        //{
+        //    PageIndex = pageIndex;
+        //    PageSize = pageSize;
+        //    TotalItems = totalItems;
+        //    Items = items;
+        //    TotalPages = (int)Math.Ceiling(TotalItems / (double)pageSize);
+        //    //AddRange(items);
+        //}
+
         #endregion
+
+
     }
 }

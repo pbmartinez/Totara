@@ -1,5 +1,6 @@
 ﻿using Application.Dtos;
 using Application.IAppServices;
+using Domain.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +13,13 @@ namespace WebApi.Controllers
     [Route("api/peripheral")]
     public class PeripheralController : ApiBaseController<PeripheralDto>
     {
-        private readonly IGatewayAppService _gatewayAppService;
-        public PeripheralController(IGatewayAppService gatewayAppService, IPeripheralAppService appService, ILogger<ApiBaseController<PeripheralDto>> logger)
-            : base(appService, logger)
+        private readonly IGatewayAppService _gatewayAppService;        
+        public PeripheralController(IPeripheralAppService appService, ILogger<ApiBaseController<PeripheralDto>> logger, IPropertyCheckerService propertyCheckerService,
+            IGatewayAppService gatewayAppService) 
+            : base(appService, logger, propertyCheckerService)
         {
             _gatewayAppService = gatewayAppService;
-            Includes = new List<Expression<Func<PeripheralDto, object>>>() { a => a.Gateway };
+            Includes = new List<string>() { nameof(PeripheralDto.Gateway)};
         }
 
         [HttpGet]
@@ -29,7 +31,7 @@ namespace WebApi.Controllers
                 return BadRequest();
             if (peripheralId == null || peripheralId == Guid.Empty)
                 return BadRequest();
-            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, new List<Expression<Func<GatewayDto, object>>> { g=>g.Peripherals});
+            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, Includes);
             if (gateway == null)
                 return NotFound();
             var peripheral = gateway.Peripherals.FirstOrDefault(p=> p.Id == peripheralId.Value);
@@ -44,7 +46,7 @@ namespace WebApi.Controllers
         {
             if (gatewayId == null || gatewayId == Guid.Empty)
                 return BadRequest();
-            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, new List<Expression<Func<GatewayDto, object>>> { g=>g.Peripherals});
+            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, Includes);
             if (gateway == null)
                 return NotFound();
             return Ok(gateway.Peripherals);
@@ -72,7 +74,7 @@ namespace WebApi.Controllers
         {
             if (gatewayId == null || gatewayId == Guid.Empty)
                 return BadRequest();
-            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, new List<Expression<Func<GatewayDto, object>>> { g => g.Peripherals });
+            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, Includes);
             if (gateway == null)
                 return NotFound();
             var peripheralTarget = gateway.Peripherals.FirstOrDefault(p => p.Id == peripheral.Id);
@@ -88,7 +90,7 @@ namespace WebApi.Controllers
         {
             if (gatewayId == null || gatewayId == Guid.Empty || peripheralId == null || peripheralId == Guid.Empty)
                 return BadRequest();
-            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, new List<Expression<Func<GatewayDto, object>>> { g => g.Peripherals });
+            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, Includes);
             if (gateway == null)
                 return NotFound();
             var peripheralTarget = gateway.Peripherals.FirstOrDefault(p => p.Id == peripheralId.Value);
@@ -107,7 +109,7 @@ namespace WebApi.Controllers
         {
             if (gatewayId == null || gatewayId == Guid.Empty || peripheralId == null || peripheralId == Guid.Empty)
                 return BadRequest();
-            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, new List<Expression<Func<GatewayDto, object>>> { g => g.Peripherals });
+            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, Includes);
             if (gateway == null)
                 return NotFound();
             var peripheralTarget = gateway.Peripherals.FirstOrDefault(p => p.Id == peripheralId.Value);

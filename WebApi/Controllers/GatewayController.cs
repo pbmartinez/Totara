@@ -1,6 +1,7 @@
 ﻿using Application.Constants;
 using Application.Dtos;
 using Application.IAppServices;
+using Domain.Interfaces;
 using Domain.Localization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +14,11 @@ namespace WebApi.Controllers
     [Route("api/gateway")]
     public class GatewayController : ApiBaseController<GatewayDto>
     {
-        public GatewayController(IGatewayAppService appService, ILogger<ApiBaseController<GatewayDto>> logger)
-            : base(appService, logger)
+        
+        public GatewayController(IGatewayAppService appService, ILogger<ApiBaseController<GatewayDto>> logger, IPropertyCheckerService propertyCheckerService) 
+            : base(appService, logger, propertyCheckerService)
         {
-            Includes = new List<Expression<Func<GatewayDto, object>>>() { g => g.Peripherals };
+            Includes = new () { nameof(GatewayDto.Peripherals), nameof(GatewayDto.Brand) };
         }
 
         [HttpGet("{gatewayId}/validation-errors")]
@@ -30,7 +32,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                var gateway = await AppService.GetAsync(gatewayId.Value, new List<Expression<Func<GatewayDto, object>>>() { a => a.Peripherals });
+                var gateway = await AppService.GetAsync(gatewayId.Value, Includes);
 
                 if (gateway == null)
                     validationErrors.Add("gateway does not exist");

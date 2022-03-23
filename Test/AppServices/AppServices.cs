@@ -114,8 +114,8 @@ namespace Test.AppServices
             await gatewayRepository.AddAsync(entityVersion);
             await gatewayRepository.UnitOfWork.CommitAsync();
 
-            var g = await gatewayRepository.GetAsync(entityVersion.Id, new List<Expression<Func<Gateway, object>>>() { a => a.Peripherals });
-            var gat = await gatewayRepository.GetAllAsync(new List<Expression<Func<Gateway, object>>>() { a => a.Peripherals },null);
+            var g = await gatewayRepository.GetAsync(entityVersion.Id, new List<string>() { nameof(Gateway.Peripherals) });
+            var gat = await gatewayRepository.GetAllAsync(new List<string>() { nameof(Gateway.Peripherals) },null);
             
             g.Should().NotBeNull();
             g.Peripherals.Should().NotBeNull();

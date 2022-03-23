@@ -30,6 +30,8 @@ namespace Application.Dtos
 
         public bool ShowPeripherlsInGrid { get; set; } = false;
 
+        public BrandDto Brand { get; set; }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             var gateway = (GatewayDto)validationContext.ObjectInstance;
