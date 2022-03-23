@@ -14,6 +14,7 @@ using WebApi.Parameters;
 namespace WebApi.Controllers
 {    
     [ApiController]
+
     //[Authorize]
     [Route("api/[controller]")]
     public abstract class ApiBaseController<TEntityDto> : ControllerBase where TEntityDto : Domain.Entities.Entity
