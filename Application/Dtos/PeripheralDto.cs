@@ -42,6 +42,7 @@ namespace Application.Dtos
         public Guid GatewayId { get; set; }
 
         public GatewayDto Gateway { get; set; }
+        public ProviderDto Provider { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

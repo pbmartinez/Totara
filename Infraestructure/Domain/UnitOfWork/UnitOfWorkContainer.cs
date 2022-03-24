@@ -82,5 +82,6 @@ namespace Infraestructure.Domain.UnitOfWork
         public virtual DbSet<Gateway>? Gateway { get; set; }
         public virtual DbSet<Peripheral>? Peripheral { get; set; }
         public virtual DbSet<Brand>? Brand { get; set; }
+        public virtual DbSet<Provider>? Provider { get; set; }
     }
 }
