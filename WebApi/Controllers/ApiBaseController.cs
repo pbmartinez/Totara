@@ -65,25 +65,29 @@ namespace WebApi.Controllers
         public virtual async Task<IActionResult> Get([FromQuery]QueryStringParameters queryStringParameters)
         {
             //TODO: Return bad request specifying that was by incorrect properties
+            //TODO: Check properties when propagating includes navigation properties
+            //      and make includes case ignored
             if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(queryStringParameters.Fields))
-                return BadRequest();                                
-            var items = await AppService.GetAllAsync(Includes, DefaultOrderBy);
+                return BadRequest();
+            var includes = queryStringParameters.Includes.Split(',').ToList();
+            var items = await AppService.GetAllAsync(includes, DefaultOrderBy);
             var result = items.ShapeDataOnIEnumerable(queryStringParameters.Fields);
             return Ok(result);
         }
 
         [HttpGet("{id}")]
         [HttpHead("{id}")]
-        public virtual async Task<ActionResult<TEntityDto>> Get(Guid? id, string? fields)
+        public virtual async Task<ActionResult<TEntityDto>> Get(Guid? id, [FromQuery] QueryStringParameters queryStringParameters)
         {
-            if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(fields))
+            if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(queryStringParameters.Fields))
                 return BadRequest();
             if (id == null || id.Value == Guid.Empty)
                 return BadRequest();
-            var item = await AppService.GetAsync(id.Value, Includes);
+            var includes = queryStringParameters.Includes.Split(',').ToList();
+            var item = await AppService.GetAsync(id.Value, includes);
             if (item == null)
                 return NotFound();
-            return Ok(item.ShapeDataOnObject(fields ?? string.Empty));
+            return Ok(item.ShapeDataOnObject(queryStringParameters.Fields ?? string.Empty));
         }
 
         [HttpPost]

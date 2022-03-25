@@ -14,5 +14,6 @@ namespace Domain.Entities
         public Guid GatewayId { get; set; }
 
         public virtual Gateway Gateway { get; set; }
+        public virtual Provider Provider { get; set; }
     }
 }
