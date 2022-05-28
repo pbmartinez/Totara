@@ -56,13 +56,13 @@ namespace Infraestructure.Application.AppServices
             return count;
         }
 
-        public async Task<ProviderDto> FindOneBySpecificationPatternAsync(Specification<ProviderDto> specification = null, List<string> includes = null)
+        public async Task<ProviderDto> FindOneBySpecificationPatternAsync(Specification<ProviderDto>? specification = null, List<string>? includes = null)
         {
             var item = await _ProviderRepository.FindOneByExpressionAsync(specification?.MapToExpressionOfType<Provider>(), includes);
             return _mapper.Map<ProviderDto>(item);
         }
 
-        public async Task<List<ProviderDto>> FindPageBySpecificationPatternAsync(Specification<ProviderDto> specification = null, List<string> includes = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
+        public async Task<List<ProviderDto>> FindPageBySpecificationPatternAsync(Specification<ProviderDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0)
         {
             return _mapper.Map<List<ProviderDto>>(
                 await _ProviderRepository.FindPageByExpressionAsync(
@@ -70,19 +70,19 @@ namespace Infraestructure.Application.AppServices
         }
 
         
-        public ProviderDto Get(Guid id, List<string> includes = null)
+        public ProviderDto Get(Guid id, List<string>? includes = null)
         {
             return _mapper.Map<ProviderDto>(_ProviderRepository.Get(id, includes));
         }
 
-        public async Task<List<ProviderDto>> GetAllAsync(List<string> includes = null, Dictionary<string, bool> order = null)
+        public async Task<List<ProviderDto>> GetAllAsync(List<string>? includes = null, Dictionary<string, bool>? order = null)
         {
             var items = await _ProviderRepository.GetAllAsync(includes, order);
             var dtoItems = _mapper.Map<List<ProviderDto>>(items.ToList());
             return dtoItems;
         }
 
-        public async Task<ProviderDto> GetAsync(Guid id, List<string> includes = null)
+        public async Task<ProviderDto> GetAsync(Guid id, List<string>? includes = null)
         {
             return _mapper.Map<ProviderDto>(await _ProviderRepository.GetAsync(id, includes));
         }

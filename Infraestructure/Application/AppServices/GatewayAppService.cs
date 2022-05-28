@@ -43,7 +43,7 @@ namespace Infraestructure.Application.AppServices
         }
 
         
-        public async Task<List<GatewayDto>> FindAllBySpecificationPatternAsync(Specification<GatewayDto> specification = null, List<string> includes = null, Dictionary<string, bool> order = null)
+        public async Task<List<GatewayDto>> FindAllBySpecificationPatternAsync(Specification<GatewayDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null)
         {
             return _mapper.Map<List<GatewayDto>>(
                 await _GatewayRepository.FindAllByExpressionAsync(
@@ -57,13 +57,13 @@ namespace Infraestructure.Application.AppServices
             return count;
         }
 
-        public async Task<GatewayDto> FindOneBySpecificationPatternAsync(Specification<GatewayDto> specification = null, List<string> includes = null)
+        public async Task<GatewayDto> FindOneBySpecificationPatternAsync(Specification<GatewayDto>? specification = null, List<string>? includes = null)
         {
             var item = await _GatewayRepository.FindOneByExpressionAsync(specification?.MapToExpressionOfType<Gateway>(), includes);
             return _mapper.Map<GatewayDto>(item);
         }
 
-        public async Task<List<GatewayDto>> FindPageBySpecificationPatternAsync(Specification<GatewayDto> specification = null, List<string> includes = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
+        public async Task<List<GatewayDto>> FindPageBySpecificationPatternAsync(Specification<GatewayDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0)
         {
             return _mapper.Map<List<GatewayDto>>(
                 await _GatewayRepository.FindPageByExpressionAsync(
@@ -71,12 +71,12 @@ namespace Infraestructure.Application.AppServices
         }
 
 
-        public GatewayDto Get(Guid id, List<string> includes = null)
+        public GatewayDto Get(Guid id, List<string>? includes = null)
         {
             return _mapper.Map<GatewayDto>(_GatewayRepository.Get(id, includes));
         }
 
-        public async Task<List<GatewayDto>> GetAllAsync(List<string> includes = null, Dictionary<string, bool> order = null)
+        public async Task<List<GatewayDto>> GetAllAsync(List<string>? includes = null, Dictionary<string, bool>? order = null)
         {
             var items = await _GatewayRepository.GetAllAsync(includes, order);
             var dtoItems = _mapper.Map<List<GatewayDto>>(items.ToList());
@@ -84,7 +84,7 @@ namespace Infraestructure.Application.AppServices
         }
 
 
-        public async Task<GatewayDto> GetAsync(Guid id, List<string> includes = null)
+        public async Task<GatewayDto> GetAsync(Guid id, List<string>? includes = null)
         {
             return _mapper.Map<GatewayDto>(await _GatewayRepository.GetAsync(id, includes));
         }

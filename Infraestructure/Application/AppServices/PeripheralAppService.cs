@@ -43,7 +43,7 @@ namespace Infraestructure.Application.AppServices
         }
 
         
-        public async Task<List<PeripheralDto>> FindAllBySpecificationPatternAsync(Specification<PeripheralDto> specification = null, List<string> includes = null, Dictionary<string, bool> order = null)
+        public async Task<List<PeripheralDto>> FindAllBySpecificationPatternAsync(Specification<PeripheralDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null)
         {
             return _mapper.Map<List<PeripheralDto>>(
                    await _PeripheralRepository.FindAllByExpressionAsync(
@@ -59,7 +59,7 @@ namespace Infraestructure.Application.AppServices
 
        
 
-        public async Task<PeripheralDto> FindOneBySpecificationPatternAsync(Specification<PeripheralDto> specification = null, List<string> includes = null)
+        public async Task<PeripheralDto> FindOneBySpecificationPatternAsync(Specification<PeripheralDto>? specification = null, List<string>? includes = null)
         {
             var item = await _PeripheralRepository.FindOneByExpressionAsync(specification?.MapToExpressionOfType<Peripheral>(), includes);
             return _mapper.Map<PeripheralDto>(item);
@@ -67,7 +67,7 @@ namespace Infraestructure.Application.AppServices
 
         
 
-        public async Task<List<PeripheralDto>> FindPageBySpecificationPatternAsync(Specification<PeripheralDto> specification = null, List<string> includes = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
+        public async Task<List<PeripheralDto>> FindPageBySpecificationPatternAsync(Specification<PeripheralDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0)
         {
             return _mapper.Map<List<PeripheralDto>>(
                 await _PeripheralRepository.FindPageByExpressionAsync(
@@ -76,13 +76,13 @@ namespace Infraestructure.Application.AppServices
 
         
 
-        public PeripheralDto Get(Guid id, List<string> includes = null)
+        public PeripheralDto Get(Guid id, List<string>? includes = null)
         {
             return _mapper.Map<PeripheralDto>(_PeripheralRepository.Get(id, includes));
         }
 
 
-        public async Task<List<PeripheralDto>> GetAllAsync(List<string> includes = null, Dictionary<string, bool> order = null)
+        public async Task<List<PeripheralDto>> GetAllAsync(List<string>? includes = null, Dictionary<string, bool>? order = null)
         {
             var items = await _PeripheralRepository.GetAllAsync(includes, order);
             var dtoItems = _mapper.Map<List<PeripheralDto>>(items.ToList());
@@ -90,7 +90,7 @@ namespace Infraestructure.Application.AppServices
         }
 
 
-        public async Task<PeripheralDto> GetAsync(Guid id, List<string> includes = null)
+        public async Task<PeripheralDto> GetAsync(Guid id, List<string>? includes = null)
         {
             return _mapper.Map<PeripheralDto>(await _PeripheralRepository.GetAsync(id, includes));
         }
