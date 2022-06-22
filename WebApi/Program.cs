@@ -10,10 +10,15 @@ using Microsoft.Identity.Web;
 using System.Configuration;
 using Microsoft.IdentityModel.Logging;
 using WebApi.WellKnownNames;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+var logger = new LoggerConfiguration().ReadFrom.Configuration(builder.Configuration).CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 
 builder.Services.AddControllers(setupAction =>
 {
