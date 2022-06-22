@@ -78,6 +78,21 @@ namespace Infraestructure.Domain.UnitOfWork
 
             return items;
         }
+        public IQueryable<T> ExecuteQuery<T>(string query, params object[] parameters) where T : class
+        {
+            return Set<T>().FromSqlRaw<T>(query, parameters).AsQueryable();
+        }
+
+        public int ExecuteCommand(string sqlCommand, params object[] parameters)
+        {
+            return Database.ExecuteSqlRaw(sqlCommand, parameters);
+        }
+
+        public async Task<int> ExecuteCommandAsync(string sqlCommand, params object[] parameters)
+        {
+            return await Database.ExecuteSqlRawAsync(sqlCommand, parameters);
+        }
+
 
         public virtual DbSet<Gateway>? Gateway { get; set; }
         public virtual DbSet<Peripheral>? Peripheral { get; set; }
