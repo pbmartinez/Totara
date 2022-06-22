@@ -18,17 +18,18 @@ namespace Domain.UnitOfWork
         /// <returns></returns>
         DbSet<TEntity> Repository<TEntity>() where TEntity : Entity;
 
+
         /// <summary>
         /// Access to any repository of type TEntity in a queryable form. 
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
-        /// <param name="includes">Related entities to be loaded</param>
-        /// <param name="predicate">The expression that defines the items to be retrieved</param>
-        /// <param name="order">Fields to be ordered</param>
-        /// <param name="pageSize">Page size</param>
-        /// <param name="pageGo">Target page</param>
-        /// <returns></returns>        
-        IQueryable<TEntity> GetQueryable<TEntity>(List<Expression<Func<TEntity, object>>> includes = null, Expression<Func<TEntity, bool>> predicate = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
+        /// <param name="includes"></param>
+        /// <param name="predicate"></param>
+        /// <param name="order"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="pageGo"></param>
+        /// <returns></returns>
+        IQueryable<TEntity> GetQueryable<TEntity>(List<string> includes = null, Expression<Func<TEntity, bool>> predicate = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
             where TEntity : class;
 
         /// <summary>

@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using Domain.Infraestructure;
+using Domain.Utils;
 using Domain.IRepositories;
 using Domain.Specification;
 using Domain.UnitOfWork;
@@ -32,11 +32,7 @@ namespace Infraestructure.Domain.Repositories
             await Task.FromResult(_unitOfWork.Repository<TEntity>().Remove(item));
         }
 
-        public async Task<TEntity> GetAsync(Guid id, List<Expression<Func<TEntity, object>>>? includes = null)
-        {
-            var item = await _unitOfWork.GetQueryable(includes, a => a.Id == id).FirstOrDefaultAsync();
-            return item;
-        }
+        
 
         public async Task UpdateAsync(TEntity item)
         {
@@ -47,34 +43,39 @@ namespace Infraestructure.Domain.Repositories
 
 
 
-        public async Task<IQueryable<TEntity>> GetAllAsync(List<Expression<Func<TEntity, object>>> includes, Dictionary<string, bool> order)
+        public async Task<int> FindCountByExpressionAsync(Expression<Func<TEntity, bool>>? expression)
         {
-            var items = _unitOfWork.GetQueryable(includes, a => true, order);
-            return await Task.FromResult(items);
+            var count = await _unitOfWork.GetQueryable(null, expression).CountAsync();
+            return count;
         }
 
 
-
-
-        public async Task<TEntity> FindOneBySpecificationPatternAsync(Specification<TEntity> specification, List<Expression<Func<TEntity, object>>> includes)
+        public TEntity Get(Guid id, List<string>? includes = null)
         {
-            var item = await _unitOfWork.GetQueryable(includes, specification.ToExpression()).FirstOrDefaultAsync();
+            var item = _unitOfWork.GetQueryable(includes,(Expression<Func<TEntity,bool>>) (a => a.Id == id)).FirstOrDefault();
             return item;
         }
 
-        public async Task<IEnumerable<TEntity>> FindAllBySpecificationPatternAsync(Specification<TEntity> specification, List<Expression<Func<TEntity, object>>> includes)
+        public async Task<IQueryable<TEntity>> GetAllAsync(List<string>? includes = null, Dictionary<string, bool>? order = null)
         {
-            var items = await _unitOfWork.GetQueryable(includes, specification.ToExpression()).ToListAsync();
-            return items;
+            var items = _unitOfWork.GetQueryable(includes, (Expression<Func<TEntity, bool>>)(a => true), order,0,0);
+            return (IQueryable<TEntity>)await Task.FromResult(items);
         }
 
-        public async Task<TEntity> FindOneByExpressionAsync(Expression<Func<TEntity, bool>> expression, List<Expression<Func<TEntity, object>>> includes)
+        public async Task<TEntity> GetAsync(Guid id, List<string>? includes = null)
+        {
+            var i = includes == null ? new List<string>() : includes.ToList();
+            var item = await _unitOfWork.GetQueryable(i, (Expression<Func<TEntity, bool>>)(a => a.Id == id)).FirstOrDefaultAsync();
+            return item;
+        }
+
+        public async Task<TEntity> FindOneByExpressionAsync(Expression<Func<TEntity, bool>>? expression, List<string>? includes)
         {
             var item = await _unitOfWork.GetQueryable(includes, expression).FirstOrDefaultAsync();
             return item;
         }
 
-        public async Task<PagedCollection<TEntity>> FindPageByExpressionAsync(Expression<Func<TEntity, bool>> expression, List<Expression<Func<TEntity, object>>> includes, Dictionary<string, bool> order, int pageSize, int pageGo)
+        public async Task<PagedCollection<TEntity>> FindPageByExpressionAsync(Expression<Func<TEntity, bool>>? expression, List<string>? includes, Dictionary<string, bool>? order, int pageSize, int pageGo)
         {
             if (order == null || order.Count == 0)
                 order = new Dictionary<string, bool>() { { "Id", true } };
@@ -92,16 +93,10 @@ namespace Infraestructure.Domain.Repositories
             return page;
         }
 
-        public async Task<List<TEntity>> FindAllByExpressionAsync(Expression<Func<TEntity, bool>> expression, List<Expression<Func<TEntity, object>>> includes, Dictionary<string, bool> order)
+        public async Task<List<TEntity>> FindAllByExpressionAsync(Expression<Func<TEntity, bool>>? expression, List<string>? includes = null, Dictionary<string, bool>? order = null)
         {
             var items = await _unitOfWork.GetQueryable(includes, expression, order).ToListAsync();
             return items;
-        }
-
-        public async Task<int> FindCountByExpressionAsync(Expression<Func<TEntity, bool>> expression)
-        {
-            var count = await _unitOfWork.GetQueryable(null, expression).CountAsync();
-            return count;
         }
     }
 }

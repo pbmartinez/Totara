@@ -132,16 +132,160 @@
   <data name="btn_Edit" xml:space="preserve">
     <value>Editar</value>
   </data>
+  <data name="btn_Login" xml:space="preserve">
+    <value>Iniciar sesión</value>
+  </data>
+  <data name="btn_Logout" xml:space="preserve">
+    <value>Cerrar sesión</value>
+  </data>
+  <data name="btn_Save" xml:space="preserve">
+    <value>Guardar</value>
+  </data>
+  <data name="display_401" xml:space="preserve">
+    <value>401</value>
+  </data>
+  <data name="display_401_Description" xml:space="preserve">
+    <value>No está autorizado a acceder al recurso</value>
+  </data>
+  <data name="display_403" xml:space="preserve">
+    <value>403</value>
+  </data>
+  <data name="display_403_Description" xml:space="preserve">
+    <value>No tiene acceso al recurso</value>
+  </data>
+  <data name="display_404" xml:space="preserve">
+    <value>404</value>
+  </data>
+  <data name="display_404_Description" xml:space="preserve">
+    <value>El recurso que intenta acceder no se encuentra</value>
+  </data>
+  <data name="display_500" xml:space="preserve">
+    <value>500</value>
+  </data>
+  <data name="display_500_Description" xml:space="preserve">
+    <value>Error en el servidor</value>
+  </data>
+  <data name="display_Actions" xml:space="preserve">
+    <value>Acciones</value>
+  </data>
+  <data name="display_AddEdit" xml:space="preserve">
+    <value>Adicionar / Editar</value>
+  </data>
+  <data name="display_AppName" xml:space="preserve">
+    <value>Musala Pasarelas</value>
+  </data>
+  <data name="display_Buscar" xml:space="preserve">
+    <value>Buscar ...</value>
+  </data>
   <data name="display_ConfirmOnDelete" xml:space="preserve">
     <value>Está seguro que desea eliminar ?</value>
   </data>
   <data name="display_DetailsOf" xml:space="preserve">
     <value>Detalles de  {0}</value>
   </data>
+  <data name="display_ListOfXXX" xml:space="preserve">
+    <value>Listado de {0}</value>
+  </data>
+  <data name="display_Welcome" xml:space="preserve">
+    <value>Bienvenido</value>
+  </data>
+  <data name="display_WelcomeMessage" xml:space="preserve">
+    <value>Bienvenido a la Aplicación de Pasarelas </value>
+  </data>
   <data name="Exception_ApplicationValidationError" xml:space="preserve">
     <value>Error de validación, compruebe los errores de la validación para más información.</value>
   </data>
+  <data name="Exception_MultipleModeOnShowView" xml:space="preserve">
+    <value>Debe especificar solo un modo al mostrar la vista. Ó ShowMode ó EditMode ó DeleteMode.</value>
+  </data>
   <data name="Exception_NullFieldOnOrderingEntity" xml:space="preserve">
     <value>La propiedad especificada {0} no puede ser seleccionada para ordernar colección de {1}.</value>
+  </data>
+  <data name="GatewayDto" xml:space="preserve">
+    <value>Pasarela</value>
+  </data>
+  <data name="GatewayDtoIpv4Address" xml:space="preserve">
+    <value>Ipv4</value>
+  </data>
+  <data name="GatewayDtoName" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="GatewayDtoPeripherals" xml:space="preserve">
+    <value>Periféricos</value>
+  </data>
+  <data name="GatewayDtos" xml:space="preserve">
+    <value>Pasarelas</value>
+  </data>
+  <data name="menu_Gateway" xml:space="preserve">
+    <value>Pasarelas</value>
+  </data>
+  <data name="menu_Home" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="menu_Peripheral" xml:space="preserve">
+    <value>Periféricos</value>
+  </data>
+  <data name="message_ItemDoesNotExist" xml:space="preserve">
+    <value>La entidad no existe</value>
+  </data>
+  <data name="message_PageNotFound" xml:space="preserve">
+    <value>Hola, al parecer intentar acceder a una página que no existe.</value>
+  </data>
+  <data name="message_SuccesfullyAdded" xml:space="preserve">
+    <value>Ha sido adicionado/a satisfactoriamente</value>
+  </data>
+  <data name="message_SuccesfullyDeleted" xml:space="preserve">
+    <value>Ha sido eliminado/a satisfactoriamente</value>
+  </data>
+  <data name="message_SuccesfullyEdited" xml:space="preserve">
+    <value>Ha sido editado/a satisfactoriamente</value>
+  </data>
+  <data name="page_401" xml:space="preserve">
+    <value>401</value>
+  </data>
+  <data name="page_403" xml:space="preserve">
+    <value>403</value>
+  </data>
+  <data name="page_404" xml:space="preserve">
+    <value>404</value>
+  </data>
+  <data name="page_500" xml:space="preserve">
+    <value>500</value>
+  </data>
+  <data name="page_GridGateways" xml:space="preserve">
+    <value>Pasarelas</value>
+  </data>
+  <data name="page_GridPeripherals" xml:space="preserve">
+    <value>Periphéricos</value>
+  </data>
+  <data name="page_Index" xml:space="preserve">
+    <value>Inicio</value>
+  </data>
+  <data name="PeripheralDto" xml:space="preserve">
+    <value>Periférico</value>
+  </data>
+  <data name="PeripheralDtoCreatedDate" xml:space="preserve">
+    <value>Fecha creado</value>
+  </data>
+  <data name="PeripheralDtoGatewayId" xml:space="preserve">
+    <value>Pasarela</value>
+  </data>
+  <data name="PeripheralDtos" xml:space="preserve">
+    <value>Periféricos</value>
+  </data>
+  <data name="PeripheralDtoStatus" xml:space="preserve">
+    <value>Estatus</value>
+  </data>
+  <data name="PeripheralDtoVendor" xml:space="preserve">
+    <value>Proveedor</value>
+  </data>
+  <data name="validation_FieldRequired" xml:space="preserve">
+    <value>Campo requerido</value>
+  </data>
+  <data name="validation_Ipv4AddressBadFormat" xml:space="preserve">
+    <value>La dirección Ip no es válida</value>
+  </data>
+  <data name="validation_MaxPeriphelsAllowed" xml:space="preserve">
+    <value>No son permitidos más de {0} periféricos por pasarela</value>
   </data>
 </root>

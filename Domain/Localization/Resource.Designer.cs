@@ -61,7 +61,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Adicionar.
+        ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string btn_Add {
             get {
@@ -70,7 +70,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cancelar.
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string btn_Cancel {
             get {
@@ -79,7 +79,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Eliminar.
+        ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string btn_Delete {
             get {
@@ -88,7 +88,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Detalles.
+        ///   Looks up a localized string similar to Details.
         /// </summary>
         public static string btn_Details {
             get {
@@ -97,7 +97,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Editar.
+        ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string btn_Edit {
             get {
@@ -106,7 +106,142 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Está seguro que desea eliminar ?.
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string btn_Login {
+            get {
+                return ResourceManager.GetString("btn_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string btn_Logout {
+            get {
+                return ResourceManager.GetString("btn_Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string btn_Save {
+            get {
+                return ResourceManager.GetString("btn_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 401.
+        /// </summary>
+        public static string display_401 {
+            get {
+                return ResourceManager.GetString("display_401", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not authorized.
+        /// </summary>
+        public static string display_401_Description {
+            get {
+                return ResourceManager.GetString("display_401_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 403.
+        /// </summary>
+        public static string display_403 {
+            get {
+                return ResourceManager.GetString("display_403", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You have not access.
+        /// </summary>
+        public static string display_403_Description {
+            get {
+                return ResourceManager.GetString("display_403_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 404.
+        /// </summary>
+        public static string display_404 {
+            get {
+                return ResourceManager.GetString("display_404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resource not found.
+        /// </summary>
+        public static string display_404_Description {
+            get {
+                return ResourceManager.GetString("display_404_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 500.
+        /// </summary>
+        public static string display_500 {
+            get {
+                return ResourceManager.GetString("display_500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Internal Server Error.
+        /// </summary>
+        public static string display_500_Description {
+            get {
+                return ResourceManager.GetString("display_500_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Actions.
+        /// </summary>
+        public static string display_Actions {
+            get {
+                return ResourceManager.GetString("display_Actions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add / Edit.
+        /// </summary>
+        public static string display_AddEdit {
+            get {
+                return ResourceManager.GetString("display_AddEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Musala Gateways.
+        /// </summary>
+        public static string display_AppName {
+            get {
+                return ResourceManager.GetString("display_AppName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find ....
+        /// </summary>
+        public static string display_Buscar {
+            get {
+                return ResourceManager.GetString("display_Buscar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete ?.
         /// </summary>
         public static string display_ConfirmOnDelete {
             get {
@@ -115,7 +250,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Detalles de  {0}.
+        ///   Looks up a localized string similar to Details of {0}.
         /// </summary>
         public static string display_DetailsOf {
             get {
@@ -124,7 +259,34 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error de validación, compruebe los errores de la validación para más información..
+        ///   Looks up a localized string similar to List of {0}.
+        /// </summary>
+        public static string display_ListOfXXX {
+            get {
+                return ResourceManager.GetString("display_ListOfXXX", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome.
+        /// </summary>
+        public static string display_Welcome {
+            get {
+                return ResourceManager.GetString("display_Welcome", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Welcome to Gateway Application.
+        /// </summary>
+        public static string display_WelcomeMessage {
+            get {
+                return ResourceManager.GetString("display_WelcomeMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Validation errors, for more information check validation errors.
         /// </summary>
         public static string Exception_ApplicationValidationError {
             get {
@@ -133,11 +295,281 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to La propiedad especificada {0} no puede ser seleccionada para ordernar colección de {1}..
+        ///   Looks up a localized string similar to Must been provided just one mode and only one mode. Either ShowMode, EditMode or DeleteMode..
+        /// </summary>
+        public static string Exception_MultipleModeOnShowView {
+            get {
+                return ResourceManager.GetString("Exception_MultipleModeOnShowView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The property specified {0} can not be defined for ordering collection of {1}..
         /// </summary>
         public static string Exception_NullFieldOnOrderingEntity {
             get {
                 return ResourceManager.GetString("Exception_NullFieldOnOrderingEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gateway.
+        /// </summary>
+        public static string GatewayDto {
+            get {
+                return ResourceManager.GetString("GatewayDto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ipv4.
+        /// </summary>
+        public static string GatewayDtoIpv4Address {
+            get {
+                return ResourceManager.GetString("GatewayDtoIpv4Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string GatewayDtoName {
+            get {
+                return ResourceManager.GetString("GatewayDtoName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peripherals.
+        /// </summary>
+        public static string GatewayDtoPeripherals {
+            get {
+                return ResourceManager.GetString("GatewayDtoPeripherals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gateways.
+        /// </summary>
+        public static string GatewayDtos {
+            get {
+                return ResourceManager.GetString("GatewayDtos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gateways.
+        /// </summary>
+        public static string menu_Gateway {
+            get {
+                return ResourceManager.GetString("menu_Gateway", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string menu_Home {
+            get {
+                return ResourceManager.GetString("menu_Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peripherals.
+        /// </summary>
+        public static string menu_Peripheral {
+            get {
+                return ResourceManager.GetString("menu_Peripheral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item does not exist.
+        /// </summary>
+        public static string message_ItemDoesNotExist {
+            get {
+                return ResourceManager.GetString("message_ItemDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sorry, there&apos;s nothing at this address..
+        /// </summary>
+        public static string message_PageNotFound {
+            get {
+                return ResourceManager.GetString("message_PageNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully added.
+        /// </summary>
+        public static string message_SuccesfullyAdded {
+            get {
+                return ResourceManager.GetString("message_SuccesfullyAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully deleted.
+        /// </summary>
+        public static string message_SuccesfullyDeleted {
+            get {
+                return ResourceManager.GetString("message_SuccesfullyDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Successfully edited.
+        /// </summary>
+        public static string message_SuccesfullyEdited {
+            get {
+                return ResourceManager.GetString("message_SuccesfullyEdited", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 401.
+        /// </summary>
+        public static string page_401 {
+            get {
+                return ResourceManager.GetString("page_401", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 403.
+        /// </summary>
+        public static string page_403 {
+            get {
+                return ResourceManager.GetString("page_403", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 404.
+        /// </summary>
+        public static string page_404 {
+            get {
+                return ResourceManager.GetString("page_404", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 500.
+        /// </summary>
+        public static string page_500 {
+            get {
+                return ResourceManager.GetString("page_500", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gateways.
+        /// </summary>
+        public static string page_GridGateways {
+            get {
+                return ResourceManager.GetString("page_GridGateways", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peripherals.
+        /// </summary>
+        public static string page_GridPeripherals {
+            get {
+                return ResourceManager.GetString("page_GridPeripherals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Index.
+        /// </summary>
+        public static string page_Index {
+            get {
+                return ResourceManager.GetString("page_Index", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peripheral.
+        /// </summary>
+        public static string PeripheralDto {
+            get {
+                return ResourceManager.GetString("PeripheralDto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Created Date.
+        /// </summary>
+        public static string PeripheralDtoCreatedDate {
+            get {
+                return ResourceManager.GetString("PeripheralDtoCreatedDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Gateway.
+        /// </summary>
+        public static string PeripheralDtoGatewayId {
+            get {
+                return ResourceManager.GetString("PeripheralDtoGatewayId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Peripherals.
+        /// </summary>
+        public static string PeripheralDtos {
+            get {
+                return ResourceManager.GetString("PeripheralDtos", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string PeripheralDtoStatus {
+            get {
+                return ResourceManager.GetString("PeripheralDtoStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vendor.
+        /// </summary>
+        public static string PeripheralDtoVendor {
+            get {
+                return ResourceManager.GetString("PeripheralDtoVendor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Field required.
+        /// </summary>
+        public static string validation_FieldRequired {
+            get {
+                return ResourceManager.GetString("validation_FieldRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ipv4 it has bad format.
+        /// </summary>
+        public static string validation_Ipv4AddressBadFormat {
+            get {
+                return ResourceManager.GetString("validation_Ipv4AddressBadFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No more then {0} peripherals by gateway are allowed.
+        /// </summary>
+        public static string validation_MaxPeriphelsAllowed {
+            get {
+                return ResourceManager.GetString("validation_MaxPeriphelsAllowed", resourceCulture);
             }
         }
     }
