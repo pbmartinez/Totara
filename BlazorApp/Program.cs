@@ -31,6 +31,7 @@ var policy = HttpPolicyExtensions
     .WaitAndRetryAsync(pollyRetryCount, retryAttempt =>
     {
         var nextTimeInterval = TimeSpan.FromSeconds(Math.Pow(2, retryAttempt));
+        //Todo replace with logging
         Console.WriteLine($"Polly: error during call, retry for {retryAttempt} time in {TimeSpan.FromSeconds(nextTimeInterval.TotalSeconds).Humanize()} second(s).");
         return nextTimeInterval;
     });
