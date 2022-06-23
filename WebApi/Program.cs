@@ -11,6 +11,8 @@ using System.Configuration;
 using Microsoft.IdentityModel.Logging;
 using WebApi.WellKnownNames;
 using Serilog;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using WebApi.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,11 +107,14 @@ builder.Services.AddDbContext<UnitOfWorkContainer>( options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)                
                 .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(AppSettings.AzureAd));
 
+builder.Services.AddHealthChecks();
+    //.AddDbContextCheck<UnitOfWorkContainer>();
+
 
 IdentityModelEventSource.ShowPII = true;
 
 var app = builder.Build();
-
+ 
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -132,6 +137,18 @@ app.UseCors("AllowedHosts");
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHealthChecks("/health/live", new HealthCheckOptions()
+{
+    AllowCachingResponses = false,
+    Predicate = _ => false,
+    ResponseWriter = HealthCheckResponses.WriteJsonResponse
+
+}) ;
+app.MapHealthChecks("/health/ready", new HealthCheckOptions()
+{
+    ResponseWriter = HealthCheckResponses.WriteJsonResponse
+
+});
 
 app.MapControllers();
 
