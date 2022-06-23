@@ -10,7 +10,7 @@ namespace BlazorApp.Identity
         {
             ConfigureHandler(
                 authorizedUrls: new[] { configuration[AppSettings.ApiBaseUrl] },
-                scopes: new[] { configuration[AppSettings.ScopeGatewayApiAccess], "openid", "profile", "offline_access" });
+                scopes: new[] { configuration[AppSettings.ScopeApiAccess], "openid", "profile", "offline_access" });
         }
     }
 }
