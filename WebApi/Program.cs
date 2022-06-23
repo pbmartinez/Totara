@@ -13,6 +13,7 @@ using WebApi.WellKnownNames;
 using Serilog;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using WebApi.Helpers;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,25 +97,25 @@ builder.Services.AddEntitiesServicesAndRepositories();
 builder.Services.AddCustomApplicationServices();
 
 //Unit of Work Implementation Configuration
-builder.Services.AddDbContext<UnitOfWorkContainer>( options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString(AppSettings.DefaultConnectionString), sqlServerOptions =>
-    {
-        sqlServerOptions.CommandTimeout(30);
-        sqlServerOptions.EnableRetryOnFailure(3);
-    }));
+builder.Services.AddDbContext<UnitOfWorkContainer>(options =>
+   options.UseSqlServer(builder.Configuration.GetConnectionString(AppSettings.DefaultConnectionString), sqlServerOptions =>
+   {
+       sqlServerOptions.CommandTimeout(30);
+       sqlServerOptions.EnableRetryOnFailure(3);
+   }));
 
 //Security Configuration
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)                
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(AppSettings.AzureAd));
 
-builder.Services.AddHealthChecks();
-    //.AddDbContextCheck<UnitOfWorkContainer>();
+builder.Services.AddHealthChecks()
+    .AddDbContextCheck<UnitOfWorkContainer>(failureStatus: HealthStatus.Degraded);
 
 
 IdentityModelEventSource.ShowPII = true;
 
 var app = builder.Build();
- 
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -130,6 +131,19 @@ else
         await context.Response.WriteAsync("An error happened, please try later");
     }));
 }
+
+app.MapHealthChecks("/health/live", new HealthCheckOptions()
+{
+    Predicate = _ => false,
+    ResponseWriter = HealthCheckExtensions.WriteJsonResponse
+});
+app.MapHealthChecks("/health/ready", new HealthCheckOptions()
+{
+    ResponseWriter = HealthCheckExtensions.WriteJsonResponse
+});
+
+
+
 app.UseHttpsRedirection();
 
 app.UseCors("AllowedHosts");
@@ -137,18 +151,7 @@ app.UseCors("AllowedHosts");
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.MapHealthChecks("/health/live", new HealthCheckOptions()
-{
-    AllowCachingResponses = false,
-    Predicate = _ => false,
-    ResponseWriter = HealthCheckResponses.WriteJsonResponse
 
-}) ;
-app.MapHealthChecks("/health/ready", new HealthCheckOptions()
-{
-    ResponseWriter = HealthCheckResponses.WriteJsonResponse
-
-});
 
 app.MapControllers();
 
