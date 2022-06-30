@@ -14,7 +14,7 @@ namespace WebApi.Controllers
     public class PeripheralController : ApiBaseController<PeripheralDto, Guid>
     {
         private readonly IGatewayAppService _gatewayAppService;        
-        public PeripheralController(IPeripheralAppService appService, ILogger<ApiBaseController<PeripheralDto, Guid>> logger, IPropertyCheckerService propertyCheckerService,
+        public PeripheralController(IPeripheralAppService appService, ILogger<PeripheralController> logger, IPropertyCheckerService propertyCheckerService,
             IGatewayAppService gatewayAppService) 
             : base(appService, logger, propertyCheckerService)
         {

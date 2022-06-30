@@ -93,7 +93,7 @@ namespace WebApi.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Post(TEntityDto item)
         {
-            if(item.IsTransient)
+            if(item.IsTransient())
                 item.GenerateIdentity();
             var result = await AppService.AddAsync(item);
             return CreatedAtAction(nameof(Get), new { id = item.Id }, item);

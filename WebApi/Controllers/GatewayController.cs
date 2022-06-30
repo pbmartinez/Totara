@@ -15,7 +15,7 @@ namespace WebApi.Controllers
     public class GatewayController : ApiBaseController<GatewayDto, Guid>
     {
         
-        public GatewayController(IGatewayAppService appService, ILogger<ApiBaseController<GatewayDto, Guid>> logger, IPropertyCheckerService propertyCheckerService) 
+        public GatewayController(IGatewayAppService appService, ILogger<GatewayController> logger, IPropertyCheckerService propertyCheckerService) 
             : base(appService, logger, propertyCheckerService)
         {
             //Includes = new () { nameof(GatewayDto.Peripherals), nameof(GatewayDto.Brand) };
