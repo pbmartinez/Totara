@@ -8,9 +8,9 @@ namespace WebApi.Controllers
 {
     [Route("api/provider")]
     [ApiController]
-    public class ProviderController : ApiBaseController<ProviderDto>
+    public class ProviderController : ApiBaseController<ProviderDto, Guid>
     {
-        public ProviderController(IProviderAppService appService, ILogger<ApiBaseController<ProviderDto>> logger, IPropertyCheckerService propertyCheckerService) : base(appService, logger, propertyCheckerService)
+        public ProviderController(IProviderAppService appService, ILogger<ProviderController> logger, IPropertyCheckerService propertyCheckerService) : base(appService, logger, propertyCheckerService)
         {
         }
     }

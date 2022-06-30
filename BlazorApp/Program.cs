@@ -2,49 +2,54 @@ using BlazorApp;
 using BlazorApp.Identity;
 using BlazorApp.Services;
 using BlazorApp.WellKnownNames;
+using Humanizer;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.IdentityModel.Logging;
 using MudBlazor.Services;
+using Polly;
+using Polly.Extensions.Http;
 using Toolbelt.Blazor;
 using Toolbelt.Blazor.Extensions.DependencyInjection;
 
-    var builder = WebAssemblyHostBuilder.CreateDefault(args);
-    builder.RootComponents.Add<App>("#app");
-    builder.RootComponents.Add<HeadOutlet>("head::after");
+var builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<App>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
 
 
-    var apiBaseUrl = builder.Configuration[AppSettings.ApiBaseUrl] ?? "";
+var apiBaseUrl = builder.Configuration[AppSettings.ApiBaseUrl] ?? "";
 
-// Http client for Gateway Api. 
 builder.Services.AddScoped<CustomAuthorizationMessageHandler>();
 
-//builder.Services.AddHttpClient(AppSettings.HttpClientGatewayApi,
-//        client => client.BaseAddress = new Uri(apiBaseUrl))
-//    //.AddHttpMessageHandler<CustomAuthorizationMessageHandler>()
-//    ;
 
+_ = int.TryParse(builder.Configuration[AppSettings.PollyRetryCount],out var pollyRetryCount);
 
-//builder.Services.AddHttpClient
-//    (AppSettings.HttpClientGatewayApi,
-//        client => client.BaseAddress = new Uri(apiBaseUrl))
-//    .AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
-
+var policy = HttpPolicyExtensions
+    .HandleTransientHttpError()
+    .WaitAndRetryAsync(pollyRetryCount, retryAttempt =>
+    {
+        var nextTimeInterval = TimeSpan.FromSeconds(Math.Pow(2, retryAttempt));
+        //Todo replace with logging
+        Console.WriteLine($"Polly: error during call, retry for {retryAttempt} time in {TimeSpan.FromSeconds(nextTimeInterval.TotalSeconds).Humanize()} second(s).");
+        return nextTimeInterval;
+    });
 
 builder.Services.AddScoped<HttpInterceptorService>();
 builder.Services.AddHttpClientInterceptor();
 
-builder.Services.AddHttpClient(AppSettings.HttpClientGatewayApi, (services, client) =>
+builder.Services.AddHttpClient(AppSettings.HttpClientApi, (services, client) =>
 {
     client.BaseAddress = new Uri(apiBaseUrl);    
     client.EnableIntercept(services);
     
-}).AddHttpMessageHandler<CustomAuthorizationMessageHandler>();
+})
+    .AddHttpMessageHandler<CustomAuthorizationMessageHandler>()
+    .AddPolicyHandler(policy);
 
 
-builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(AppSettings.HttpClientGatewayApi));
+builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient(AppSettings.HttpClientApi));
 
 
 

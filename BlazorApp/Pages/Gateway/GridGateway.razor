@@ -104,13 +104,7 @@
 
     private async Task UpdateGridAsync()
     {
-        //Gateways = await Http.GetFromJsonAsync<List<GatewayDto>>("api/gateway") ?? new List<GatewayDto>();
-        
-        var response = await Http.GetAsync("api/gateway?Fields=name");
-        var a = await response.Content.ReadAsStringAsync();
-        var f = 33;
-        var c = await Http.GetFromJsonAsync<List<ExpandoObject>>("api/gateway") ?? new List<ExpandoObject>();
-        var b = await Http.GetFromJsonAsync<List<ExpandoObject>>("api/gateway") ?? new List<ExpandoObject>();
+        Gateways = await Http.GetFromJsonAsync<List<GatewayDto>>("api/gateway") ?? new List<GatewayDto>();
     }
 
     private void OnCancelled()

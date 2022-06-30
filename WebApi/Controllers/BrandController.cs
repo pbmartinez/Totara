@@ -8,9 +8,9 @@ namespace WebApi.Controllers
 {
     [Route("api/brand")]
     [ApiController]
-    public class BrandController : ApiBaseController<BrandDto>
+    public class BrandController : ApiBaseController<BrandDto, Guid>
     {
-        public BrandController(IBrandAppService appService, ILogger<ApiBaseController<BrandDto>> logger, IPropertyCheckerService propertyCheckerService) : base(appService, logger, propertyCheckerService)
+        public BrandController(IBrandAppService appService, ILogger<ApiBaseController<BrandDto, Guid>> logger, IPropertyCheckerService propertyCheckerService) : base(appService, logger, propertyCheckerService)
         {
         }
     }
