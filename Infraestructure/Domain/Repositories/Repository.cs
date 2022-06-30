@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infraestructure.Domain.Repositories
 {
-    public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
+    public class Repository<TEntity> : IRepository<TEntity, Guid> where TEntity : Entity
     {
         private readonly IUnitOfWork _unitOfWork;
         public Repository(IUnitOfWork unitOfWork)

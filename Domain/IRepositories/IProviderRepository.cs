@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Domain.IRepositories
 {
-    public interface IProviderRepository : IRepository<Provider>
+    public interface IProviderRepository : IRepository<Provider, Guid>
     {
 
     }
