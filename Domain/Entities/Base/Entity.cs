@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace Domain.Entities
+namespace Domain.Entities.Base
 {
     public class Entity : BaseGenericEntity<Guid>
     {

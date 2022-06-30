@@ -17,7 +17,7 @@ namespace WebApi.Controllers
 
     //[Authorize]
     [Route("api/[controller]")]
-    public abstract class ApiBaseController<TEntityDto, TKey> : ControllerBase where TEntityDto : Domain.Entities.Entity
+    public abstract class ApiBaseController<TEntityDto, TKey> : ControllerBase where TEntityDto : Domain.Entities.Base.Entity
     {
         protected readonly IAppService<TEntityDto, TKey> AppService;
 

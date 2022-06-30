@@ -1,5 +1,6 @@
 ﻿using Application.IAppServices;
 using Domain.Entities;
+using Domain.Entities.Base;
 using Domain.Localization;
 using System;
 using System.Collections.Generic;

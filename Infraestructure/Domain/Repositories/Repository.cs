@@ -9,6 +9,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Domain.Entities.Base;
 
 namespace Infraestructure.Domain.Repositories
 {
