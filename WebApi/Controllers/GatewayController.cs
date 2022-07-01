@@ -22,7 +22,7 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{gatewayId}/validation-errors")]
-        public async Task<ActionResult<List<string>>> ValidationErrors(Guid? gatewayId)
+        public async Task<ActionResult<List<string>>> ValidationErrors(Guid? gatewayId, CancellationToken cancellationToken)
         {
             var validationErrors = new List<string>();
 
@@ -32,7 +32,7 @@ namespace WebApi.Controllers
             }
             else
             {
-                var gateway = await AppService.GetAsync(gatewayId.Value, Includes);
+                var gateway = await AppService.GetAsync(gatewayId.Value, Includes,cancellationToken);
 
                 if (gateway == null)
                     validationErrors.Add("gateway does not exist");

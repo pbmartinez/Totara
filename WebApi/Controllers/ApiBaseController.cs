@@ -62,7 +62,7 @@ namespace WebApi.Controllers
 
         [HttpGet]
         [HttpHead]
-        public virtual async Task<IActionResult> Get([FromQuery]QueryStringParameters queryStringParameters)
+        public virtual async Task<IActionResult> Get([FromQuery]QueryStringParameters queryStringParameters, CancellationToken cancellationToken = default)
         {
             //TODO: Return bad request specifying that was by incorrect properties
             //TODO: Check properties when propagating includes navigation properties
@@ -70,7 +70,7 @@ namespace WebApi.Controllers
             if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(queryStringParameters.Fields))
                 return BadRequest();
             var includes = queryStringParameters.Includes.Split(',').ToList();
-            var items = await AppService.GetAllAsync(includes, DefaultOrderBy);
+            var items = await AppService.GetAllAsync(includes, DefaultOrderBy, cancellationToken);
             var result = items.ShapeDataOnIEnumerable(queryStringParameters.Fields);
             return Ok(result);
         }
@@ -92,49 +92,49 @@ namespace WebApi.Controllers
         }
 
         [HttpPost]
-        public virtual async Task<IActionResult> Post(TEntityDto item)
+        public virtual async Task<IActionResult> Post(TEntityDto item, CancellationToken cancellationToken = default)
         {
             if(item.IsTransient())
                 item.GenerateIdentity();
-            var result = await AppService.AddAsync(item);
+            var result = await AppService.AddAsync(item, cancellationToken);
             return CreatedAtAction(nameof(Get), new { id = item.Id }, item);
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<IActionResult> Put(TKey id, TEntityDto item)
+        public virtual async Task<IActionResult> Put(TKey id, TEntityDto item, CancellationToken cancellationToken = default)
         {
             if (id == null)
                 return BadRequest();
-            var itemTarget = await AppService.GetAsync(id);
+            var itemTarget = await AppService.GetAsync(id,cancellationToken: cancellationToken);
             if (itemTarget == null)
                 return NotFound();
-            var result = await AppService.UpdateAsync(item);
+            var result = await AppService.UpdateAsync(item, cancellationToken);
             return NoContent();
         }
         [HttpPatch("{id}")]
-        public virtual async Task<IActionResult> Patch(TKey id, JsonPatchDocument<TEntityDto> patchDocument)
+        public virtual async Task<IActionResult> Patch(TKey id, JsonPatchDocument<TEntityDto> patchDocument, CancellationToken cancellationToken = default)
         {
             if (id == null)
                 return BadRequest();
-            var item = await AppService.GetAsync(id);
+            var item = await AppService.GetAsync(id, cancellationToken: cancellationToken);
             if (item == null)
                 return NotFound();            
             //TODO: Check client errors vs server error response
             patchDocument.ApplyTo(item);
             if(!TryValidateModel(item))
                 return ValidationProblem(ModelState);
-            var result = await AppService.UpdateAsync(item);
+            var result = await AppService.UpdateAsync(item, cancellationToken);
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public virtual async Task<IActionResult> Delete(TKey id)
+        public virtual async Task<IActionResult> Delete(TKey id, CancellationToken cancellationToken = default)
         {
             if (id == null )
                 return NotFound();
-            var item = await AppService.GetAsync(id );
+            var item = await AppService.GetAsync(id,cancellationToken: cancellationToken );
             if (item==null)
                 return NotFound();
-            var result = await AppService.RemoveAsync(id );
+            var result = await AppService.RemoveAsync(id, cancellationToken);
             return NoContent();
         }
 
