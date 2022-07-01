@@ -14,6 +14,7 @@ using Serilog;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using WebApi.Helpers;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Hellang.Middleware.ProblemDetails;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -104,13 +105,12 @@ builder.Services.AddDbContext<UnitOfWorkContainer>(options =>
        sqlServerOptions.EnableRetryOnFailure(3);
    }));
 
-//Security Configuration
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(AppSettings.AzureAd));
 
-builder.Services.AddHealthChecks()
-    .AddDbContextCheck<UnitOfWorkContainer>(failureStatus: HealthStatus.Degraded);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(AppSettings.AzureAd));
 
+builder.Services.AddHealthChecks().AddDbContextCheck<UnitOfWorkContainer>(failureStatus: HealthStatus.Degraded);
+
+builder.Services.AddProblemDetails();
 
 IdentityModelEventSource.ShowPII = true;
 
@@ -123,14 +123,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-else
-{
-    app.UseExceptionHandler(appBuilder => appBuilder.Run(async context =>
-    {
-        context.Response.StatusCode = 500;
-        await context.Response.WriteAsync("An error happened, please try later");
-    }));
-}
+
+app.UseProblemDetails();
 
 app.MapHealthChecks("/health/live", new HealthCheckOptions()
 {
