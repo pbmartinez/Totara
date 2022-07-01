@@ -2,7 +2,7 @@
 using Application.Dtos;
 using Application.Exceptions;
 using FluentAssertions;
-using Infraestructure.Application.Validator;
+using Infrastructure.Application.Validator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;

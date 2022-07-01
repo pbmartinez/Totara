@@ -77,14 +77,15 @@ namespace WebApi.Controllers
 
         [HttpGet("{id}")]
         [HttpHead("{id}")]
-        public virtual async Task<ActionResult<TEntityDto>> Get(TKey id, [FromQuery] QueryStringParameters queryStringParameters)
+        public virtual async Task<ActionResult<TEntityDto>> Get(TKey id, [FromQuery] QueryStringParameters queryStringParameters, CancellationToken cancellationToken = default)
         {
             if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(queryStringParameters.Fields))
                 return BadRequest();
             if (id == null)
                 return BadRequest();
             var includes = queryStringParameters.Includes.Split(',').ToList();
-            var item = await AppService.GetAsync(id, includes);
+            var item = await AppService.GetAsync(id, includes, cancellationToken);
+            
             if (item == null)
                 return NotFound();
             return Ok(item.ShapeDataOnObject(queryStringParameters.Fields ?? string.Empty));

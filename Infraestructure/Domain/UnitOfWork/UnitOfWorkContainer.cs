@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Domain.Entities.Base;
 
-namespace Infraestructure.Domain.UnitOfWork
+namespace Infrastructure.Domain.UnitOfWork
 {
     public class UnitOfWorkContainer : BaseDbContext, IUnitOfWork
     {
@@ -20,9 +20,9 @@ namespace Infraestructure.Domain.UnitOfWork
 
         }
 
-        public async Task<int> CommitAsync()
+        public async Task<int> CommitAsync(CancellationToken cancellationToken = default)
         {
-            return await SaveChangesAsync();
+            return await SaveChangesAsync(cancellationToken);
         }
 
         public DbSet<TEntity> Repository<TEntity>() where TEntity : Entity
@@ -30,9 +30,9 @@ namespace Infraestructure.Domain.UnitOfWork
             return Set<TEntity>();
         }
 
-        public async Task RollbackAsync()
+        public async Task RollbackAsync(CancellationToken cancellationToken = default)
         {
-            await RollbackAsync();
+            await RollbackAsync(cancellationToken);
         }
 
         public void SetEntryState<TEntity>(TEntity item, EntityState state) where TEntity : class
@@ -50,7 +50,7 @@ namespace Infraestructure.Domain.UnitOfWork
             return ChangeTracker;
         }
 
-        
+
         public IQueryable<TEntity> GetQueryable<TEntity>(List<string>? includes = null, Expression<Func<TEntity, bool>>? predicate = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0) where TEntity : class
         {
             IQueryable<TEntity> items = Set<TEntity>();
@@ -89,9 +89,9 @@ namespace Infraestructure.Domain.UnitOfWork
             return Database.ExecuteSqlRaw(sqlCommand, parameters);
         }
 
-        public async Task<int> ExecuteCommandAsync(string sqlCommand, params object[] parameters)
+        public async Task<int> ExecuteCommandAsync(string sqlCommand, CancellationToken cancellationToken = default, params object[] parameters)
         {
-            return await Database.ExecuteSqlRawAsync(sqlCommand, parameters);
+            return await Database.ExecuteSqlRawAsync(sqlCommand, parameters, cancellationToken);
         }
 
 

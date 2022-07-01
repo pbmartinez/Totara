@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.Application.Validator
+namespace Infrastructure.Application.Validator
 {
     /// <summary>
     ///   Validator based on Data Annotations. 

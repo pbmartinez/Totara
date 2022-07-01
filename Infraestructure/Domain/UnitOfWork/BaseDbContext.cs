@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.Domain.UnitOfWork
+namespace Infrastructure.Domain.UnitOfWork
 {
     public class BaseDbContext : DbContext
     {

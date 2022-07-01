@@ -1,9 +1,9 @@
-using Infraestructure.DependencyInjectionExtensions;
+using Infrastructure.DependencyInjectionExtensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System.Text.Json.Serialization;
-using Infraestructure.Domain.UnitOfWork;
+using Infrastructure.Domain.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;

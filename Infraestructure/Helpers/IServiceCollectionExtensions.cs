@@ -5,11 +5,11 @@ using AutoMapper.Extensions.ExpressionMapping;
 using Domain.Interfaces;
 using Domain.IRepositories;
 using Domain.UnitOfWork;
-using Infraestructure.Application.AppServices;
-using Infraestructure.Application.Validator;
-using Infraestructure.Domain.Repositories;
-using Infraestructure.Domain.UnitOfWork;
-using Infraestructure.Services;
+using Infrastructure.Application.AppServices;
+using Infrastructure.Application.Validator;
+using Infrastructure.Domain.Repositories;
+using Infrastructure.Domain.UnitOfWork;
+using Infrastructure.Services;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infraestructure.DependencyInjectionExtensions
+namespace Infrastructure.DependencyInjectionExtensions
 {
     /// <summary>
     /// IServiceCollecion extensions, encapsulation of adding application services to the Program/StartUp class
