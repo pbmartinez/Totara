@@ -14,10 +14,21 @@ namespace Test.Api
 {
     class WebApiApplication : WebApplicationFactory<Program>
     {
-        public WebApiApplication()
+        private static WebApiApplication _webApiApplication = null!;
+        private WebApiApplication()
         {
 
         }
+
+        public static WebApiApplication GetWebApiApplication()
+        {
+            if (_webApiApplication == null)
+            {
+                _webApiApplication = new WebApiApplication();
+            }
+            return _webApiApplication;
+        }
+
 
         public override IServiceProvider Services => base.Services;
 
