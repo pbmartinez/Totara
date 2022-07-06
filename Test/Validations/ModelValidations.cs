@@ -17,7 +17,7 @@ namespace Test.Validations
     public class ModelValidations
     {
         #region Data Sets
-        private static Guid gatewayId = Guid.NewGuid();
+        private static readonly Guid gatewayId = Guid.NewGuid();
 
         private static readonly object[] GatewaysDataSet =
         {

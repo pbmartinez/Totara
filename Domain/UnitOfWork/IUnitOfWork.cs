@@ -31,7 +31,7 @@ namespace Domain.UnitOfWork
         /// <param name="pageSize"></param>
         /// <param name="pageGo"></param>
         /// <returns></returns>
-        IQueryable<TEntity> GetQueryable<TEntity>(List<string> includes = null, Expression<Func<TEntity, bool>> predicate = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
+        IQueryable<TEntity> GetQueryable<TEntity>(List<string>? includes = null, Expression<Func<TEntity, bool>>? predicate = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0)
             where TEntity : class;
 
         /// <summary>

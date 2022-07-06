@@ -16,9 +16,9 @@ namespace Domain.IRepositories
     public interface IRepository<TEntity, TKey> where TEntity : Entity
     {
         IUnitOfWork UnitOfWork { get; }
-        TEntity Get(TKey id, List<string> includes = null);
-        Task<IQueryable<TEntity>> GetAllAsync(List<string> includes = null, Dictionary<string, bool> order = null, CancellationToken cancellationToken = default);
-        Task<TEntity> GetAsync(TKey id, List<string> includes = null, CancellationToken cancellationToken = default);
+        TEntity? Get(TKey id, List<string>? includes = null);
+        Task<IQueryable<TEntity>> GetAllAsync(List<string>? includes = null, Dictionary<string, bool>? order = null, CancellationToken cancellationToken = default);
+        Task<TEntity?> GetAsync(TKey id, List<string>? includes = null, CancellationToken cancellationToken = default);
         Task AddAsync(TEntity item, CancellationToken cancellationToken = default);
         Task UpdateAsync(TEntity item, CancellationToken cancellationToken = default);
         Task DeleteAsync(TEntity item, CancellationToken cancellationToken = default);
@@ -27,9 +27,9 @@ namespace Domain.IRepositories
         //FindOneBySpecificationPatternAsync -> FindOneByExpressionAsync
         //The expression that is defined in the specification
         
-        Task<TEntity> FindOneByExpressionAsync(Expression<Func<TEntity,bool>> expression, List<string> includes, CancellationToken cancellationToken = default);
+        Task<TEntity?> FindOneByExpressionAsync(Expression<Func<TEntity,bool>> expression, List<string>? includes = null, CancellationToken cancellationToken = default);
         Task<PagedCollection<TEntity>> FindPageByExpressionAsync(Expression<Func<TEntity, bool>> expression, List<string> includes, Dictionary<string, bool> order, int pageSize, int pageGo, CancellationToken cancellationToken = default);
-        Task<List<TEntity>> FindAllByExpressionAsync(Expression<Func<TEntity, bool>> expression, List<string> includes = null, Dictionary<string, bool> order = null, CancellationToken cancellationToken = default);
+        Task<List<TEntity>> FindAllByExpressionAsync(Expression<Func<TEntity, bool>> expression, List<string>? includes = null, Dictionary<string, bool>? order = null, CancellationToken cancellationToken = default);
         Task<int> FindCountByExpressionAsync(Expression<Func<TEntity, bool>> expression, CancellationToken cancellationToken = default);
     }
 }

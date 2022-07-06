@@ -10,10 +10,10 @@ namespace Application.Dtos
 {
     public class ProviderDto:Entity
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Description { get; set; }= string.Empty;
 
         public virtual Guid PeripheralId { get; set; }
-        public virtual PeripheralDto Peripheral { get; set; }
+        public virtual PeripheralDto Peripheral { get; set; } = null!;
     }
 }

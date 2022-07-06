@@ -51,20 +51,20 @@ namespace Infrastructure.Application.AppServices
 
         public async Task<int> FindCountBySpecificationPatternAsync(Specification<ProviderDto>? specification = null, CancellationToken cancellationToken = default)
         {
-            var count = await _ProviderRepository.FindCountByExpressionAsync(specification?.MapToExpressionOfType<Provider>(), cancellationToken);
+            var count = await _ProviderRepository.FindCountByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Provider>(), cancellationToken);
             return count;
         }
 
-        public async Task<ProviderDto> FindOneBySpecificationPatternAsync(Specification<ProviderDto>? specification = null, List<string>? includes = null, CancellationToken cancellationToken = default)
+        public async Task<ProviderDto?> FindOneBySpecificationPatternAsync(Specification<ProviderDto>? specification = null, List<string>? includes = null, CancellationToken cancellationToken = default)
         {
-            var item = await _ProviderRepository.FindOneByExpressionAsync(specification?.MapToExpressionOfType<Provider>(), includes, cancellationToken);
+            var item = await _ProviderRepository.FindOneByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Provider>(), includes, cancellationToken);
             return _mapper.Map<ProviderDto>(item);
         }
 
         public async Task<List<ProviderDto>> FindPageBySpecificationPatternAsync(Specification<ProviderDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0, CancellationToken cancellationToken = default)
         {
             return _mapper.Map<List<ProviderDto>>(
-                await _ProviderRepository.FindPageByExpressionAsync(specification?.MapToExpressionOfType<Provider>(), includes, order, pageSize, pageGo, cancellationToken));
+                await _ProviderRepository.FindPageByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Provider>(), includes ?? new List<string>(), order ?? new Dictionary<string, bool>(), pageSize, pageGo, cancellationToken));
         }
 
 
@@ -88,6 +88,8 @@ namespace Infrastructure.Application.AppServices
         public async Task<bool> RemoveAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var item = await _ProviderRepository.GetAsync(id, cancellationToken: cancellationToken);
+            if (item == null)
+                throw new ArgumentException("poner mensaa qui");
             await _ProviderRepository.DeleteAsync(item, cancellationToken);
             var commited = await _ProviderRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 

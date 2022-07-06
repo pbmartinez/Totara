@@ -19,19 +19,19 @@ namespace Application.Dtos
 
         [Display(ResourceType = typeof(Resource), Name = $"{nameof(GatewayDto)}{nameof(Name)}")]
         [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
 
         [Display(ResourceType = typeof(Resource), Name = $"{nameof(GatewayDto)}{nameof(Ipv4Address)}")]
         [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
         [Ipv4Address(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_Ipv4AddressBadFormat")]
-        public string Ipv4Address { get; set; }
+        public string Ipv4Address { get; set; } = string.Empty;
 
         public List<PeripheralDto> Peripherals { get; set; }
 
 
         public bool ShowPeripherlsInGrid { get; set; } = false;
 
-        public BrandDto Brand { get; set; }
+        public BrandDto? Brand { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

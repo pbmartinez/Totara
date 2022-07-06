@@ -51,20 +51,20 @@ namespace Infrastructure.Application.AppServices
 
         public async Task<int> FindCountBySpecificationPatternAsync(Specification<PeripheralDto>? specification = null, CancellationToken cancellationToken = default)
         {
-            var count = await _PeripheralRepository.FindCountByExpressionAsync(specification?.MapToExpressionOfType<Peripheral>(), cancellationToken);
+            var count = await _PeripheralRepository.FindCountByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Peripheral>(), cancellationToken);
             return count;
         }
 
-        public async Task<PeripheralDto> FindOneBySpecificationPatternAsync(Specification<PeripheralDto>? specification = null, List<string>? includes = null, CancellationToken cancellationToken = default)
+        public async Task<PeripheralDto?> FindOneBySpecificationPatternAsync(Specification<PeripheralDto>? specification = null, List<string>? includes = null, CancellationToken cancellationToken = default)
         {
-            var item = await _PeripheralRepository.FindOneByExpressionAsync(specification?.MapToExpressionOfType<Peripheral>(), includes, cancellationToken);
+            var item = await _PeripheralRepository.FindOneByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Peripheral>(), includes, cancellationToken);
             return _mapper.Map<PeripheralDto>(item);
         }
 
         public async Task<List<PeripheralDto>> FindPageBySpecificationPatternAsync(Specification<PeripheralDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0, CancellationToken cancellationToken = default)
         {
             return _mapper.Map<List<PeripheralDto>>(
-                await _PeripheralRepository.FindPageByExpressionAsync(specification?.MapToExpressionOfType<Peripheral>(), includes, order, pageSize, pageGo, cancellationToken));
+                await _PeripheralRepository.FindPageByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Peripheral>(), includes ?? new List<string>(), order ?? new Dictionary<string, bool>(), pageSize, pageGo, cancellationToken));
         }
 
 
@@ -88,6 +88,8 @@ namespace Infrastructure.Application.AppServices
         public async Task<bool> RemoveAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var item = await _PeripheralRepository.GetAsync(id, cancellationToken: cancellationToken);
+            if (item == null)
+                throw new ArgumentException("poner mensahe ahi");
             await _PeripheralRepository.DeleteAsync(item, cancellationToken);
             var commited = await _PeripheralRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 

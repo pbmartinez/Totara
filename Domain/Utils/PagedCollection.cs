@@ -21,13 +21,13 @@ namespace Domain.Utils
         public int TotalItems { get; set; }
 
         [DataMember]
-        public List<TEntity> Items { get; set; }
+        public List<TEntity>? Items { get; set; }
 
         //[DataMember]
         //public string Filter { get; set; }
 
         [DataMember]
-        public Dictionary<string, bool> Order { get; set; }
+        public Dictionary<string, bool>? Order { get; set; }
 
 
 

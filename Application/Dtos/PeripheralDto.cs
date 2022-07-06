@@ -26,7 +26,7 @@ namespace Application.Dtos
 
         [Display(ResourceType = typeof(Resource), Name = $"{nameof(PeripheralDto)}{nameof(Vendor)}")]
         [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
-        public string Vendor { get; set; }
+        public string Vendor { get; set; } = string.Empty;
 
         [Display(ResourceType = typeof(Resource), Name = $"{nameof(PeripheralDto)}{nameof(CreatedDate)}")]
         [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
@@ -42,12 +42,11 @@ namespace Application.Dtos
         [Required(ErrorMessageResourceType = typeof(Resource), ErrorMessageResourceName = "validation_FieldRequired")]
         public Guid GatewayId { get; set; }
 
-        public GatewayDto Gateway { get; set; }
-        public ProviderDto Provider { get; set; }
+        public GatewayDto Gateway { get; set; } = null!;
+        public ProviderDto? Provider { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            var peripheral = (PeripheralDto)validationContext.ObjectInstance;
             var erroResults = new List<ValidationResult>();
             
             //TODO fix call validation from fronted app: 1. endpoint for validation :). 2. import infrastructure in fronten app :(

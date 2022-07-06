@@ -51,20 +51,20 @@ namespace Infrastructure.Application.AppServices
 
         public async Task<int> FindCountBySpecificationPatternAsync(Specification<GatewayDto>? specification = null, CancellationToken cancellationToken = default)
         {
-            var count = await _GatewayRepository.FindCountByExpressionAsync(specification?.MapToExpressionOfType<Gateway>(), cancellationToken);
+            var count = await _GatewayRepository.FindCountByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Gateway>(), cancellationToken);
             return count;
         }
 
-        public async Task<GatewayDto> FindOneBySpecificationPatternAsync(Specification<GatewayDto>? specification = null, List<string>? includes = null, CancellationToken cancellationToken = default)
+        public async Task<GatewayDto?> FindOneBySpecificationPatternAsync(Specification<GatewayDto>? specification = null, List<string>? includes = null, CancellationToken cancellationToken = default)
         {
-            var item = await _GatewayRepository.FindOneByExpressionAsync(specification?.MapToExpressionOfType<Gateway>(), includes, cancellationToken);
+            var item = await _GatewayRepository.FindOneByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Gateway>(), includes, cancellationToken);
             return _mapper.Map<GatewayDto>(item);
         }
 
         public async Task<List<GatewayDto>> FindPageBySpecificationPatternAsync(Specification<GatewayDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0, CancellationToken cancellationToken = default)
         {
             return _mapper.Map<List<GatewayDto>>(
-                await _GatewayRepository.FindPageByExpressionAsync(specification?.MapToExpressionOfType<Gateway>(), includes, order, pageSize, pageGo, cancellationToken));
+                await _GatewayRepository.FindPageByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Gateway>(), includes ?? new List<string>(), order ?? new Dictionary<string, bool>(), pageSize, pageGo, cancellationToken));
         }
 
 
@@ -88,6 +88,8 @@ namespace Infrastructure.Application.AppServices
         public async Task<bool> RemoveAsync(Guid id, CancellationToken cancellationToken = default)
         {
             var item = await _GatewayRepository.GetAsync(id, cancellationToken: cancellationToken);
+            if (item == null)
+                throw new ArgumentException("Itme does not exist");
             await _GatewayRepository.DeleteAsync(item, cancellationToken);
             var commited = await _GatewayRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 

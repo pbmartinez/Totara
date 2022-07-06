@@ -16,7 +16,7 @@ namespace BlazorApp.Services
             _navManager = navManager ?? throw new ArgumentNullException(nameof(navManager));
         }
 
-        public void RegisterEvent() => _interceptor.AfterSend += InterceptResponse;
+        public void RegisterEvent() => _interceptor.AfterSend += InterceptResponse!;
 
         private void InterceptResponse(object sender, HttpClientInterceptorEventArgs e)
         {
@@ -50,6 +50,6 @@ namespace BlazorApp.Services
             }
         }
 
-        public void DisposeEvent() => _interceptor.AfterSend -= InterceptResponse;
+        public void DisposeEvent() => _interceptor.AfterSend -= InterceptResponse!;
     }
 }

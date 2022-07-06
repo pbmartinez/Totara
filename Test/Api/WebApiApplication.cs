@@ -1,7 +1,13 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Domain.Entities;
+using Infrastructure.Domain.UnitOfWork;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Respawn;
+using Respawn.Graph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +21,11 @@ namespace Test.Api
     class WebApiApplication : WebApplicationFactory<Program>
     {
         private static WebApiApplication _webApiApplication = null!;
+        private static Checkpoint CheckPoint = new Checkpoint()
+        {
+            TablesToIgnore = new Table[] { new Table("__EFMigrationsHistory") },
+            
+        };
         private WebApiApplication()
         {
 
@@ -30,67 +41,42 @@ namespace Test.Api
         }
 
 
-        public override IServiceProvider Services => base.Services;
-
-        public override ValueTask DisposeAsync()
+        public async Task ExecuteScopeAsync(Func<IServiceProvider, Task> action)
         {
-            return base.DisposeAsync();
+            using (var scope = GetWebApiApplication().Services.GetService<IServiceScopeFactory>()!.CreateScope())
+            {
+                await action(scope.ServiceProvider);
+            }
         }
 
-        public override bool Equals(object? obj)
+        public async Task ExecuteDbContextAsync(Func<UnitOfWorkContainer, Task> action)
         {
-            return base.Equals(obj);
+            await ExecuteScopeAsync(sp => action(sp.GetService<UnitOfWorkContainer>()!));
         }
 
-        public override int GetHashCode()
+        public static async Task ResetDatabase()
         {
-            return base.GetHashCode();
+            var configuration = GetWebApiApplication().Services.GetService<IConfiguration>();
+            var connectionString = configuration?["ConnectionStrings:DefaultConnection"];
+            await CheckPoint.Reset("Server=localhost;Database=MusalaGateways;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
         }
 
-        public override string? ToString()
+        public async Task<Gateway> AGatewayInTheDatabase()
         {
-            return base.ToString();
+            var item = new Gateway()
+            {
+                Id = Guid.NewGuid(),
+                Name = "Gateway Name",
+                Ipv4Address = "192.168.10.77"                
+            };
+
+            await ExecuteDbContextAsync(async context =>
+            {
+                await context.AddAsync(item);
+                await context.SaveChangesAsync();
+            });
+            return item;
         }
 
-        protected override void ConfigureClient(HttpClient client)
-        {
-            base.ConfigureClient(client);
-        }
-
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
-        {
-            base.ConfigureWebHost(builder);
-        }
-
-        protected override IHost CreateHost(IHostBuilder builder)
-        {
-            // shared extra set up goes here
-            return base.CreateHost(builder);
-        }
-
-        protected override IHostBuilder? CreateHostBuilder()
-        {
-            return base.CreateHostBuilder();
-        }
-
-        protected override TestServer CreateServer(IWebHostBuilder builder)
-        {
-            return base.CreateServer(builder);
-        }
-
-        protected override IWebHostBuilder? CreateWebHostBuilder()
-        {
-            return base.CreateWebHostBuilder();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
-        }
-
-        protected override IEnumerable<Assembly> GetTestAssemblies()
-        {
-            return base.GetTestAssemblies();
-        }
     }
 }

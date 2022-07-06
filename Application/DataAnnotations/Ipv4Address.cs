@@ -16,7 +16,7 @@ namespace Application.DataAnnotations
 
         }
 
-        public override bool IsValid(object value)
+        public override bool IsValid(object? value)
         {
             var IpAddress = value as string;
             if (string.IsNullOrEmpty(IpAddress) || string.IsNullOrWhiteSpace(IpAddress))

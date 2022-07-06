@@ -39,8 +39,12 @@ namespace Infrastructure.Domain.Repositories
         {
             //if (cancellationToken.IsCancellationRequested)
             //    return await Task.FromCanceled(cancellationToken);
-            var a = await GetAsync(item.Id);
-            _unitOfWork.GetEntry(a).CurrentValues.SetValues(item);
+            var itemToUpdate = await GetAsync(item.Id, cancellationToken: cancellationToken);
+            if (itemToUpdate == null)
+            {
+                throw new ArgumentException("Item to update must be valid and present in database");
+            }
+            _unitOfWork.GetEntry(itemToUpdate).CurrentValues.SetValues(item);
             await Task.CompletedTask;
         }
 
@@ -53,7 +57,7 @@ namespace Infrastructure.Domain.Repositories
         }
 
 
-        public TEntity Get(Guid id, List<string>? includes = null)
+        public TEntity? Get(Guid id, List<string>? includes = null)
         {
             var item = _unitOfWork.GetQueryable(includes, (Expression<Func<TEntity, bool>>)(a => a.Id == id)).FirstOrDefault();
             return item;
@@ -65,7 +69,7 @@ namespace Infrastructure.Domain.Repositories
             return await Task.FromResult(items);
         }
 
-        public async Task<TEntity> GetAsync(Guid id, List<string>? includes = null, CancellationToken cancellationToken = default)
+        public async Task<TEntity?> GetAsync(Guid id, List<string>? includes = null, CancellationToken cancellationToken = default)
         {
             var i = includes == null ? new List<string>() : includes.ToList();
             var item = await _unitOfWork.GetQueryable(i, (Expression<Func<TEntity, bool>>)(a => a.Id == id))
@@ -73,7 +77,7 @@ namespace Infrastructure.Domain.Repositories
             return item;
         }
 
-        public async Task<TEntity> FindOneByExpressionAsync(Expression<Func<TEntity, bool>>? expression, List<string>? includes, CancellationToken cancellationToken = default)
+        public async Task<TEntity?> FindOneByExpressionAsync(Expression<Func<TEntity, bool>>? expression, List<string>? includes, CancellationToken cancellationToken = default)
         {
             var item = await _unitOfWork.GetQueryable(includes, expression).FirstOrDefaultAsync(cancellationToken: cancellationToken);
             return item;

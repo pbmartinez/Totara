@@ -20,10 +20,17 @@ using WebApi.Parameters;
 namespace Test.Api
 {
     [TestFixture]
-    public class Gateway
+    public class GatewayControllerTest
     {
         private static WebApiApplication Application { get; set; } = WebApiApplication.GetWebApiApplication();
         private HttpClient HttpClient { get; set; } = Application.CreateClient();
+
+        [SetUp]
+        public async Task ResetBeforeTest()
+        {
+            await WebApiApplication.ResetDatabase();
+            await WebApiApplication.GetWebApiApplication().AGatewayInTheDatabase();
+        }
 
 
         [Test]

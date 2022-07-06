@@ -10,10 +10,10 @@ namespace Application.Dtos
 {
     public class BrandDto :Entity
     {
-        public string Name { get; set; }
-        public string Sponsor { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Sponsor { get; set; } = string.Empty;
 
         public Guid GatewayId { get; set; }
-        public virtual GatewayDto Gateway { get; set; }
+        public virtual GatewayDto Gateway { get; set; } = null!;
     }
 }
