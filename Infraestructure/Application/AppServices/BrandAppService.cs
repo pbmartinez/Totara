@@ -14,7 +14,7 @@ using Application.Specifications;
 using Application.IValidator;
 using Application.Exceptions;
 
-namespace Infraestructure.Application.AppServices
+namespace Infrastructure.Application.AppServices
 {
     public partial class BrandAppService : IBrandAppService
     {
@@ -29,80 +29,79 @@ namespace Infraestructure.Application.AppServices
             _entityValidator = entityValidator ?? throw new ArgumentNullException(nameof(entityValidator));
         }
 
-        public async Task<bool> AddAsync(BrandDto item)
+        public async Task<bool> AddAsync(BrandDto item, CancellationToken cancellationToken = default)
         {
             int commited;
             if (_entityValidator.IsValid(item))
             {
-                await _BrandRepository.AddAsync(_mapper.Map<Brand>(item));
-                commited = await _BrandRepository.UnitOfWork.CommitAsync();
+                await _BrandRepository.AddAsync(_mapper.Map<Brand>(item), cancellationToken);
+                commited = await _BrandRepository.UnitOfWork.CommitAsync(cancellationToken);
             }
             else
                 throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));
             return commited > 0;
         }
-        
-        public async Task<List<BrandDto>> FindAllBySpecificationPatternAsync(Specification<BrandDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null)
+
+        public async Task<List<BrandDto>> FindAllBySpecificationPatternAsync(Specification<BrandDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null, CancellationToken cancellationToken = default)
         {
             return _mapper.Map<List<BrandDto>>(
-                await _BrandRepository.FindAllByExpressionAsync(
-                    _mapper.MapExpression<Expression<Func<Brand, bool>>>(
-                        specification == null ? a => true : specification.ToExpression()), includes, order));
+                await _BrandRepository.FindAllByExpressionAsync(_mapper.MapExpression<Expression<Func<Brand, bool>>>(
+                        specification == null ? a => true : specification.ToExpression()), includes, order, cancellationToken));
         }
 
-        public async Task<int> FindCountBySpecificationPatternAsync(Specification<BrandDto>? specification = null)
+        public async Task<int> FindCountBySpecificationPatternAsync(Specification<BrandDto>? specification = null, CancellationToken cancellationToken = default)
         {
-            var count = await _BrandRepository.FindCountByExpressionAsync(specification?.MapToExpressionOfType<Brand>());
+            var count = await _BrandRepository.FindCountByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Brand>(), cancellationToken);
             return count;
         }
 
-        public async Task<BrandDto> FindOneBySpecificationPatternAsync(Specification<BrandDto>? specification = null, List<string>? includes = null)
+        public async Task<BrandDto?> FindOneBySpecificationPatternAsync(Specification<BrandDto>? specification = null, List<string>? includes = null, CancellationToken cancellationToken = default)
         {
-            var item = await _BrandRepository.FindOneByExpressionAsync(specification?.MapToExpressionOfType<Brand>(), includes);
+            var item = await _BrandRepository.FindOneByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Brand>(), includes, cancellationToken);
             return _mapper.Map<BrandDto>(item);
         }
 
-        public async Task<List<BrandDto>> FindPageBySpecificationPatternAsync(Specification<BrandDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0)
+        public async Task<List<BrandDto>> FindPageBySpecificationPatternAsync(Specification<BrandDto>? specification = null, List<string>? includes = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0, CancellationToken cancellationToken = default)
         {
             return _mapper.Map<List<BrandDto>>(
-                await _BrandRepository.FindPageByExpressionAsync(
-                    specification?.MapToExpressionOfType<Brand>(), includes, order, pageSize, pageGo));
+                await _BrandRepository.FindPageByExpressionAsync(specification == null ? a => true : specification.MapToExpressionOfType<Brand>(), includes ?? new List<string>(), order ?? new Dictionary<string, bool>(), pageSize, pageGo, cancellationToken));
         }
 
-        
+
         public BrandDto Get(Guid id, List<string>? includes = null)
         {
             return _mapper.Map<BrandDto>(_BrandRepository.Get(id, includes));
         }
 
-        public async Task<List<BrandDto>> GetAllAsync(List<string>? includes = null, Dictionary<string, bool>? order = null)
+        public async Task<List<BrandDto>> GetAllAsync(List<string>? includes = null, Dictionary<string, bool>? order = null, CancellationToken cancellationToken = default)
         {
-            var items = await _BrandRepository.GetAllAsync(includes, order);
+            var items = await _BrandRepository.GetAllAsync(includes, order, cancellationToken);
             var dtoItems = _mapper.Map<List<BrandDto>>(items.ToList());
             return dtoItems;
         }
 
-        public async Task<BrandDto> GetAsync(Guid id, List<string>? includes = null)
+        public async Task<BrandDto> GetAsync(Guid id, List<string>? includes = null, CancellationToken cancellationToken = default)
         {
-            return _mapper.Map<BrandDto>(await _BrandRepository.GetAsync(id, includes));
+            return _mapper.Map<BrandDto>(await _BrandRepository.GetAsync(id, includes, cancellationToken));
         }
 
-        public async Task<bool> RemoveAsync(Guid id)
+        public async Task<bool> RemoveAsync(Guid id, CancellationToken cancellationToken = default)
         {
-            var item = await _BrandRepository.GetAsync(id);
-            await _BrandRepository.DeleteAsync(item);
-            var commited = await _BrandRepository.UnitOfWork.CommitAsync();
+            var item = await _BrandRepository.GetAsync(id, cancellationToken: cancellationToken);
+            if (item != null)
+                await _BrandRepository.DeleteAsync(item, cancellationToken);
+            var commited = await _BrandRepository.UnitOfWork.CommitAsync(cancellationToken: cancellationToken);
 
             return commited > 0;
         }
 
-        public async Task<bool> UpdateAsync(BrandDto item)
+        public async Task<bool> UpdateAsync(BrandDto item, CancellationToken cancellationToken = default)
         {
             int commited;
             if (_entityValidator.IsValid(item))
             {
-                await _BrandRepository.UpdateAsync(_mapper.Map<Brand>(item));
-                commited = await _BrandRepository.UnitOfWork.CommitAsync();
+                await _BrandRepository.UpdateAsync(_mapper.Map<Brand>(item), cancellationToken);
+                commited = await _BrandRepository.UnitOfWork.CommitAsync(cancellationToken);
             }
             else
                 throw new ApplicationValidationErrorsException(_entityValidator.GetInvalidMessages(item));

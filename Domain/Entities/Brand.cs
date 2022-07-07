@@ -10,10 +10,10 @@ namespace Domain.Entities
 {
     public class Brand : Entity
     {
-        public string Name { get; set; }
-        public string Sponsor { get; set; }
+        public string Name { get; set; } = string.Empty;
+        public string Sponsor { get; set; } = string.Empty;
 
         public Guid GatewayId { get; set; }
-        public virtual Gateway Gateway { get; set; }
+        public virtual Gateway Gateway { get; set; } = null!;
     }
 }

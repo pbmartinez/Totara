@@ -1,9 +1,9 @@
-using Infraestructure.DependencyInjectionExtensions;
+using Infrastructure.DependencyInjectionExtensions;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System.Text.Json.Serialization;
-using Infraestructure.Domain.UnitOfWork;
+using Infrastructure.Domain.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
@@ -14,6 +14,8 @@ using Serilog;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using WebApi.Helpers;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Hellang.Middleware.ProblemDetails;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,52 +30,8 @@ builder.Services.AddControllers(setupAction =>
     //Return Not Acceptable Status Code when api is requested in a format that it does not support
     setupAction.ReturnHttpNotAcceptable = true;
 })
-.AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
-.ConfigureApiBehaviorOptions(setupAction =>
- {
-     setupAction.InvalidModelStateResponseFactory = context =>
-     {
-         // create a problem details object
-         var problemDetailsFactory = context.HttpContext.RequestServices
-             .GetRequiredService<ProblemDetailsFactory>();
-         var problemDetails = problemDetailsFactory.CreateValidationProblemDetails(
-                 context.HttpContext,
-                 context.ModelState);
+.AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-         // add additional info not added by default
-         problemDetails.Detail = "See the errors field for details.";
-         problemDetails.Instance = context.HttpContext.Request.Path;
-
-         // find out which status code to use
-         var actionExecutingContext =
-               context as Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext;
-
-         // if there are modelstate errors & all keys were correctly
-         // found/parsed we're dealing with validation errors
-         if ((context.ModelState.ErrorCount > 0) &&
-             (actionExecutingContext?.ActionArguments.Count == context.ActionDescriptor.Parameters.Count))
-         {
-             //problemDetails.Type = "";
-             problemDetails.Status = StatusCodes.Status422UnprocessableEntity;
-             problemDetails.Title = "One or more validation errors occurred.";
-
-             return new UnprocessableEntityObjectResult(problemDetails)
-             {
-                 ContentTypes = { "application/problem+json" }
-             };
-         }
-
-         // if one of the keys wasn't correctly found / couldn't be parsed
-         // we're dealing with null/unparsable input
-         problemDetails.Status = StatusCodes.Status400BadRequest;
-         problemDetails.Title = "One or more errors on input occurred.";
-         return new BadRequestObjectResult(problemDetails)
-         {
-             ContentTypes = { "application/problem+json" }
-         };
-     };
- })
-;
 // CORS Configuration
 var allowedHosts = builder.Configuration[AppSettings.AllowedHosts].Split(',');
 
@@ -104,13 +62,25 @@ builder.Services.AddDbContext<UnitOfWorkContainer>(options =>
        sqlServerOptions.EnableRetryOnFailure(3);
    }));
 
-//Security Configuration
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(AppSettings.AzureAd));
 
-builder.Services.AddHealthChecks()
-    .AddDbContextCheck<UnitOfWorkContainer>(failureStatus: HealthStatus.Degraded);
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(AppSettings.AzureAd));
 
+builder.Services.AddHealthChecks().AddDbContextCheck<UnitOfWorkContainer>(failureStatus: HealthStatus.Degraded);
+
+builder.Services.AddProblemDetails(options =>
+{
+    options.Map<Exception>((httpContext, exce) =>
+    {
+        return new ProblemDetails()
+        {
+            Instance = httpContext.Request.Path,
+            Detail = exce.Message,
+            Status = httpContext.Response.StatusCode,
+            Title = "Internal Server Error",
+            Type = $"https://httpstatuses.io/{httpContext.Response.StatusCode}"
+        };
+    });
+});
 
 IdentityModelEventSource.ShowPII = true;
 
@@ -123,14 +93,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-else
-{
-    app.UseExceptionHandler(appBuilder => appBuilder.Run(async context =>
-    {
-        context.Response.StatusCode = 500;
-        await context.Response.WriteAsync("An error happened, please try later");
-    }));
-}
+
+app.UseProblemDetails();
 
 app.MapHealthChecks("/health/live", new HealthCheckOptions()
 {

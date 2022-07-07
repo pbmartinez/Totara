@@ -2,7 +2,7 @@
 using Domain.IRepositories;
 using Domain.UnitOfWork;
 
-namespace Infraestructure.Domain.Repositories
+namespace Infrastructure.Domain.Repositories
 {
     public partial class PeripheralRepository : Repository<Peripheral>, IPeripheralRepository
     {

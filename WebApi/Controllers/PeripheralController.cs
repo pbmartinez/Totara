@@ -25,13 +25,13 @@ namespace WebApi.Controllers
         [HttpGet]
         [HttpHead]
         [Route("~/api/gateway/{gatewayId}/peripheral/{peripheralId}")]
-        public async Task<ActionResult<PeripheralDto>> GetPeripheralForGateway(Guid? gatewayId, Guid? peripheralId)
+        public async Task<ActionResult<PeripheralDto>> GetPeripheralForGateway(Guid? gatewayId, Guid? peripheralId, CancellationToken cancellationToken)
         {
             if (gatewayId == null || gatewayId == Guid.Empty)
                 return BadRequest();
             if (peripheralId == null || peripheralId == Guid.Empty)
                 return BadRequest();
-            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, Includes);
+            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, Includes,cancellationToken);
             if (gateway == null)
                 return NotFound();
             var peripheral = gateway.Peripherals.FirstOrDefault(p=> p.Id == peripheralId.Value);
@@ -42,11 +42,11 @@ namespace WebApi.Controllers
         [HttpGet]
         [HttpHead]
         [Route("~/api/gateway/{gatewayId}/peripheral")]
-        public async Task<ActionResult<PeripheralDto>> GetAllPeripheralForGateway(Guid? gatewayId)
+        public async Task<ActionResult<PeripheralDto>> GetAllPeripheralForGateway(Guid? gatewayId, CancellationToken cancellationToken = default)
         {
             if (gatewayId == null || gatewayId == Guid.Empty)
                 return BadRequest();
-            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, Includes);
+            var gateway = await _gatewayAppService.GetAsync(gatewayId.Value, Includes, cancellationToken);
             if (gateway == null)
                 return NotFound();
             return Ok(gateway.Peripherals);

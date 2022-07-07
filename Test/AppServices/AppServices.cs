@@ -4,10 +4,10 @@ using AutoMapper;
 using Domain.Entities;
 using FluentAssertions;
 using FluentAssertions.Execution;
-using Infraestructure.Application.AppServices;
-using Infraestructure.Application.Validator;
-using Infraestructure.Domain.Repositories;
-using Infraestructure.Domain.UnitOfWork;
+using Infrastructure.Application.AppServices;
+using Infrastructure.Application.Validator;
+using Infrastructure.Domain.Repositories;
+using Infrastructure.Domain.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
@@ -26,7 +26,7 @@ namespace Test.AppServices
 
 
         #region Data Set
-        private static Guid gatewayId = Guid.NewGuid();
+        private static readonly Guid gatewayId = Guid.NewGuid();
 
         private static readonly object[] GatewaysWithValidationFails =
         {
@@ -119,7 +119,7 @@ namespace Test.AppServices
             
             g.Should().NotBeNull();
             g.Peripherals.Should().NotBeNull();
-            g.Peripherals.Count ().Should().Be(entityVersion.Peripherals.Count, "The same amount of related peripherals should be added");
+            g.Peripherals.Count.Should().Be(entityVersion.Peripherals.Count, "The same amount of related peripherals should be added");
         }
     }
 }

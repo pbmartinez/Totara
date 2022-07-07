@@ -1,4 +1,4 @@
-﻿using Infraestructure.Domain.UnitOfWork;
+﻿using Infrastructure.Domain.UnitOfWork;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System;

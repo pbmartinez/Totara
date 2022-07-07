@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Infraestructure.Migrations
+namespace Infrastructure.Migrations
 {
     public partial class AddBrandToGateway : Migration
     {

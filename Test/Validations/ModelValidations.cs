@@ -2,7 +2,7 @@
 using Application.Dtos;
 using Application.Exceptions;
 using FluentAssertions;
-using Infraestructure.Application.Validator;
+using Infrastructure.Application.Validator;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace Test.Validations
     public class ModelValidations
     {
         #region Data Sets
-        private static Guid gatewayId = Guid.NewGuid();
+        private static readonly Guid gatewayId = Guid.NewGuid();
 
         private static readonly object[] GatewaysDataSet =
         {

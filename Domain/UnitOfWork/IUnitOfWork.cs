@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Domain.UnitOfWork
@@ -30,20 +31,22 @@ namespace Domain.UnitOfWork
         /// <param name="pageSize"></param>
         /// <param name="pageGo"></param>
         /// <returns></returns>
-        IQueryable<TEntity> GetQueryable<TEntity>(List<string> includes = null, Expression<Func<TEntity, bool>> predicate = null, Dictionary<string, bool> order = null, int pageSize = 0, int pageGo = 0)
+        IQueryable<TEntity> GetQueryable<TEntity>(List<string>? includes = null, Expression<Func<TEntity, bool>>? predicate = null, Dictionary<string, bool>? order = null, int pageSize = 0, int pageGo = 0)
             where TEntity : class;
 
         /// <summary>
         /// It commits all pending changes
         /// </summary>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task<int> CommitAsync();
+        Task<int> CommitAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// Rolls back all changes during transaction. 
+        /// Rolls back all changes during transaction.
         /// </summary>
+        /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        Task RollbackAsync();
+        Task RollbackAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Sets the state (Detached, Unchanged, Deleted, Modified, Added) of a given entity 
@@ -61,6 +64,8 @@ namespace Domain.UnitOfWork
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="query"></param>
+        /// <param name="cancellationToken"></param>
+        /// <param name="parameters"></param>
         /// <returns></returns>
         IQueryable<T> ExecuteQuery<T>(string query, params object[] parameters) where T : class;
 
@@ -73,11 +78,12 @@ namespace Domain.UnitOfWork
         int ExecuteCommand(string sqlCommand, params object[] parameters);
 
         /// <summary>
-        /// Excetutes a command against the database. i.e writing statement. 
+        /// Executes a command against the database. i.e writing statement. 
         /// </summary>
         /// <param name="sqlCommand"></param>
+        /// <param name="cancellationToken"></param>
         /// <param name="parameters"></param>
         /// <returns></returns>
-        Task<int> ExecuteCommandAsync(string sqlCommand, params object[] parameters);
+        Task<int> ExecuteCommandAsync(string sqlCommand, CancellationToken cancellationToken = default, params object[] parameters);
     }
 }
