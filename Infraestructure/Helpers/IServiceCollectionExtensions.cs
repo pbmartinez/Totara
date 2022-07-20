@@ -34,10 +34,7 @@ namespace Infrastructure.DependencyInjectionExtensions
             services.AddAutoMapper(configuration =>
             {
                 configuration.AddExpressionMapping();
-                configuration.AddProfile<GatewayProfile>();
-                configuration.AddProfile<PeripheralProfile>();
-                configuration.AddProfile<BrandProfile>();
-                configuration.AddProfile<ProviderProfile>();
+                configuration.AddProfile<UsuarioProfile>();
                 AppDomain.CurrentDomain.GetAssemblies();
 
             });
@@ -64,16 +61,10 @@ namespace Infrastructure.DependencyInjectionExtensions
             services.AddScoped<IUnitOfWork, UnitOfWorkContainer>();
 
             //AppServices
-            services.AddScoped<IGatewayAppService, GatewayAppService>();
-            services.AddScoped<IPeripheralAppService, PeripheralAppService>();
-            services.AddScoped<IBrandAppService, BrandAppService>();
-            services.AddScoped<IProviderAppService, ProviderAppService>();
+            services.AddScoped<IUsuarioAppService, UsuarioAppService>();
 
             //Repositories
-            services.AddScoped<IGatewayRepository, GatewayRepository>();
-            services.AddScoped<IPeripheralRepository, PeripheralRepository>();
-            services.AddScoped<IBrandRepository, BrandRepository>();
-            services.AddScoped<IProviderRepository, ProviderRepository>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
         }
         /// <summary>
         /// Adds custom Application services

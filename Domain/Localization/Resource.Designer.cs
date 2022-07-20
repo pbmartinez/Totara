@@ -223,7 +223,7 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Musala Gateways.
+        ///   Looks up a localized string similar to Totara App.
         /// </summary>
         public static string display_AppName {
             get {
@@ -313,78 +313,6 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gateway.
-        /// </summary>
-        public static string GatewayDto {
-            get {
-                return ResourceManager.GetString("GatewayDto", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ipv4.
-        /// </summary>
-        public static string GatewayDtoIpv4Address {
-            get {
-                return ResourceManager.GetString("GatewayDtoIpv4Address", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string GatewayDtoName {
-            get {
-                return ResourceManager.GetString("GatewayDtoName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Peripherals.
-        /// </summary>
-        public static string GatewayDtoPeripherals {
-            get {
-                return ResourceManager.GetString("GatewayDtoPeripherals", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Gateways.
-        /// </summary>
-        public static string GatewayDtos {
-            get {
-                return ResourceManager.GetString("GatewayDtos", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Gateways.
-        /// </summary>
-        public static string menu_Gateway {
-            get {
-                return ResourceManager.GetString("menu_Gateway", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Home.
-        /// </summary>
-        public static string menu_Home {
-            get {
-                return ResourceManager.GetString("menu_Home", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Peripherals.
-        /// </summary>
-        public static string menu_Peripheral {
-            get {
-                return ResourceManager.GetString("menu_Peripheral", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Item does not exist.
         /// </summary>
         public static string message_ItemDoesNotExist {
@@ -466,24 +394,6 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gateways.
-        /// </summary>
-        public static string page_GridGateways {
-            get {
-                return ResourceManager.GetString("page_GridGateways", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Peripherals.
-        /// </summary>
-        public static string page_GridPeripherals {
-            get {
-                return ResourceManager.GetString("page_GridPeripherals", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Index.
         /// </summary>
         public static string page_Index {
@@ -493,56 +403,65 @@ namespace Domain.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Peripheral.
+        ///   Looks up a localized string similar to User.
         /// </summary>
-        public static string PeripheralDto {
+        public static string UsuarioDto {
             get {
-                return ResourceManager.GetString("PeripheralDto", resourceCulture);
+                return ResourceManager.GetString("UsuarioDto", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Created Date.
+        ///   Looks up a localized string similar to Email.
         /// </summary>
-        public static string PeripheralDtoCreatedDate {
+        public static string UsuarioDtoEmail {
             get {
-                return ResourceManager.GetString("PeripheralDtoCreatedDate", resourceCulture);
+                return ResourceManager.GetString("UsuarioDtoEmail", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Gateway.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
-        public static string PeripheralDtoGatewayId {
+        public static string UsuarioDtoNombre {
             get {
-                return ResourceManager.GetString("PeripheralDtoGatewayId", resourceCulture);
+                return ResourceManager.GetString("UsuarioDtoNombre", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Peripherals.
+        ///   Looks up a localized string similar to Users.
         /// </summary>
-        public static string PeripheralDtos {
+        public static string UsuarioDtos {
             get {
-                return ResourceManager.GetString("PeripheralDtos", resourceCulture);
+                return ResourceManager.GetString("UsuarioDtos", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Status.
+        ///   Looks up a localized string similar to Suspended.
         /// </summary>
-        public static string PeripheralDtoStatus {
+        public static string UsuarioDtoSuspended {
             get {
-                return ResourceManager.GetString("PeripheralDtoStatus", resourceCulture);
+                return ResourceManager.GetString("UsuarioDtoSuspended", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Vendor.
+        ///   Looks up a localized string similar to Username.
         /// </summary>
-        public static string PeripheralDtoVendor {
+        public static string UsuarioDtoUsername {
             get {
-                return ResourceManager.GetString("PeripheralDtoVendor", resourceCulture);
+                return ResourceManager.GetString("UsuarioDtoUsername", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email address is incorrect.
+        /// </summary>
+        public static string validation_BadEmailAddress {
+            get {
+                return ResourceManager.GetString("validation_BadEmailAddress", resourceCulture);
             }
         }
         
@@ -552,24 +471,6 @@ namespace Domain.Localization {
         public static string validation_FieldRequired {
             get {
                 return ResourceManager.GetString("validation_FieldRequired", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ipv4 it has bad format.
-        /// </summary>
-        public static string validation_Ipv4AddressBadFormat {
-            get {
-                return ResourceManager.GetString("validation_Ipv4AddressBadFormat", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to No more then {0} peripherals by gateway are allowed.
-        /// </summary>
-        public static string validation_MaxPeriphelsAllowed {
-            get {
-                return ResourceManager.GetString("validation_MaxPeriphelsAllowed", resourceCulture);
             }
         }
     }

@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 namespace Application.Specifications
 {
     //Miningfull name that denotes the specification
-    public class AllGatewaySpecification : Specification<GatewayDto>
+    public class AllUsuariosSpecification : Specification<UsuarioDto>
     {
-        public AllGatewaySpecification(IMapper mapper) : base(mapper)
+        public AllUsuariosSpecification(IMapper mapper) : base(mapper)
         {
         }
         //Expression that defines the predicate that object of type(EntityDto) must comply to fullfill the specification
-        public override Expression<Func<GatewayDto, bool>> ToExpression()
+        public override Expression<Func<UsuarioDto, bool>> ToExpression()
         {
             return e => true;
         }

@@ -14,7 +14,6 @@ using WebApi.Parameters;
 namespace WebApi.Controllers
 {    
     [ApiController]
-
     //[Authorize]
     [Route("api/[controller]")]
     public abstract class ApiBaseController<TEntityDto, TKey> : ControllerBase where TEntityDto : Domain.Entities.Base.Entity
@@ -61,12 +60,8 @@ namespace WebApi.Controllers
         }
 
         [HttpGet]
-        [HttpHead]
         public virtual async Task<IActionResult> Get([FromQuery]QueryStringParameters queryStringParameters, CancellationToken cancellationToken = default)
         {
-            //TODO: Return bad request specifying that was by incorrect properties
-            //TODO: Check properties when propagating includes navigation properties
-            //      and make includes case ignored
             if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(queryStringParameters.Fields))
                 return BadRequest();
             var includes = queryStringParameters.Includes.Split(',').ToList();
@@ -76,7 +71,6 @@ namespace WebApi.Controllers
         }
 
         [HttpGet("{id}")]
-        [HttpHead("{id}")]
         public virtual async Task<ActionResult<TEntityDto>> Get(TKey id, [FromQuery] QueryStringParameters queryStringParameters, CancellationToken cancellationToken = default)
         {
             if (!_propertyCheckerService.TypeHasProperties<TEntityDto>(queryStringParameters.Fields))
@@ -110,22 +104,7 @@ namespace WebApi.Controllers
                 return NotFound();
             var result = await AppService.UpdateAsync(item, cancellationToken);
             return NoContent();
-        }
-        [HttpPatch("{id}")]
-        public virtual async Task<IActionResult> Patch(TKey id, JsonPatchDocument<TEntityDto> patchDocument, CancellationToken cancellationToken = default)
-        {
-            if (id == null)
-                return BadRequest();
-            var item = await AppService.GetAsync(id, cancellationToken: cancellationToken);
-            if (item == null)
-                return NotFound();            
-            //TODO: Check client errors vs server error response
-            patchDocument.ApplyTo(item);
-            if(!TryValidateModel(item))
-                return ValidationProblem(ModelState);
-            var result = await AppService.UpdateAsync(item, cancellationToken);
-            return NoContent();
-        }
+        }        
         [HttpDelete("{id}")]
         public virtual async Task<IActionResult> Delete(TKey id, CancellationToken cancellationToken = default)
         {
@@ -136,12 +115,6 @@ namespace WebApi.Controllers
                 return NotFound();
             var result = await AppService.RemoveAsync(id, cancellationToken);
             return NoContent();
-        }
-
-        public override ActionResult ValidationProblem([ActionResultObjectValue] ModelStateDictionary modelStateDictionary)
-        {
-            var options = HttpContext.RequestServices.GetRequiredService<IOptions<ApiBehaviorOptions>>();
-            return (ActionResult)options.Value.InvalidModelStateResponseFactory(ControllerContext);
         }
     }
 }
