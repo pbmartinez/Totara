@@ -10,6 +10,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Domain.Entities.Base;
+using Infrastructure.Helpers;
 
 namespace Infrastructure.Domain.UnitOfWork
 {
@@ -93,11 +94,11 @@ namespace Infrastructure.Domain.UnitOfWork
         {
             return await Database.ExecuteSqlRawAsync(sqlCommand, parameters, cancellationToken);
         }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Seed();
+        }
 
-
-        public virtual DbSet<Gateway>? Gateway { get; set; }
-        public virtual DbSet<Peripheral>? Peripheral { get; set; }
-        public virtual DbSet<Brand>? Brand { get; set; }
-        public virtual DbSet<Provider>? Provider { get; set; }
+        public virtual DbSet<Usuario>? Usuarios { get; set; }
     }
 }

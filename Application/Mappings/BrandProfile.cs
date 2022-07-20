@@ -4,13 +4,11 @@ using Domain.Entities;
 
 namespace Application.Mappings
 {
-    public class BrandProfile : Profile
+    public class UsuarioProfile : Profile
     {
-        public BrandProfile()
+        public UsuarioProfile()
         {
-            CreateMap<Brand, BrandDto>()
-                .ForMember(g => g.Gateway, options => options.MapFrom(f => f.Gateway))
-                .ReverseMap();
+            CreateMap<Usuario, UsuarioDto>().ReverseMap();
         }
     }
 }

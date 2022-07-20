@@ -26,100 +26,58 @@ namespace Test.AppServices
 
 
         #region Data Set
-        private static readonly Guid gatewayId = Guid.NewGuid();
 
-        private static readonly object[] GatewaysWithValidationFails =
+
+        private static readonly object[] UsuariosWithValidationFails =
         {
-            new object[]{   new GatewayDto{Id = new Guid("c48c2a37-4388-4fa0-96d8-f97a61cbef74"),Name="Name 1",Ipv4Address="4999.168.10.1" } ,
-                            new Gateway{Id = new Guid("c48c2a37-4388-4fa0-96d8-f97a61cbef74"),Name="Name 1",Ipv4Address="4999.168.10.1" }},
-            new object[]{   new GatewayDto{Id = new Guid("e36bfda8-54c8-4807-8111-31e7efc8ac18"),Name="Name 1",Ipv4Address="192.4999.10.1" },
-                            new Gateway{Id = new Guid("e36bfda8-54c8-4807-8111-31e7efc8ac18"),Name="Name 1",Ipv4Address="192.4999.10.1" }},
-            new object[]{   new GatewayDto{Id = new Guid("a0c892c8-0bcd-472b-9380-f9a972f65d15"),Name="Name 1",Ipv4Address="192.168.10.1",
-                                Peripherals=new List<PeripheralDto>() {
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new PeripheralDto{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                            } },
-                            new Gateway{Id = new Guid("a0c892c8-0bcd-472b-9380-f9a972f65d15"),Name="Name 1",Ipv4Address="192.168.10.1",
-                                Peripherals=new List<Peripheral>() {
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                            } }
-            }
+            new object[]{   new UsuarioDto{Id = 1, Nombre = "", Username="krystina",Email="eleazar1988@hotmail.com",Suspended= false } ,
+                            new Usuario{Id = 1, Nombre = "James A Gaines", Username="krystina",Email="",Suspended= false}
+            },
+            new object[]{   new UsuarioDto{Id = 1, Nombre = "Rose S Henson", Username="Ieyahthoov4",Email="braulio.muell@hotmail.com",Suspended= false},
+                            new Usuario{Id = 1, Nombre = "Rose S Henson", Username="Ieyahthoov4",Email="braulio.muell@hotmail.com",Suspended= false} }
+
         };
 
-        private static readonly object[] GatewaysWithValidationSuccess =
+        private static readonly object[] UsuariosWithValidationSuccess =
         {
-                            new Gateway{Id = new Guid("c48c2a37-4388-4fa0-96d8-f97a61cbef74"),Name="Name 1",Ipv4Address="192.168.10.1" },
-
-                            new Gateway{Id = new Guid("e36bfda8-54c8-4807-8111-31e7efc8ac18"),Name="Name 1",Ipv4Address="192.168.10.1" },
-
-                            new Gateway{Id = new Guid("a0c892c8-0bcd-472b-9380-f9a972f65d15"),Name="Name 1",Ipv4Address="192.168.10.1",
-                                Peripherals=new List<Peripheral>() {
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId},
-                                new Peripheral{ Id = Guid.NewGuid(), Vendor="Pa & Co",CreatedDate=DateTime.Today,Status=true, GatewayId=gatewayId}
-                            } }
-            
-        }; 
+            new Usuario{Id = 1, Nombre = "James A Gaines", Username="krystina",Email="eleazar1988@hotmail.com",Suspended= false},
+            new Usuario{Id = 1, Nombre = "Rose S Henson", Username="Ieyahthoov4",Email="braulio.muell@hotmail.com",Suspended= false}
+        };
         #endregion
 
 
 
         [Test]
-        [TestCaseSource(nameof(GatewaysWithValidationFails))]
-        public void AddGatewaysThrowExceptionOnValidationFails(GatewayDto itemDtoVersion, Gateway entityVersion )
+        [TestCaseSource(nameof(UsuariosWithValidationFails))]
+        public void AddUsuariosThrowExceptionOnValidationFails(UsuarioDto itemDtoVersion, Usuario entityVersion)
         {
             var options = DataBaseService.DataBaseProviderSetUp.SQLServerInMemoryOptions("database");
             var context = new UnitOfWorkContainer(options);
-            var gatewayRepository = new GatewayRepository(context);
+            var UsuarioRepository = new UsuarioRepository(context);
             var mockedMapper = new Mock<IMapper>();
-            mockedMapper.Setup(x => x.Map<Gateway>(itemDtoVersion)).Returns(entityVersion);
-            var gatewayService = new GatewayAppService(gatewayRepository, mockedMapper.Object, new DataAnnotationsEntityValidator());
+            mockedMapper.Setup(x => x.Map<Usuario>(itemDtoVersion)).Returns(entityVersion);
+            var UsuarioService = new UsuarioAppService(UsuarioRepository, mockedMapper.Object, new DataAnnotationsEntityValidator());
 
-            Action action = () => gatewayService.AddAsync(itemDtoVersion).Wait();
-            
+            Action action = () => UsuarioService.AddAsync(itemDtoVersion).Wait();
+
             action.Should().Throw<ApplicationValidationErrorsException>();
         }
 
 
         [Test]
-        [TestCaseSource(nameof(GatewaysWithValidationSuccess))]
-        public async Task AddGatewaysSuccesfullySaved(Gateway entityVersion)
+        [TestCaseSource(nameof(UsuariosWithValidationSuccess))]
+        public async Task AddUsuariosSuccesfullySaved(Usuario entityVersion)
         {
-            var options = DataBaseService.DataBaseProviderSetUp.SQLServerInMemoryOptions(nameof(AddGatewaysSuccesfullySaved));
+            var options = DataBaseService.DataBaseProviderSetUp.SQLServerInMemoryOptions(nameof(AddUsuariosSuccesfullySaved));
             var context = new UnitOfWorkContainer(options);
-            var gatewayRepository = new GatewayRepository(context);
-            
-            await gatewayRepository.AddAsync(entityVersion);
-            await gatewayRepository.UnitOfWork.CommitAsync();
+            var UsuarioRepository = new UsuarioRepository(context);
 
-            var g = await gatewayRepository.GetAsync(entityVersion.Id, new List<string>() { nameof(Gateway.Peripherals) });
-            var gat = await gatewayRepository.GetAllAsync(new List<string>() { nameof(Gateway.Peripherals) },null);
-            
+            await UsuarioRepository.AddAsync(entityVersion);
+            await UsuarioRepository.UnitOfWork.CommitAsync();
+
+            var g = await UsuarioRepository.GetAsync(entityVersion.Id);
+            var gat = await UsuarioRepository.GetAllAsync(null);
             g.Should().NotBeNull();
-            g.Peripherals.Should().NotBeNull();
-            g.Peripherals.Count.Should().Be(entityVersion.Peripherals.Count, "The same amount of related peripherals should be added");
         }
     }
 }

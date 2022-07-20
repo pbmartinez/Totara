@@ -55,13 +55,10 @@ builder.Services.AddEntitiesServicesAndRepositories();
 builder.Services.AddCustomApplicationServices();
 
 //Unit of Work Implementation Configuration
-builder.Services.AddDbContext<UnitOfWorkContainer>(options =>
-   options.UseSqlServer(builder.Configuration.GetConnectionString(AppSettings.DefaultConnectionString), sqlServerOptions =>
-   {
-       sqlServerOptions.CommandTimeout(30);
-       sqlServerOptions.EnableRetryOnFailure(3);
-   }));
 
+builder.Services.AddDbContext<UnitOfWorkContainer>(options =>
+   options.UseMySql(builder.Configuration.GetConnectionString(AppSettings.DefaultConnectionString),
+   Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql")).EnableDetailedErrors());
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(AppSettings.AzureAd));
 

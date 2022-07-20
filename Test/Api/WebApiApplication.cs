@@ -58,16 +58,18 @@ namespace Test.Api
         {
             var configuration = GetWebApiApplication().Services.GetService<IConfiguration>();
             var connectionString = configuration?["ConnectionStrings:DefaultConnection"];
-            await CheckPoint.Reset("Server=localhost;Database=MusalaGateways;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            await CheckPoint.Reset("Server=localhost;Database=TotaraTest;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
         }
 
-        public async Task<Gateway> AGatewayInTheDatabase()
+        public async Task<Usuario> AnUserInTheDatabase()
         {
-            var item = new Gateway()
+            var item = new Usuario()
             {
-                Id = Guid.NewGuid(),
-                Name = "Gateway Name",
-                Ipv4Address = "192.168.10.77"                
+                Id = 1,
+                Nombre = "",
+                Username = "",
+                Email = "",
+                Suspended = false
             };
 
             await ExecuteDbContextAsync(async context =>
