@@ -27,5 +27,7 @@ namespace Domain.Entities
         public string Email { get; set; } = string.Empty;
 
         public bool Suspended { get; set; }
+
+        public string? Rut { get; set; } = string.Empty;
     }
 }
