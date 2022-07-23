@@ -56,9 +56,14 @@ builder.Services.AddCustomApplicationServices();
 
 //Unit of Work Implementation Configuration
 
-builder.Services.AddDbContext<UnitOfWorkContainer>(options =>
-   options.UseMySql(builder.Configuration.GetConnectionString(AppSettings.DefaultConnectionString),
-   Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql")).EnableDetailedErrors());
+builder.Services.AddDbContext<UnitOfWorkContainer>
+    (
+        options =>
+           options.UseMySql(builder.Configuration.GetConnectionString(AppSettings.DefaultConnectionString),
+           ServerVersion.Parse("8.0.28-mysql")).EnableDetailedErrors()
+    );
+
+
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddMicrosoftIdentityWebApi(builder.Configuration.GetSection(AppSettings.AzureAd));
 
@@ -83,6 +88,9 @@ IdentityModelEventSource.ShowPII = true;
 
 var app = builder.Build();
 
+await using var scope = app.Services.CreateAsyncScope();
+using var db = scope.ServiceProvider.GetService<UnitOfWorkContainer>();
+await db.Database.MigrateAsync();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
