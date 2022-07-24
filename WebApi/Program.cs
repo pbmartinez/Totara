@@ -100,11 +100,11 @@ await db.Database.MigrateAsync();
 
 app.UseProblemDetails();
 
-if (app.Environment.IsDevelopment() || app.Environment.IsTesting())
-{
+//if (app.Environment.IsDevelopment() || app.Environment.IsTesting())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 
 app.MapHealthChecks("/health/live", new HealthCheckOptions()
@@ -119,7 +119,7 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions()
 
 
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseCors("AllowedHosts");
 
