@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MySqlConnector;
 using Respawn;
 using Respawn.Graph;
 using System;
@@ -24,11 +25,11 @@ namespace Test.Api
         private static Checkpoint CheckPoint = new Checkpoint()
         {
             TablesToIgnore = new Table[] { new Table("__EFMigrationsHistory") },
-            
+            DbAdapter = DbAdapter.MySql
         };
         private WebApiApplication()
         {
-
+            
         }
 
         public static WebApiApplication GetWebApiApplication()
@@ -36,10 +37,17 @@ namespace Test.Api
             if (_webApiApplication == null)
             {
                 _webApiApplication = new WebApiApplication();
+                _webApiApplication.WithWebHostBuilder(builder => {
+                    builder.UseEnvironment("Testing");
+                });
+                
             }
             return _webApiApplication;
         }
 
+        public IConfiguration Configuration => Services.GetService<IConfiguration>()!;
+
+        public string BaseUrl => Configuration["Testing:BaseUrl"];
 
         public async Task ExecuteScopeAsync(Func<IServiceProvider, Task> action)
         {
@@ -58,7 +66,9 @@ namespace Test.Api
         {
             var configuration = GetWebApiApplication().Services.GetService<IConfiguration>();
             var connectionString = configuration?["ConnectionStrings:DefaultConnection"];
-            await CheckPoint.Reset("Server=localhost;Database=TotaraTest;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            using var conn = new MySqlConnection(connectionString ?? throw new ArgumentNullException(nameof(connectionString)));
+            await conn.OpenAsync();
+            await CheckPoint.Reset(conn);
         }
 
         public async Task<Usuario> AnUserInTheDatabase()
@@ -66,9 +76,9 @@ namespace Test.Api
             var item = new Usuario()
             {
                 Id = 1,
-                Nombre = "",
-                Username = "",
-                Email = "",
+                Nombre = "Jeffery K. Hope",
+                Username = "Lizinars",
+                Email = "JefferyKHope@jourrapide.com",
                 Suspended = false
             };
 

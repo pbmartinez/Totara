@@ -8,18 +8,17 @@ namespace Test.Api
 {
     public class ApiEndpoints
     {
-        static string BASE_URL = "https://localhost:7219";
 
         #region GET Methods
         public static class Get
         {
             public static string Usuario()
             {
-                return $"{BASE_URL}/api/usuario";
+                return $"/api/usuario";
             }
             public static string Usuario<TKey>(TKey id)
             {
-                return $"{BASE_URL}/api/usuario/{id}";
+                return $"/api/usuario/{id}";
             }
         }
         #endregion
@@ -29,7 +28,7 @@ namespace Test.Api
         {
             public static string Usuario()
             {
-                return $"{BASE_URL}/api/usuario";
+                return $"/api/usuario";
             }
 
             
@@ -41,7 +40,7 @@ namespace Test.Api
         {
             public static string Usuario<TKey>(TKey id)
             {
-                return $"{BASE_URL}/api/usuario/{id}";
+                return $"/api/usuarios/{id}";
             }
             
         }
@@ -52,7 +51,7 @@ namespace Test.Api
         {
             public static string Usuario<TKey>(TKey id)
             {
-                return $"{BASE_URL}/api/usuario/{id}";
+                return $"/api/usuarios/{id}";
             }
         } 
         #endregion

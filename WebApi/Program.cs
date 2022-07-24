@@ -57,11 +57,11 @@ builder.Services.AddCustomApplicationServices();
 //Unit of Work Implementation Configuration
 
 builder.Services.AddDbContext<UnitOfWorkContainer>
-    (
-        options =>
-           options.UseMySql(builder.Configuration.GetConnectionString(AppSettings.DefaultConnectionString),
-           ServerVersion.Parse("8.0.28-mysql")).EnableDetailedErrors()
-    );
+(
+    options =>
+        options.UseMySql(builder.Configuration.GetConnectionString(AppSettings.DefaultConnectionString),
+        ServerVersion.Parse("8.0.28-mysql")).EnableDetailedErrors()
+);
 
 
 
@@ -85,21 +85,31 @@ builder.Services.AddProblemDetails(options =>
 });
 
 IdentityModelEventSource.ShowPII = true;
-
+var conn = builder.Configuration.GetConnectionString(AppSettings.DefaultConnectionString);
 var app = builder.Build();
 
 await using var scope = app.Services.CreateAsyncScope();
 using var db = scope.ServiceProvider.GetService<UnitOfWorkContainer>();
 await db.Database.MigrateAsync();
 
+
+
 // Configure the HTTP request pipeline.
+
+app.UseProblemDetails();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseProblemDetails();
+if (app.Environment.EnvironmentName == "Testing")
+{
+    //
+}
+
+
 
 app.MapHealthChecks("/health/live", new HealthCheckOptions()
 {
