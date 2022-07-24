@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MySqlConnector;
 using Respawn;
 using Respawn.Graph;
 using System;
@@ -18,32 +19,37 @@ using System.Threading.Tasks;
 
 namespace Test.Api
 {
-    class WebApiApplication : WebApplicationFactory<Program>
+    class TestServerFixtures 
     {
-        private static WebApiApplication _webApiApplication = null!;
-        private static Checkpoint CheckPoint = new Checkpoint()
+        public WebApplicationFactory<Program> Application { get; set; }  
+
+        private readonly TestServer _testServer ;
+        public HttpClient HttpClient { get; }
+        public IConfiguration Configuration => _testServer.Services.GetService<IConfiguration>()!;
+        
+
+        public TestServerFixtures()
+        {
+            Application = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
+            {
+                builder.UseEnvironment("Testing");
+            });
+            _testServer = Application.Server;
+            
+            HttpClient = Application.CreateClient();
+        }
+
+        private static Checkpoint CheckPoint = new()
         {
             TablesToIgnore = new Table[] { new Table("__EFMigrationsHistory") },
-            
+            DbAdapter = DbAdapter.MySql
         };
-        private WebApiApplication()
-        {
 
-        }
-
-        public static WebApiApplication GetWebApiApplication()
-        {
-            if (_webApiApplication == null)
-            {
-                _webApiApplication = new WebApiApplication();
-            }
-            return _webApiApplication;
-        }
-
+        public string BaseUrl => Configuration["Testing:BaseUrl"];
 
         public async Task ExecuteScopeAsync(Func<IServiceProvider, Task> action)
         {
-            using (var scope = GetWebApiApplication().Services.GetService<IServiceScopeFactory>()!.CreateScope())
+            using (var scope = _testServer.Services.GetService<IServiceScopeFactory>()!.CreateScope())
             {
                 await action(scope.ServiceProvider);
             }
@@ -54,11 +60,13 @@ namespace Test.Api
             await ExecuteScopeAsync(sp => action(sp.GetService<UnitOfWorkContainer>()!));
         }
 
-        public static async Task ResetDatabase()
+        public async Task ResetDatabase()
         {
-            var configuration = GetWebApiApplication().Services.GetService<IConfiguration>();
+            var configuration = _testServer.Services.GetService<IConfiguration>();
             var connectionString = configuration?["ConnectionStrings:DefaultConnection"];
-            await CheckPoint.Reset("Server=localhost;Database=TotaraTest;Trusted_Connection=True;MultipleActiveResultSets=true;TrustServerCertificate=True");
+            using var conn = new MySqlConnection(connectionString ?? throw new ArgumentNullException(nameof(connectionString)));
+            await conn.OpenAsync();
+            await CheckPoint.Reset(conn);
         }
 
         public async Task<Usuario> AnUserInTheDatabase()
@@ -66,9 +74,9 @@ namespace Test.Api
             var item = new Usuario()
             {
                 Id = 1,
-                Nombre = "",
-                Username = "",
-                Email = "",
+                Nombre = "Jeffery K. Hope",
+                Username = "Lizinars",
+                Email = "JefferyKHope@jourrapide.com",
                 Suspended = false
             };
 
