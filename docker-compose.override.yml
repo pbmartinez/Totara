@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  totara-webapi:
+    container_name: totara-webapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "5080:80"
+      - "5443:443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    restart: "always"
+    depends_on:
+      - totara-database
+    networks:
+      - totara-network
+  totara-database:
+    image: "mysql:8.0.29"
+    container_name: totara-mysql
+    command: "--default-authentication-plugin=mysql_native_password"
+    ports:
+      - "3306:3306"
+    restart: "always"
+    environment:
+        MYSQL_ROOT_PASSWORD: "Administrador*2020"
+    volumes:
+      - /var/lib/docker/volumes/mysql_data:/var/lib/mysql    
+    networks:
+      - totara-network
+networks:
+  totara-network:
+    driver: bridge
+        
