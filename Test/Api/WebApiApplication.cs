@@ -45,6 +45,10 @@ namespace Test.Api
             return _webApiApplication;
         }
 
+        protected override void ConfigureWebHost(IWebHostBuilder builder)
+        {
+            builder.UseEnvironment("Testing");
+        }
         public IConfiguration Configuration => Services.GetService<IConfiguration>()!;
 
         public string BaseUrl => Configuration["Testing:BaseUrl"];

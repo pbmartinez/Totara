@@ -90,6 +90,8 @@ var app = builder.Build();
 
 await using var scope = app.Services.CreateAsyncScope();
 using var db = scope.ServiceProvider.GetService<UnitOfWorkContainer>();
+if (db == null)
+    throw new NullReferenceException($"{nameof(db)}{typeof(UnitOfWorkContainer).Name}");
 await db.Database.MigrateAsync();
 
 
@@ -98,17 +100,11 @@ await db.Database.MigrateAsync();
 
 app.UseProblemDetails();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsTesting())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-if (app.Environment.EnvironmentName == "Testing")
-{
-    //
-}
-
 
 
 app.MapHealthChecks("/health/live", new HealthCheckOptions()
