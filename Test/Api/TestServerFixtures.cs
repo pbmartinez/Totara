@@ -19,43 +19,37 @@ using System.Threading.Tasks;
 
 namespace Test.Api
 {
-    class WebApiApplication : WebApplicationFactory<Program>
+    class TestServerFixtures 
     {
-        private static WebApiApplication _webApiApplication = null!;
-        private static Checkpoint CheckPoint = new Checkpoint()
+        public WebApplicationFactory<Program> Application { get; set; }  
+
+        private readonly TestServer _testServer ;
+        public HttpClient HttpClient { get; }
+        public IConfiguration Configuration => _testServer.Services.GetService<IConfiguration>()!;
+        
+
+        public TestServerFixtures()
+        {
+            Application = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
+            {
+                builder.UseEnvironment("Testing");
+            });
+            _testServer = Application.Server;
+            
+            HttpClient = Application.CreateClient();
+        }
+
+        private static Checkpoint CheckPoint = new()
         {
             TablesToIgnore = new Table[] { new Table("__EFMigrationsHistory") },
             DbAdapter = DbAdapter.MySql
         };
-        private WebApiApplication()
-        {
-            
-        }
-
-        public static WebApiApplication GetWebApiApplication()
-        {
-            if (_webApiApplication == null)
-            {
-                _webApiApplication = new WebApiApplication();
-                _webApiApplication.WithWebHostBuilder(builder => {
-                    builder.UseEnvironment("Testing");
-                });
-                
-            }
-            return _webApiApplication;
-        }
-
-        protected override void ConfigureWebHost(IWebHostBuilder builder)
-        {
-            builder.UseEnvironment("Testing");
-        }
-        public IConfiguration Configuration => Services.GetService<IConfiguration>()!;
 
         public string BaseUrl => Configuration["Testing:BaseUrl"];
 
         public async Task ExecuteScopeAsync(Func<IServiceProvider, Task> action)
         {
-            using (var scope = GetWebApiApplication().Services.GetService<IServiceScopeFactory>()!.CreateScope())
+            using (var scope = _testServer.Services.GetService<IServiceScopeFactory>()!.CreateScope())
             {
                 await action(scope.ServiceProvider);
             }
@@ -66,9 +60,9 @@ namespace Test.Api
             await ExecuteScopeAsync(sp => action(sp.GetService<UnitOfWorkContainer>()!));
         }
 
-        public static async Task ResetDatabase()
+        public async Task ResetDatabase()
         {
-            var configuration = GetWebApiApplication().Services.GetService<IConfiguration>();
+            var configuration = _testServer.Services.GetService<IConfiguration>();
             var connectionString = configuration?["ConnectionStrings:DefaultConnection"];
             using var conn = new MySqlConnection(connectionString ?? throw new ArgumentNullException(nameof(connectionString)));
             await conn.OpenAsync();

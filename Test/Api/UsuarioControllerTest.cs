@@ -23,8 +23,7 @@ namespace Test.Api
     [TestFixture]
     public class UsuarioControllerTest
     {
-        private static WebApiApplication Application { get; set; } = WebApiApplication.GetWebApiApplication();
-        private HttpClient HttpClient { get; set; } = Application.CreateClient();
+        private static TestServerFixtures ServerFixtures { get; set; } = new TestServerFixtures();
 
         #region Data Set
 
@@ -70,15 +69,15 @@ namespace Test.Api
         [SetUp]
         public async Task ResetBeforeTest()
         {
-            await WebApiApplication.ResetDatabase();
-            await WebApiApplication.GetWebApiApplication().AnUserInTheDatabase();
+            await ServerFixtures.ResetDatabase();
+            await ServerFixtures.AnUserInTheDatabase();
         }
         
 
         [Test]
         public async Task Get_Usuarios()
         {
-            var response = await Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Get(new QueryStringParameters(), new CancellationToken()))
+            var response = await ServerFixtures.Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Get(new QueryStringParameters(), new CancellationToken()))
                 .GetAsync();
             response.StatusCode.Should().Be(HttpStatusCode.OK);
         }
@@ -88,7 +87,7 @@ namespace Test.Api
         [TestCaseSource(nameof(UsuariosWithResultsOnGet))]
         public async Task Get_Usuario_By_Id(int id, HttpStatusCode statusCode)
         {
-            var response = await Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Get(id, new QueryStringParameters(), new CancellationToken()))
+            var response = await ServerFixtures.Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Get(id, new QueryStringParameters(), new CancellationToken()))
                 .GetAsync();
 
             response.StatusCode.Should().Be(statusCode);
@@ -105,9 +104,9 @@ namespace Test.Api
         [TestCaseSource(nameof(UsuariosWithResultsOnPost))]
         public async Task Post_Usuario(UsuarioDto item, HttpStatusCode status)
         {
-            var response = await Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Post(item, new CancellationToken()))
+            var response = await ServerFixtures.Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Post(item, new CancellationToken()))
                 .PostAsync();
-            var responseAfterPost = await Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Get(item.Id, new QueryStringParameters(), new CancellationToken()))
+            var responseAfterPost = await ServerFixtures.Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Get(item.Id, new QueryStringParameters(), new CancellationToken()))
                 .GetAsync();
 
             using (new AssertionScope())
@@ -129,8 +128,8 @@ namespace Test.Api
         [TestCaseSource(nameof(UsuariosWithResultsOnPut))]
         public async Task Put_Usuario(UsuarioDto item, HttpStatusCode status)
         {
-            var response = await HttpClient.PutAsJsonAsync(Application.BaseUrl + ApiEndpoints.Put.Usuario(item.Id), item);
-            var responseAfterPut = await Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Get(item.Id, new QueryStringParameters(), new CancellationToken()))
+            var response = await ServerFixtures.HttpClient.PutAsJsonAsync(ServerFixtures.BaseUrl + ApiEndpoints.Put.Usuario(item.Id), item);
+            var responseAfterPut = await ServerFixtures.Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Get(item.Id, new QueryStringParameters(), new CancellationToken()))
                 .GetAsync();
             using (new AssertionScope())
             {
@@ -150,9 +149,9 @@ namespace Test.Api
         [TestCaseSource(nameof(UsuariosWithResultsOnDelete))]
         public async Task Delete_Usuario(int id, HttpStatusCode status)
         {
-            var response = await Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Delete(id, new CancellationToken()))
+            var response = await ServerFixtures.Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Delete(id, new CancellationToken()))
                 .SendAsync("Delete");
-            var responseAfterDelete = await Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Get(id, new QueryStringParameters(), new CancellationToken()))
+            var responseAfterDelete = await ServerFixtures.Application.Server.CreateHttpApiRequest<UsuarioController>(g => g.Get(id, new QueryStringParameters(), new CancellationToken()))
                 .GetAsync();
 
             using (new AssertionScope())
