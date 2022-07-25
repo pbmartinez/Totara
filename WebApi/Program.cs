@@ -99,14 +99,8 @@ await db.Database.MigrateAsync();
 // Configure the HTTP request pipeline.
 
 app.UseProblemDetails();
-
-//if (app.Environment.IsDevelopment() || app.Environment.IsTesting())
-//{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-//}
-
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.MapHealthChecks("/health/live", new HealthCheckOptions()
 {
     Predicate = _ => false,
@@ -116,19 +110,8 @@ app.MapHealthChecks("/health/ready", new HealthCheckOptions()
 {
     ResponseWriter = HealthCheckExtensions.WriteJsonResponse
 });
-
-
-
-//app.UseHttpsRedirection();
-
 app.UseCors("AllowedHosts");
-
-
 app.UseAuthentication();
 app.UseAuthorization();
-
-
 app.MapControllers();
-
 app.Run();
-
