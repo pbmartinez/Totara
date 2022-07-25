@@ -2,8 +2,7 @@ version: '3.4'
 
 services:
   totara-webapi:
-    image: ${DOCKER_REGISTRY-}webapi
-    #image: pbmartinez/webapi:dev
+    image: pbmartinez/totara-webapi:dev
     build:
       context: .
       dockerfile: WebApi/Dockerfile
